@@ -1,0 +1,63 @@
+.issue-table {
+  td:first-of-type {
+      white-space: nowrap;
+  }
+}
+
+.name-value-table a {
+    color: @icinga-blue;
+    &:hover:before {
+        text-decoration: none;
+    }
+}
+
+div.action-bar a, div.action-bar form i {
+  color: @icinga-blue;
+}
+
+div.action-bar > a {
+  margin-right: 1em;
+}
+
+p.state-hint {
+    border: 1px solid @text-color;
+    padding: 0.5em;
+    line-height: 2em;
+    max-width: 60em;
+    border-left-width: 3em;
+    &:before {
+        position: absolute;
+        margin-left: -1.5em;
+        font-family: 'ifont';
+        color: white;
+        font-size: 2em;
+    }
+    &.ok {
+        border-color: @color-ok;
+    }
+    &.warning {
+        border-color: @color-warning;
+    }
+    &.error {
+        border-color: @color-critical;
+    }
+    &.critical:before {
+        content: '\e885';
+    }
+    &.warning:before {
+        content: '\e885';
+    }
+    &.ok:before {
+        content: '\e803';
+    }
+    a {
+        text-decoration: underline;
+    }
+}
+
+img.icon {
+  height: 1.5em;
+  width: 1.5em;
+  overflow: hidden;
+  display: inline-block;
+}
