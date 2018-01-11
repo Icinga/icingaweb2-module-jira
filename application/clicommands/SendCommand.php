@@ -62,7 +62,7 @@ class SendCommand extends Command
                 echo "Problem has been acknowledged\n";
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo $e->getMessage() . "\n";
         }
     }
 }
