@@ -37,39 +37,26 @@ class IcingaCommandPipe
 
     protected function getHostObject($hostname)
     {
-        $backend = Backend::instance();
-        $found = $backend->select()
-            ->from('hostStatus')
-            ->where('host_name', $hostname)
-            ->count();
+        $host = new Host(Backend::instance(), $hostname);
 
-        if ($found !== 1) {
+        if ($host->fetch() === false) {
             throw new IcingaException('No such host found: %s', $hostname);
         }
-
-        $host = new Host($backend, $hostname);
 
         return $host;
     }
 
     protected function getServiceObject($hostname, $service)
     {
-        $backend = Backend::instance();
-        $found = $backend->select()
-            ->from('serviceStatus')
-            ->where('host_name', $hostname)
-            ->where('service_description', $service)
-            ->count();
+        $service = new Service(Backend::instance(), $hostname, $service);
 
-        if ($found !== 1) {
+        if ($service->fetch() === false) {
             throw new IcingaException(
                 'No service "%s" found on host "%s"',
                 $service,
                 $hostname
             );
         }
-
-        $service = new Service($backend, $hostname, $service);
 
         return $service;
     }
