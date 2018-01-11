@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira;
 
+use Exception;
 use Icinga\Application\Benchmark;
 use Icinga\Application\Config;
 use Icinga\Exception\ConfigurationError;
@@ -31,10 +32,12 @@ class RestApi
         $this->baseUrl = rtrim($baseUrl, '/') . '/rest';
     }
 
+    /**
+     * @return static
+     */
     public static function fromConfig()
     {
         $config = Config::module('jira');
-        $host = $config->get('api', 'host');
         $url = sprintf(
             'https://%s:%d/%s',
             $config->get('api', 'host'),
@@ -66,8 +69,80 @@ class RestApi
         }
     }
 
-    public function hasOpenIssueFor($host, $service = null)
+    public function eventuallyGetLatestOpenIssueKeyFor($host, $service = null)
     {
+        try {
+            $start = 0;
+            $limit = 1;
+            $query = $this->prepareIssueQuery($host, $service, true);
+            $fields = [
+                'icingaHost',
+                'icingaService',
+            ];
+
+            $issues = $this->post('search', [
+                'jql'        => $query,
+                'startAt'    => $start,
+                'maxResults' => $limit,
+                'fields'     => $fields,
+            ])->getResult()->issues;
+
+            if (empty($issues)) {
+                return null;
+            } else {
+                return current($issues)->key;
+            }
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)
+    {
+        $project = 'ITSM';
+
+        $query = sprintf('project = "%s" AND creator = currentUser()', $project);
+
+        if ($onlyOpen) {
+            $query .= ' AND status NOT IN (Gelöst, Geschlossen, Abgelehnt)';
+        }
+
+        if ($host !== null) {
+            $query .= sprintf(' AND icingaHost ~ "%s"', $host);
+        }
+
+        if ($host !== null) {
+            $query .= sprintf(' AND icingaService ~ "%s"', $service);
+        }
+
+        $query .= ' ORDER BY created DESC';
+
+        return $query;
+    }
+
+    public function fetchIssues($host = null, $service = null, $onlyOpen = true)
+    {
+        $start = 0;
+        $limit = 15;
+        $query = $this->prepareIssueQuery($host, $service, $onlyOpen);
+        $fields = [
+            'project',
+            'issuetype',
+            'description',
+            'summary',
+            'status',
+            'created',
+            'icingaStatus',
+            'icingaHost',
+            'icingaService',
+        ];
+
+        return $this->post('search', [
+            'jql'        => $query,
+            'startAt'    => $start,
+            'maxResults' => $limit,
+            'fields'     => $fields,
+        ])->getResult()->issues;
     }
 
     public function createIssue($fields)
@@ -144,7 +219,16 @@ class RestApi
     {
         return implode('/', [$this->baseUrl, $this->apiName, $this->apiVersion, $url]);
     }
-    
+
+    /**
+     * @param $method
+     * @param $url
+     * @param null $body
+     * @return RestApiResponse
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     protected function request($method, $url, $body = null)
     {
         $auth = sprintf('%s:%s', $this->username, $this->password);
@@ -215,11 +299,6 @@ class RestApi
     public function get($url, $body = null)
     {
         return $this->request('get', $url, $body);
-    }
-
-    public function getRaw($url, $body = null)
-    {
-        return $this->request('get', $url, $body, true);
     }
 
     public function post($url, $body = null)
