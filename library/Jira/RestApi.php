@@ -223,7 +223,7 @@ class RestApi
     /**
      * @param $method
      * @param $url
-     * @param null $body
+     * @param mixed $body
      * @return RestApiResponse
      * @throws ConfigurationError
      * @throws IcingaException
