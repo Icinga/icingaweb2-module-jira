@@ -241,8 +241,8 @@ class RestApi
 
         if ($body !== null) {
             $body = json_encode($body);
-            $headers[] = 'Content-Type: application/json';
         }
+        $headers[] = 'Content-Type: application/json';
 
         $curl = $this->curl();
         $opts = array(
