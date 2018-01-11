@@ -9,6 +9,7 @@ use Icinga\Module\Jira\RestApi;
 
 class Controller extends CompatController
 {
+    /** @var RestApi */
     private $jira;
 
     protected function dump($what)
@@ -37,6 +38,9 @@ class Controller extends CompatController
         }
     }
 
+    /**
+     * @return RestApi
+     */
     protected function jira()
     {
         if ($this->jira === null) {
@@ -46,6 +50,9 @@ class Controller extends CompatController
         return $this->jira;
     }
 
+    /**
+     * @return RestApi
+     */
     protected function connectToJira()
     {
         return RestApi::fromConfig();

@@ -11,11 +11,6 @@ class DirectorConfig
     /** @var Db */
     protected $db;
 
-    public function init()
-    {
-        $this->assertPermission('director/admin');
-    }
-    
     public function commandExists(IcingaCommand $command)
     {
         return IcingaCommand::exists($command->getObjectName(), $this->db);
@@ -58,6 +53,9 @@ class DirectorConfig
         }
     }
 
+    /**
+     * @return IcingaCommand
+     */
     public function createHostCommand()
     {
         return IcingaCommand::create([
@@ -69,6 +67,9 @@ class DirectorConfig
         ], $this->db());
     }
 
+    /**
+     * @return IcingaCommand
+     */
     public function createServiceCommand()
     {
         return IcingaCommand::create([

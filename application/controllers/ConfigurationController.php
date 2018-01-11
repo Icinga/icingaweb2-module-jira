@@ -4,14 +4,19 @@ namespace Icinga\Module\Jira\Controllers;
 
 use dipl\Html\Html;
 use dipl\Html\Link;
+use Icinga\Module\Director\Objects\IcingaCommand;
 use Icinga\Module\Jira\DirectorConfig;
 use Icinga\Module\Jira\Web\Controller;
-use Icinga\Module\Jira\Web\Table\IssuesTable;
 use Icinga\Module\Jira\Web\Form\TemplateForm;
 use Icinga\Web\Notification;
 
 class ConfigurationController extends Controller
 {
+    public function init()
+    {
+        $this->assertPermission('director/admin');
+    }
+
     public function indexAction()
     {
         $this->addTitle('JIRA Configuration')->activateTab();
@@ -51,7 +56,7 @@ class ConfigurationController extends Controller
         $this->redirectNow($this->url()->without('action'));
     }
 
-    protected function addCommand($command, $config)
+    protected function addCommand(IcingaCommand $command, DirectorConfig $config)
     {
         $c = $this->content();
         $name = $command->getObjectName();
