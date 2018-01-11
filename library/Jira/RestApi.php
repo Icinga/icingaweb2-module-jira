@@ -111,7 +111,7 @@ class RestApi
             $query .= sprintf(' AND icingaHost ~ "%s"', $host);
         }
 
-        if ($host !== null) {
+        if ($service !== null) {
             $query .= sprintf(' AND icingaService ~ "%s"', $service);
         }
 
