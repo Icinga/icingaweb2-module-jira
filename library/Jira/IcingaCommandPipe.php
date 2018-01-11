@@ -13,8 +13,13 @@ class IcingaCommandPipe
 {
     public function acknowledge($author, $message, $host, $service = null)
     {
+        $object = $this->getObject($host, $service);
+        if ($object->acknowledged) {
+            return false;
+        }
+
         $cmd = new AcknowledgeProblemCommand();
-        $cmd->setObject($this->getObject($host, $service))
+        $cmd->setObject($object)
             ->setAuthor($author)
             ->setComment($message)
             ->setPersistent(false)
@@ -24,6 +29,8 @@ class IcingaCommandPipe
 
         $transport = new CommandTransport();
         $transport->send($cmd);
+
+        return true;
     }
 
     protected function getObject($hostname, $service)

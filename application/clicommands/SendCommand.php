@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira\Clicommands;
 
+use Exception;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
 
@@ -56,6 +57,12 @@ class SendCommand extends Command
         }
 
         $cmd = new IcingaCommandPipe();
-        $cmd->acknowledge('JIRA', $message, $host, $service);
+        try {
+            if ($cmd->acknowledge('JIRA', $message, $host, $service)) {
+                echo "Problem has been acknowledged\n";
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }
