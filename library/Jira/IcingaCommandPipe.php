@@ -1,6 +1,6 @@
 <?php
 
-namespace Icinga\Module\Helpline;
+namespace Icinga\Module\Jira;
 
 use Icinga\Module\Monitoring\Backend;
 use Icinga\Module\Monitoring\Command\Object\AcknowledgeProblemCommand;

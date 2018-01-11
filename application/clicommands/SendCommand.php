@@ -2,7 +2,7 @@
 
 namespace Icinga\Module\Jira\Clicommands;
 
-use Icinga\Module\Helpline\IcingaCommandPipe;
+use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
 
 class SendCommand extends Command
