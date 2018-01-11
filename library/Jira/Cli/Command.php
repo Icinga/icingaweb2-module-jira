@@ -9,6 +9,9 @@ class Command extends CliCommand
 {
     private $jira;
 
+    /**
+     * @return RestApi
+     */
     protected function jira()
     {
         if ($this->jira === null) {
@@ -18,6 +21,9 @@ class Command extends CliCommand
         return $this->jira;
     }
 
+    /**
+     * @return RestApi
+     */
     protected function connectToJira()
     {
         return RestApi::fromConfig();
