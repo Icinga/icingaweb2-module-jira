@@ -5,10 +5,47 @@ This is what your monitoring software should call to send a notification to JIRA
 
     icingacli jira send problem \
         --host some.example.com \
-        --state DOWN \
         --project ITSM \
         --issuetype Incident \
-        --output 'CRITICAL - 127.0.0.1: rta nan, lost 100%'
+        --state DOWN \
+        --description 'some.example.com is DOWN'
+        --summary 'CRITICAL - 127.0.0.1: rta nan, lost 100%'
+
+To get related documentation, the `--help` parameter could be useful. At the
+time being, the output of `icingacli jira send problem --help` is as follows:
+
+```
+Create an issue for the given Host or Service problem
+=====================================================
+
+Use this as a NotificationCommand for Icinga
+
+USAGE
+
+icingacli jira send problem [options]
+
+REQUIRED OPTIONS
+
+  --project <project-name>     JIRA project name, like "ITSM"
+  --issuetype <type-name>      JIRA issue type, like "Incident"
+  --summary <summary>          JIRA issue summary
+  --description <description>  JIRA issue description text
+  --state <state-name>         Icinga state
+  --host <host-name>           Icinga Host name
+
+OPTIONAL
+
+  --service <service-name>   Icinga Service name
+  --template <template-name> Template name (templates.ini section)
+  --ack-author <author>      Username shown for acknowledgements,
+                             defaults to "JIRA"
+  --command-pipe <path>      Legacy command pipe, allows to run without
+                             depending on a configured monitoring module
+
+FLAGS
+  --verbose    More log information
+  --benchmark  Show timing and memory usage details
+```
 
 Icinga 2 NotificationCommand
 ----------------------------
@@ -20,19 +57,46 @@ object NotificationCommand "JIRA Host Notification" {
     import "plugin-notification-command"
     command = [ "/usr/bin/icingacli", "jira", "send", "problem" ]
     arguments += {
+        "--ack-author" = {
+            description = "This author name will be used when acknowledging Icinga problems once a JIRA issue got created"
+            value = "$jira_ack_author$"
+        }
+        "--command-pipe" = {
+            description = "Legacy Icinga command pipe. Should only be used on Icinga 1.x system without a correctly configured Icinga Web 2 monitoring module"
+            value = "$jira_command_pipe$"
+        }
+        "--description" = {
+            description = "JIRA issue description"
+            required = true
+            value = "$jira_description$"
+        }
         "--host" = "$host.name$"
-        "--host-alias" = "$host.display_name$"
         "--issuetype" = {
+            description = "JIRA issue type (e.g. Incident)"
             required = true
             value = "$jira_issuetype$"
         }
-        "--output" = "$host.output$"
         "--project" = {
+            description = "JIRA project name (e.g. ITSM)"
             required = true
             value = "$jira_project$"
         }
-        "--state" = "$host.state$"
+        "--state" = {
+            description = "Host state (e.g. DOWN)"
+            value = "$host.state$"
+        }
+        "--summary" = {
+            description = "JIRA issue summary"
+            required = true
+            value = "$jira_summary$"
+        }
+        "--template" = {
+            description = "Issue template name (templates.ini section). This allows to pass custom fields to JIRA"
+            value = "$jira_template$"
+        }
     }
+    vars.jira_description = "$host.output$"
+    vars.jira_summary = "$host.name$ is $host.state$"
 }
 ```
 
@@ -44,20 +108,47 @@ object NotificationCommand "JIRA Service Notification" {
     import "plugin-notification-command"
     command = [ "/usr/bin/icingacli", "jira", "send", "problem" ]
     arguments += {
+        "--ack-author" = {
+            description = "This author name will be used when acknowledging Icinga problems once a JIRA issue got created"
+            value = "$jira_ack_author$"
+        }
+        "--command-pipe" = {
+            description = "Legacy Icinga command pipe. Should only be used on Icinga 1.x system without a correctly configured Icinga Web 2 monitoring module"
+            value = "$jira_command_pipe$"
+        }
+        "--description" = {
+            description = "JIRA issue description"
+            required = true
+            value = "$jira_description$"
+        }
         "--host" = "$host.name$"
-        "--host-alias" = "$host.display_name$"
         "--issuetype" = {
+            description = "JIRA issue type (e.g. Incident)"
             required = true
             value = "$jira_issuetype$"
         }
-        "--output" = "$service.output$"
         "--project" = {
+            description = "JIRA project name (e.g. ITSM)"
             required = true
             value = "$jira_project$"
         }
         "--service" = "$service.name$"
-        "--state" = "$service.state$"
+        "--state" = {
+            description = "Service state (e.g. CRITICAL)"
+            value = "$service.state$"
+        }
+        "--summary" = {
+            description = "JIRA issue summary"
+            required = true
+            value = "$jira_summary$"
+        }
+        "--template" = {
+            description = "Issue template name (templates.ini section). This allows to pass custom fields to JIRA"
+            value = "$jira_template$"
+        }
     }
+    vars.jira_description = "$service.output$"
+    vars.jira_summary = "$service.name$ on $host.name$ is $service.state$"
 }
 ```
 
