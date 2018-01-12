@@ -5,6 +5,7 @@ namespace Icinga\Module\Jira;
 use Exception;
 use Icinga\Application\Benchmark;
 use Icinga\Application\Config;
+use Icinga\Application\Logger;
 use Icinga\Exception\ConfigurationError;
 use Icinga\Exception\IcingaException;
 use Icinga\Exception\NotFoundError;
@@ -53,9 +54,10 @@ class RestApi
 
     public function fetchIssue($key)
     {
-        return $this->translateCustomFieldNames(
-            $this->get("issue/" . urlencode($key))->getResult()
-        );
+        $issue = $this->get("issue/" . urlencode($key))->getResult();
+        Benchmark::measure('A single issue has been fetched');
+
+        return $this->translateCustomFieldNames($issue);
     }
 
     public function hasIssue($key)
@@ -84,8 +86,12 @@ class RestApi
             ])->getResult()->issues;
 
             if (empty($issues)) {
+                Benchmark::measure('Found no (optional) issue');
+
                 return null;
             } else {
+                Benchmark::measure('Fetched an (optional) single issues');
+
                 return current($issues)->key;
             }
         } catch (Exception $e) {
@@ -133,12 +139,16 @@ class RestApi
             'icingaKey',
         ];
 
-        return $this->post('search', [
+        $issues = $this->post('search', [
             'jql'        => $query,
             'startAt'    => $start,
             'maxResults' => $limit,
             'fields'     => $fields,
         ])->getResult()->issues;
+
+        Benchmark::measure(sprintf('Fetched %s issues', count($issues)));
+
+        return $issues;
     }
 
     public function createIssue($fields)
@@ -151,7 +161,11 @@ class RestApi
         $result = $this->post('issue', $payload)->getResult();
 
         if (property_exists($result, 'key')) {
-            return $result->key;
+            $key = $result->key;
+            Logger::info('New JIRA issue %s has been created', $key);
+            Benchmark::measure('A new issue has been created');
+
+            return $key;
         } else {
             throw new IcingaException(
                 'Failed to create a new issue: %s',
@@ -163,8 +177,10 @@ class RestApi
     public function enumCustomFields()
     {
         if ($this->enumCustomFields === null) {
+            Benchmark::measure('Need to fetch custom field mappings');
             $result = [];
-            foreach ($this->get('field')->getResult() as $field) {
+            $response = $this->get('field')->getResult();
+            foreach ($response->getResult() as $field) {
                 if ($field->custom) {
                     $result[$field->id] = $field->name;
                 }
@@ -172,8 +188,9 @@ class RestApi
             natcasesort($result);
 
             $this->enumCustomFields = $result;
+            Benchmark::measure(sprintf('Got %d custom field mappings', count($result)));
         }
-        
+
         return $this->enumCustomFields;
     }
 
