@@ -3,66 +3,93 @@
 namespace Icinga\Module\Jira\Clicommands;
 
 use Exception;
+use Icinga\Application\Logger;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
+use Icinga\Module\Jira\IcingaIssue;
+use Icinga\Module\Jira\IssueTemplate;
+use Icinga\Module\Jira\LegacyCommandPipe;
 
 class SendCommand extends Command
 {
+    /**
+     * Create an issue for the given Host or Service problem
+     *
+     * Use this as a NotificationCommand for Icinga
+     *
+     * USAGE
+     *
+     * icingacli jira send problem [options]
+     *
+     * REQUIRED OPTIONS
+     *
+     *   --project <project-name>     JIRA project name, like "ITSM"
+     *   --issuetype <type-name>      JIRA issue type, like "Incident"
+     *   --summary <summary>          JIRA issue summary
+     *   --description <description>  JIRA issue description text
+     *   --state <state-name>         Icinga state
+     *   --host <host-name>           Icinga Host name
+     *
+     * OPTIONAL
+     *
+     *   --service <service-name>   Icinga Service name
+     *   --template <template-name> Template name (templates.ini section)
+     *   --ack-author <author>      Username shown for acknowledgements,
+     *                              defaults to "JIRA"
+     *   --command-pipe <path>      Legacy command pipe, allows to run without
+     *                              depending on a configured monitoring module
+     *
+     * FLAGS
+     *   --verbose    More log information
+     *   --benchmark  Show timing and memory usage details
+     */
     public function problemAction()
     {
-        $p     = $this->params;
-        $host  = $p->getRequired('host');
-        $service = $p->get('service');
-        $state   = $p->getRequired('state');
-        $project     = $p->getRequired('project');
-        $issueType   = $p->getRequired('issuetype');
-        $summary     = sprintf('%s is %s', $host, $state);
-        $description = $p->getRequired('output');
+        $p = $this->params;
 
-        $fields = [
-            'project'       => [ 'key' => $project ],
-            'issuetype'     => [ 'name' => $issueType ],
-            'summary'       => $summary,
-            'description'   => $description,
-            'Task'          => 'API',
-            'Suchkategorie' => 'CI',
-            'Aktivität'     => [ 'value' => 'proaktiv' ],
-            'Suche'         => $host,
-            'ValCopy'       => $host,
-            'icingaStatus'  => $state,
-            'icingaHost'    => $host,
-        ];
-
-        if ($service !== null) {
-            $fields['icingaService'] = $service;
-        }
+        $host        = $p->shiftRequired('host');
+        $service     = $p->shift('service');
+        $tplName     = $p->shift('template');
+        $ackAuthor   = $p->shift('ack-author', 'JIRA');
+        $ackPipe     = $p->shift('command-pipe');
 
         $jira = $this->jira();
         $key = $jira->eventuallyGetLatestOpenIssueKeyFor($host, $service);
+
         if ($key === null) {
-            $key = $jira->createIssue($fields);
-            printf(
-                "New JIRA issue %s has been created\n",
-                $key
-            );
-            $message = sprintf(
-                'JIRA issue %s has been created',
-                $key
-            );
+            $params = [
+                'project'     => $p->shiftRequired('project'),
+                'issueType'   => $p->shiftRequired('issuetype'),
+                'summary'     => $p->shiftRequired('summary'),
+                'description' => $p->shiftRequired('description'),
+                'state'       => $p->shiftRequired('state'),
+                'host'        => $host,
+                'service'     => $service,
+            ] + $p->getParams();
+
+            $template = new IssueTemplate();
+            if ($tplName) {
+                $template->addByTemplateName($tplName);
+            }
+
+            $key = $jira->createIssue($template->getFilled($params));
+
+            $ackMessage = "JIRA issue $key has been created";
         } else {
-            $message = sprintf(
-                'Existing JIRA issue %s has been found',
-                $key
-            );
+            $ackMessage = "Existing JIRA issue $key has been found";
         }
 
-        $cmd = new IcingaCommandPipe();
         try {
-            if ($cmd->acknowledge('JIRA', $message, $host, $service)) {
-                echo "Problem has been acknowledged\n";
+            if ($ackPipe) {
+                $cmd = new LegacyCommandPipe($ackPipe);
+            } else {
+                $cmd = new IcingaCommandPipe();
+            }
+            if ($cmd->acknowledge($ackAuthor, $ackMessage, $host, $service)) {
+                Logger::info("Problem has been acknowledged for $key");
             }
         } catch (Exception $e) {
-            echo $e->getMessage() . "\n";
+            Logger::error($e->getMessage());
         }
     }
 }
