@@ -82,7 +82,7 @@ class RestApi
                 'jql'        => $query,
                 'startAt'    => $start,
                 'maxResults' => $limit,
-                'fields'     => 'icingaKey',
+                'fields'     => [ 'icingaKey' ],
             ])->getResult()->issues;
 
             if (empty($issues)) {
@@ -143,7 +143,7 @@ class RestApi
             'jql'        => $query,
             'startAt'    => $start,
             'maxResults' => $limit,
-            'fields'     => [ $fields ],
+            'fields'     => $fields,
         ])->getResult()->issues;
 
         Benchmark::measure(sprintf('Fetched %s issues', count($issues)));
