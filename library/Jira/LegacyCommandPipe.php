@@ -51,7 +51,7 @@ class LegacyCommandPipe
         $comment,
         $host,
         $service = null,
-        $notify = true,
+        $notify = false,
         $sticky = false,
         $persistent = false,
         $expireTime = null
@@ -61,10 +61,12 @@ class LegacyCommandPipe
         } else {
             $expireSuffix = '_EXPIRE';
         }
+
+        $cmd = sprintf('[%u] ', time());
         if ($service === null) {
-            $cmd = "ACKNOWLEDGE_HOST_PROBLEM$expireSuffix;$host";
+            $cmd .= "ACKNOWLEDGE_HOST_PROBLEM$expireSuffix;$host";
         } else {
-            $cmd = "ACKNOWLEDGE_SVC_PROBLEM$expireSuffix;$host;$service";
+            $cmd .= "ACKNOWLEDGE_SVC_PROBLEM$expireSuffix;$host;$service";
         }
 
 
@@ -78,6 +80,8 @@ class LegacyCommandPipe
             $cmd .= ";$expireTime";
         }
 
-        return $cmd . ";$author;$comment";
+        $cmd .= ";$author;$comment\n";
+
+        return $cmd;
     }
 }
