@@ -33,7 +33,7 @@ class IssueDetails extends NameValueTable
         $icingaKey = $fields->icingaKey;
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
-        if (emtpy($parts)) {
+        if (empty($parts)) {
             $service = null;
         } else {
             $service = array($parts);
