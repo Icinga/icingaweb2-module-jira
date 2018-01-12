@@ -41,6 +41,7 @@ class SendCommand extends Command
      *
      * FLAGS
      *   --verbose    More log information
+     *   --trace      Get a full stack trace in case an error occurs
      *   --benchmark  Show timing and memory usage details
      */
     public function problemAction()

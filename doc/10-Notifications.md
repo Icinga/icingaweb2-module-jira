@@ -44,6 +44,7 @@ OPTIONAL
 
 FLAGS
   --verbose    More log information
+  --trace      Get a full stack trace in case an error occurs
   --benchmark  Show timing and memory usage details
 ```
 
@@ -161,13 +162,29 @@ Icinga 1 command
 
 Still running Icinga 1.x? You should definitively migrate to Icinga 2! However,
 Icinga Web 2.x plays nicely with Icinga 1 - and so does this module. This is how
-your command definition could look like:
+your command definitions could look like:
 
 ```
 define command {
     command_name    jira-notify-host
-    command_line    /usr/bin/icingacli jira send problem --host '$HOSTADDRESS$' \
-        --host-alias '$HOSTALIAS$' --issuetype 'Incident' --project ITSM \
-        --state $HOSTSTATE$ --output '$HOSTOUTPUT$'
+    command_line    /usr/bin/icingacli jira send problem \
+        --project 'ITSM' \
+        --issuetype 'Incident' \
+        --summary '$HOSTNAME$ is $HOSTSTATE$' \
+        --description '$HOSTOUTPUT$' \
+        --host '$HOSTNAME$' \
+        --state $HOSTSTATE$
+}
+
+define command {
+    command_name    jira-notify-service
+    command_line    /usr/bin/icingacli jira send problem \
+        --project 'ITSM' \
+        --issuetype 'Incident' \
+        --summary '$SERVICEDESC$ on $HOSTNAME$ is $SERVICESTATE$' \
+        --description '$HOSTOUTPUT$' \
+        --host '$HOSTNAME$' \
+        --service '$SERVICEDESC$' \
+        --state $SERVICESTATE$
 }
 ```
