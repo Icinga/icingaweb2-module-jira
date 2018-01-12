@@ -106,6 +106,7 @@ class RestApi
         $query = sprintf('project = "%s" AND creator = currentUser()', $project);
 
         if ($onlyOpen) {
+            // TODO: make this either configurable or ask JIRA
             $query .= ' AND status NOT IN (Gelöst, Geschlossen, Abgelehnt)';
         }
 
@@ -115,7 +116,10 @@ class RestApi
                 $icingaKey .= "!$service";
             }
 
-            $query .= sprintf(' AND icingaKey ~ "%s"', $icingaKey);
+            // TODO:
+            // $query .= sprintf(' AND icingaKey = "%s"', $icingaKey);
+            // Workaround for wrong text searcher:
+            $query .= sprintf(' AND icingaKey ~ "\"%s\""', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
