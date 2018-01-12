@@ -105,4 +105,63 @@ afterwards:
 
     systemctl restart icinga2.service
 
+Required JIRA Custom Fields
+---------------------------
+
+This module requires you to create two custom fields in JIRA:
+
+* `icingaKey`: a searchable text field
+* `icingaStatus`: a short text field, 12 characters are enough
+
+### icingaKey field value
+
+TL;DR: you do not need to read this, it is just for those who are curios how
+this field is going to be used.
+
+This module uses `icingaKey` to figure out whether an issue for the given object
+already exists. Hosts use their host name, services use hostname!servicename.
+As JIRA seems to offer no exact search for custom text fields out of the box (at
+least not without installing extra plugins), we are cheating. Search is down via
+`~` and we add surrounding escaped double quotes. Still, this doesn't seem to be
+enough. So we prefix the key with `BEGIN` and postfix it with `END`.
+
+Said all this, the `icingaKey` for `Disk Space` on `example.com` will result in the
+following JQL construct:
+
+    icingaKey ~ "\"BEGINexample.com!Disk SpaceEND\""
+
+A little bit weird, but it should work fine. And as this field is usually not
+shown anywhere, it shouldn't disturb.
+
+Fill JIRA Custom Fields
+-----------------------
+
+For your customized workflows you might need this module to ship additional
+fields. This is as easy as creating corresponding templates in your `templates.ini`
+in `<ICINGAWEB_CONFIGDIR>/modules/jira/templates.ini`:
+
+```ini
+[my-workflow]
+Task = "API"
+SearchCategory = "CI"
+SearchTerm = "${host}.example.com"
+Activity.value = "proactive"
+customfield_1232 = "Icinga"
+```
+
+Pass `my-workflow` to your NotificationCommand through the `--template` parameter
+and your issue will fill in and pass all above fields.
+
+* It is possible to use the internal field name (like `customfield_1232`), but
+  the visible name is also fine. Even special characters like in `Aktivität` are
+  allowed
+
+* You can use placeholders for variables via `${varname}`. You can use some of
+  the predefined ones, but you can also add new ones. You can for example use
+  `${location}` and pass `$host.vars.location$` via `--location`, just make sure
+  that the parameter name matches the placeholder/variable name
+
+* Predefined variable names are host, service, state, project, issuetype, summary
+  and description
+
 That's it, now you should be ready to start [Sending Notifications](10-Notifications.md).
