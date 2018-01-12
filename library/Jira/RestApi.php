@@ -310,8 +310,11 @@ class RestApi
 
         if ($statusCode >= 400) {
             $result = @json_decode($res);
-            if ($result && property_exists($result, 'errorMessages')) {
+            if ($result && property_exists($result, 'errorMessages') && ! empty($result->errorMessages)) {
                 throw new IcingaException(implode('; ', $result->errorMessages));
+            }
+            if ($result && property_exists($result, 'errors') && ! empty($result->errors)) {
+                throw new IcingaException(implode('; ', (array) $result->errors));
             }
 
             throw new IcingaException(
