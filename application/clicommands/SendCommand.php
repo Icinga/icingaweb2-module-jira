@@ -6,7 +6,6 @@ use Exception;
 use Icinga\Application\Logger;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
-use Icinga\Module\Jira\IcingaIssue;
 use Icinga\Module\Jira\IssueTemplate;
 use Icinga\Module\Jira\LegacyCommandPipe;
 
