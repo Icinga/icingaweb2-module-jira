@@ -102,20 +102,4 @@ class RenderingHelper
             DateFormatter::timeSince(strtotime($time), $onlyTime)
         );
     }
-
-    public function anonymize($test)
-    {
-        return $test;
-
-        $test = preg_replace_callback(
-            '/([A-Z]{4})\-(\d{3,4})/',
-            function ($what) {
-                return strrev(strtolower($what[1])) . $what[2] . '.example.com';
-            },
-            $test
-        );
-        $test = preg_replace('/1\d+\.\d+\./', '192.168.', $test);
-        
-        return $test;
-    }
 }

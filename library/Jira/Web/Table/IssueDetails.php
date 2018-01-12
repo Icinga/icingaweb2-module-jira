@@ -29,8 +29,15 @@ class IssueDetails extends NameValueTable
 
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
-        $host = $helper->anonymize($fields->icingaHost);
-        $service = $fields->icingaService;
+
+        $icingaKey = $fields->icingaKey;
+        $parts = explode('!', $icingaKey);
+        $host = array_shift($parts);
+        if (emtpy($parts)) {
+            $service = null;
+        } else {
+            $service = array($parts);
+        }
         $user = $fields->icingaUser;
 
         $this->addNameValuePairs([

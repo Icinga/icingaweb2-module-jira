@@ -75,16 +75,12 @@ class RestApi
             $start = 0;
             $limit = 1;
             $query = $this->prepareIssueQuery($host, $service, true);
-            $fields = [
-                'icingaHost',
-                'icingaService',
-            ];
 
             $issues = $this->post('search', [
                 'jql'        => $query,
                 'startAt'    => $start,
                 'maxResults' => $limit,
-                'fields'     => $fields,
+                'fields'     => 'icingaKey',
             ])->getResult()->issues;
 
             if (empty($issues)) {
@@ -108,11 +104,12 @@ class RestApi
         }
 
         if ($host !== null) {
-            $query .= sprintf(' AND icingaHost ~ "%s"', $host);
-        }
+            $icingaKey = $host;
+            if ($service !== null) {
+                $icingaKey .= "!$service";
+            }
 
-        if ($service !== null) {
-            $query .= sprintf(' AND icingaService ~ "%s"', $service);
+            $query .= sprintf(' AND icingaKey ~ "%s"', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
@@ -133,8 +130,7 @@ class RestApi
             'status',
             'created',
             'icingaStatus',
-            'icingaHost',
-            'icingaService',
+            'icingaKey',
         ];
 
         return $this->post('search', [
