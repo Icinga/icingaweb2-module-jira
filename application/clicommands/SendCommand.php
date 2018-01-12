@@ -59,7 +59,7 @@ class SendCommand extends Command
         if ($key === null) {
             $params = [
                 'project'     => $p->shiftRequired('project'),
-                'issueType'   => $p->shiftRequired('issuetype'),
+                'issuetype'   => $p->shiftRequired('issuetype'),
                 'summary'     => $p->shiftRequired('summary'),
                 'description' => $p->shiftRequired('description'),
                 'state'       => $p->shiftRequired('state'),

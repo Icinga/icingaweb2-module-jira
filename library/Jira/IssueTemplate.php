@@ -94,11 +94,11 @@ class IssueTemplate
     {
         return [
             'project.key'    => '${project}',
-            'issuetype.name' => '${issueType}',
+            'issuetype.name' => '${issuetype}',
             'summary'        => '${summary}',
             'description'    => '${description}',
             'icingaKey'      => '${icingaKey}',
-            'icingaStatus'   => '${status}',
+            'icingaStatus'   => '${state}',
         ];
     }
 }
