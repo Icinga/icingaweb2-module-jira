@@ -58,7 +58,7 @@ class IssueTemplate
 
     protected function fillTemplate($string, $params)
     {
-        $pattern = '/\$\{([a-zA-Z0-9])\}/';
+        $pattern = '/\$\{([a-zA-Z0-9]+)\}/';
         return preg_replace_callback(
             $pattern,
             function ($match) use ($params) {
