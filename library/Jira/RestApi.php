@@ -111,20 +111,27 @@ class RestApi
         }
 
         if ($host !== null) {
-            $icingaKey = $host;
-            if ($service !== null) {
-                $icingaKey .= "!$service";
-            }
+            $icingaKey = static::makeIcingaKey($host, $service);
 
-            // TODO:
-            // $query .= sprintf(' AND icingaKey = "%s"', $icingaKey);
-            // Workaround for wrong text searcher:
+            // There is no exact field matcher out of the box on JIRA, this is
+            // an ugly work-around. We search for "BEGINhostnameEND" or
+            // "BEGINhostname!serviceEND"
             $query .= sprintf(' AND icingaKey ~ "\"%s\""', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
 
         return $query;
+    }
+
+    public static function makeIcingaKey($host, $service = null)
+    {
+        $icingaKey = "BEGIN$host";
+        if ($service !== null) {
+            $icingaKey .= "!$service";
+        }
+
+        return "${icingaKey}END";
     }
 
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)

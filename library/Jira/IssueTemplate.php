@@ -78,11 +78,14 @@ class IssueTemplate
 
     protected function getIcingaKeyFromParams($params)
     {
+        $host = $params['host'];
         if (array_key_exists('service', $params) && strlen($params['service'])) {
-            return sprintf('%s!%s', $params['host'], $params['service']);
+            $service = $params['service'];
         } else {
-            return $params['host'];
+            $service = null;
         }
+
+        return RestApi::makeIcingaKey($host, $service);
     }
 
     protected function getCustomFields()
