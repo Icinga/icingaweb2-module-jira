@@ -78,7 +78,7 @@ class IssueTemplate
 
     protected function getIcingaKeyFromParams($params)
     {
-        if (array_key_exists('service', $params)) {
+        if (array_key_exists('service', $params) && strlen($params['service'])) {
             return sprintf('%s!%s', $params['host'], $params['service']);
         } else {
             return $params['host'];
@@ -93,12 +93,12 @@ class IssueTemplate
     protected function getDefaultFields()
     {
         return [
-            'project.key'     => '${project}',
-            'issue_type.name' => '${issueType}',
-            'summary'         => '${summary}',
-            'description'     => '${description}',
-            'icingaKey'       => '${icingaKey}',
-            'icingaStatus'    => '${status}',
+            'project.key'    => '${project}',
+            'issuetype.name' => '${issueType}',
+            'summary'        => '${summary}',
+            'description'    => '${description}',
+            'icingaKey'      => '${icingaKey}',
+            'icingaStatus'   => '${status}',
         ];
     }
 }
