@@ -63,7 +63,8 @@ class DirectorConfig
             'object_name' => 'JIRA Host Notification',
             'object_type' => 'object',
             'command'     => '/usr/bin/icingacli jira send problem',
-            'arguments'   => $this->defaultHostArguments()
+            'arguments'   => $this->defaultHostArguments(),
+            'vars'        => $this->defaultHostVars(),
         ], $this->db());
     }
 
@@ -77,7 +78,8 @@ class DirectorConfig
             'object_name' => 'JIRA Service Notification',
             'object_type' => 'object',
             'command'     => '/usr/bin/icingacli jira send problem',
-            'arguments'   => $this->defaultServiceArguments() + $this->defaultHostArguments()
+            'arguments'   => $this->defaultServiceArguments() + $this->defaultHostArguments(),
+            'vars'        => $this->defaultServiceVars(),
         ], $this->db());
     }
 
@@ -85,12 +87,40 @@ class DirectorConfig
     {
         return [
             '--project'   => (object) [
-                'value'    => '$jira_project$',
-                'required' => true,
+                'value'       => '$jira_project$',
+                'required'    => true,
+                'description' => 'JIRA project name (e.g. ITSM)',
             ],
             '--issuetype' => (object) [
-                'value'    => '$jira_issuetype$',
+                'value'       => '$jira_issuetype$',
+                'description' => 'JIRA issue type (e.g. Incident)',
+                'required'    => true,
+            ],
+            '--summary' => (object) [
+                'value'       => '$jira_summary$',
+                'description' => 'JIRA issue summary',
+                'required'    => true,
+            ],
+            '--description' => (object) [
+                'value'       => '$jira_description$',
+                'description' => 'JIRA issue description',
                 'required' => true,
+            ],
+            '--template' => (object) [
+                'value'       => '$jira_template$',
+                'description' => 'Issue template name (templates.ini section).'
+                    . ' This allows to pass custom fields to JIRA',
+            ],
+            '--ack-author' => (object) [
+                'value'       => '$jira_ack_author$',
+                'description' => 'This author name will be used when acknowledging'
+                    . ' Icinga problems once a JIRA issue got created',
+            ],
+            '--command-pipe' => (object) [
+                'value'       => '$jira_command_pipe$',
+                'description' => 'Legacy Icinga command pipe. Should only be'
+                    . ' used on Icinga 1.x system without a correctly configured'
+                    . ' Icinga Web 2 monitoring module',
             ],
         ];
     }
@@ -98,10 +128,11 @@ class DirectorConfig
     protected function defaultHostArguments()
     {
         return [
-            '--host'       => '$host.name$',
-            '--host-alias' => '$host.display_name$',
-            '--output'     => '$host.output$',
-            '--state'      => '$host.state$',
+            '--host'  => '$host.name$',
+            '--state' => (object) [
+                'value'       => '$host.state$',
+                'description' => 'Host state (e.g. DOWN)',
+            ],
         ] + $this->requiredArguments();
     }
 
@@ -109,8 +140,26 @@ class DirectorConfig
     {
         return [
             '--service' => '$service.name$',
-            '--output'  => '$service.output$',
-            '--state'   => '$service.state$',
+            '--state' => (object) [
+                'value'       => '$service.state$',
+                'description' => 'Service state (e.g. CRITICAL)',
+            ],
+        ];
+    }
+
+    protected function defaultHostVars()
+    {
+        return [
+            'jira_description' => '$host.output$',
+            'jira_summary'     => '$host.name$ is $host.state$',
+        ];
+    }
+
+    protected function defaultServiceVars()
+    {
+        return [
+            'jira_description' => '$service.output$',
+            'jira_summary'     => '$service.name$ on $host.name$ is $service.state$',
         ];
     }
 
