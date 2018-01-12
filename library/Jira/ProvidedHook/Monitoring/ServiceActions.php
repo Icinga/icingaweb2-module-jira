@@ -15,7 +15,8 @@ class ServiceActions extends ServiceActionsHook
                 'jira/issues',
                 [
                     'host'    => $service->host_name,
-                    'service' => $service->service_description
+                    'service' => $service->service_description,
+                    'all'     => true,
                 ]
             )
         ];
