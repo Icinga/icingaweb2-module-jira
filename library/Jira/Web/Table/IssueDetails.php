@@ -30,13 +30,13 @@ class IssueDetails extends NameValueTable
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
 
-        $icingaKey = preg_replace_callback('/^BEGIN(.+)END$/', '$1', $fields->icingaKey);
+        $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->icingaKey);
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
         if (empty($parts)) {
             $service = null;
         } else {
-            $service = array($parts);
+            $service = array_shift($parts);
         }
         $user = $fields->icingaUser;
 
