@@ -298,6 +298,11 @@ class RestApi
         }
 
         if ($statusCode >= 400) {
+            $result = @json_decode($res);
+            if ($result && property_exists($result, 'errors')) {
+                throw new IcingaException(implode('; ', $result->errors));
+            }
+
             throw new IcingaException(
                 'REST API Request failed, got %s',
                 $this->getHttpErrorMessage($statusCode)
