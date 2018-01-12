@@ -143,7 +143,7 @@ class RestApi
             'jql'        => $query,
             'startAt'    => $start,
             'maxResults' => $limit,
-            'fields'     => $fields,
+            'fields'     => [ $fields ],
         ])->getResult()->issues;
 
         Benchmark::measure(sprintf('Fetched %s issues', count($issues)));
@@ -179,7 +179,7 @@ class RestApi
         if ($this->enumCustomFields === null) {
             Benchmark::measure('Need to fetch custom field mappings');
             $result = [];
-            $response = $this->get('field')->getResult();
+            $response = $this->get('field');
             foreach ($response->getResult() as $field) {
                 if ($field->custom) {
                     $result[$field->id] = $field->name;
