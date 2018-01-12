@@ -16,7 +16,7 @@ time being, the output of `icingacli jira send problem --help` is as follows:
 
 ```
 Create an issue for the given Host or Service problem
-=====================================================
+ ====================================================
 
 Use this as a NotificationCommand for Icinga
 
