@@ -113,7 +113,7 @@ class IssuesController extends Controller
             'urlParams' => $params,
         ]);
 
-        if ($this->hasPermission('jira/issue/create')) {
+        if ($this->hasPermission('jira/issue/create') && $this->params->has('host')) {
             $tabs->add('create', [
                 'label'     => $this->translate('Create'),
                 'url'       => 'jira/issues/create',
