@@ -4,10 +4,14 @@ namespace Icinga\Module\Jira\Web\Form;
 
 use dipl\Html\Html;
 use dipl\Html\BaseElement;
+use dipl\Translation\TranslationHelper;
+use Exception;
 use Icinga\Module\Jira\RestApi;
 
 class TemplateForm extends BaseElement
 {
+    use TranslationHelper;
+
     protected $tag = 'form';
 
     protected $jira;
@@ -19,7 +23,18 @@ class TemplateForm extends BaseElement
 
     protected function assemble()
     {
-        $this->add($this->makeSelect('project', $this->jira->get('project')->getResult(), [
+        try {
+            $projects = $this->jira->get('project')->getResult();
+        } catch (Exception $e) {
+            $this->add(Html::tag('p', ['class' => 'state-hint error'], sprintf(
+                $this->translate('Unable to talk to JIRA, please check your configuration: %s'),
+                $e->getMessage()
+            )));
+
+            return;
+        }
+
+        $this->add($this->makeSelect('project', $projects, [
             'value'    => 'key',
             'caption'  => 'name',
             'imagesrc' => function ($project) {
@@ -84,7 +99,7 @@ class TemplateForm extends BaseElement
 
         // $select->add(Html::tag('option', ['value' => '', 'data-description' => ''], '- please choose -'));
         foreach ($data as $key => $entry) {
-            if ($reject !== null && $reject($entry)) {
+            if (is_callable($reject) && $reject($entry)) {
                 continue;
             }
 
