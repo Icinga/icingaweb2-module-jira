@@ -137,12 +137,12 @@ class ConfigurationController extends Controller
         if ($name === null) {
             $name = $this->getRequest()->getActionName();
         }
-        $this->tabs()->add('director', [
-            'label' => 'Director Config',
-            'url' => 'jira/configuration/director',
-        ])->add('index', [
+        $this->tabs()->add('index', [
             'label' => 'Jira Config',
             'url' => 'jira/configuration',
+        ])->add('director', [
+            'label' => 'Director Config',
+            'url' => 'jira/configuration/director',
         ])->activate($name);
         
         return $this;
