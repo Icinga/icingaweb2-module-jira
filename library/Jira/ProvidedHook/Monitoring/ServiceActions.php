@@ -8,6 +8,11 @@ use Icinga\Web\Url;
 
 class ServiceActions extends ServiceActionsHook
 {
+    /**
+     * @param Service $service
+     * @return array
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     public function getActionsForService(Service $service)
     {
         return [

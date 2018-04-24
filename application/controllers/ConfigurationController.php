@@ -4,6 +4,7 @@ namespace Icinga\Module\Jira\Controllers;
 
 use dipl\Html\Html;
 use dipl\Html\Link;
+use Icinga\Exception\ConfigurationError;
 use Icinga\Module\Director\Objects\IcingaCommand;
 use Icinga\Module\Jira\DirectorConfig;
 use Icinga\Module\Jira\Web\Controller;
@@ -12,11 +13,18 @@ use Icinga\Web\Notification;
 
 class ConfigurationController extends Controller
 {
+    /**
+     * @throws \Icinga\Security\SecurityException
+     */
     public function init()
     {
         $this->assertPermission('director/admin');
     }
 
+    /**
+     * @throws \Icinga\Exception\Http\HttpNotFoundException
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     public function indexAction()
     {
         $this->addTitle('JIRA Configuration')->activateTab();
@@ -25,6 +33,10 @@ class ConfigurationController extends Controller
         });
     }
 
+    /**
+     * @throws \Icinga\Exception\Http\HttpNotFoundException
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     public function directorAction()
     {
         $this->addTitle('Director Config Preview')->activateTab();
@@ -39,9 +51,18 @@ class ConfigurationController extends Controller
             ['class'  => 'icon-flapping']
         ));
         $this->runFailSafe(function () {
-            $config = new DirectorConfig();
-            $this->addCommand($config->createHostCommand(), $config);
-            $this->addCommand($config->createServiceCommand(), $config);
+            try {
+                $config = new DirectorConfig();
+                $this->addCommand($config->createHostCommand(), $config);
+                $this->addCommand($config->createServiceCommand(), $config);
+            } catch (ConfigurationError $e) {
+                $this->content()->add([
+                    Html::tag('h1', ['class' => 'state-hint error'], $this->translate(
+                        'Icinga Director has not been configured on this system: %s',
+                        $e->getMessage()
+                    ))
+                ]);
+            }
         });
     }
 
@@ -56,6 +77,11 @@ class ConfigurationController extends Controller
         $this->redirectNow($this->url()->without('action'));
     }
 
+    /**
+     * @param IcingaCommand $command
+     * @param DirectorConfig $config
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     protected function addCommand(IcingaCommand $command, DirectorConfig $config)
     {
         $c = $this->content();
@@ -100,6 +126,12 @@ class ConfigurationController extends Controller
         return Html::tag('p', ['class' => ['state-hint', $state]], $msg);
     }
 
+    /**
+     * @param null $name
+     * @return $this
+     * @throws \Icinga\Exception\Http\HttpNotFoundException
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     protected function activateTab($name = null)
     {
         if ($name === null) {

@@ -8,6 +8,11 @@ use Icinga\Web\Url;
 
 class HostActions extends HostActionsHook
 {
+    /**
+     * @param Host $host
+     * @return array
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     public function getActionsForHost(Host $host)
     {
         return [

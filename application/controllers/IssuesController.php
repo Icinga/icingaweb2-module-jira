@@ -11,6 +11,10 @@ use Icinga\Module\Monitoring\Backend;
 
 class IssuesController extends Controller
 {
+    /**
+     * @throws \Icinga\Exception\Http\HttpNotFoundException
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     public function indexAction()
     {
         $host = $this->params->get('host');
@@ -39,12 +43,21 @@ class IssuesController extends Controller
         });
     }
 
+    /**
+     * @throws \Icinga\Security\SecurityException
+     */
     public function createAction()
     {
         $this->assertPermission('jira/issue/create');
         $this->runFailSafe('showNewIssueForm');
     }
 
+    /**
+     * @throws \Icinga\Exception\ConfigurationError
+     * @throws \Icinga\Exception\Http\HttpNotFoundException
+     * @throws \Icinga\Exception\MissingParameterException
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     protected function showNewIssueForm()
     {
         $host = $this->params->getRequired('host');
@@ -74,6 +87,12 @@ class IssuesController extends Controller
             ->addAttributes(['class' => 'icinga-module module-director']);
     }
 
+    /**
+     * @param null $name
+     * @return $this
+     * @throws \Icinga\Exception\Http\HttpNotFoundException
+     * @throws \Icinga\Exception\ProgrammingError
+     */
     protected function activateTab($name = null)
     {
         if ($name === null) {
