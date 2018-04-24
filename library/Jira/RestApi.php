@@ -52,6 +52,13 @@ class RestApi
         return new static($url, $user, $pass);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function fetchIssue($key)
     {
         $issue = $this->get("issue/" . urlencode($key))->getResult();
@@ -60,6 +67,12 @@ class RestApi
         return $this->translateCustomFieldNames($issue);
     }
 
+    /**
+     * @param $key
+     * @return bool
+     * @throws ConfigurationError
+     * @throws IcingaException
+     */
     public function hasIssue($key)
     {
         try {
@@ -134,6 +147,15 @@ class RestApi
         return "${icingaKey}END";
     }
 
+    /**
+     * @param null $host
+     * @param null $service
+     * @param bool $onlyOpen
+     * @return mixed
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)
     {
         $start = 0;
@@ -162,6 +184,11 @@ class RestApi
         return $issues;
     }
 
+    /**
+     * @param $fields
+     * @return mixed
+     * @throws IcingaException
+     */
     public function createIssue($fields)
     {
         $payload = (object) [
@@ -185,6 +212,12 @@ class RestApi
         }
     }
 
+    /**
+     * @return array|null
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function enumCustomFields()
     {
         if ($this->enumCustomFields === null) {
@@ -205,6 +238,13 @@ class RestApi
         return $this->enumCustomFields;
     }
 
+    /**
+     * @param $issue
+     * @return mixed
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function translateCustomFieldNames($issue)
     {
         $fields = (object) [];
@@ -222,6 +262,13 @@ class RestApi
         return $issue;
     }
 
+    /**
+     * @param $issue
+     * @return mixed
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function translateNamesToCustomFields($issue)
     {
         $fields = (object) [];
@@ -328,21 +375,53 @@ class RestApi
         return RestApiResponse::fromJsonResult($res);
     }
 
+    /**
+     * @param $url
+     * @param null $body
+     * @return RestApiResponse
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function get($url, $body = null)
     {
         return $this->request('get', $url, $body);
     }
 
+    /**
+     * @param $url
+     * @param null $body
+     * @return RestApiResponse
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function post($url, $body = null)
     {
         return $this->request('post', $url, $body);
     }
 
+    /**
+     * @param $url
+     * @param null $body
+     * @return RestApiResponse
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function put($url, $body = null)
     {
         return $this->request('put', $url, $body);
     }
 
+    /**
+     * @param $url
+     * @param null $body
+     * @return RestApiResponse
+     * @throws ConfigurationError
+     * @throws IcingaException
+     * @throws NotFoundError
+     */
     public function delete($url, $body = null)
     {
         return $this->request('delete', $url, $body);
@@ -389,7 +468,7 @@ class RestApi
     }
 
     /**
-     * @throws Exception
+     * @throws IcingaException
      *
      * @return resource
      */
@@ -398,7 +477,7 @@ class RestApi
         if ($this->curl === null) {
             $this->curl = curl_init($this->baseUrl);
             if (! $this->curl) {
-                throw new Exception('CURL INIT ERROR: ' . curl_error($this->curl));
+                throw new IcingaException('CURL INIT ERROR: ' . curl_error($this->curl));
             }
         }
 
