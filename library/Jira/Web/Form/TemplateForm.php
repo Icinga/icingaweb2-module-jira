@@ -3,12 +3,12 @@
 namespace Icinga\Module\Jira\Web\Form;
 
 use dipl\Html\Html;
-use dipl\Html\BaseElement;
+use dipl\Html\BaseHtmlElement;
 use dipl\Translation\TranslationHelper;
 use Exception;
 use Icinga\Module\Jira\RestApi;
 
-class TemplateForm extends BaseElement
+class TemplateForm extends BaseHtmlElement
 {
     use TranslationHelper;
 
