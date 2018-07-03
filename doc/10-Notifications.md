@@ -8,7 +8,7 @@ This is what your monitoring software should call to send a notification to JIRA
         --project ITSM \
         --issuetype Incident \
         --state DOWN \
-        --description 'some.example.com is DOWN'
+        --description 'some.example.com is DOWN' \
         --summary 'CRITICAL - 127.0.0.1: rta nan, lost 100%'
 
 To get related documentation, the `--help` parameter could be useful. At the
