@@ -5,7 +5,7 @@ Dependencies
 ------------
 
 * Icinga Web 2 (&gt;= 2.4.1)
-* Icinga Director (&gt;= v1.4.0)
+* Icinga Director (&gt;= v1.5.0)
 * PHP (&gt;= 5.4 or 7.x)
 
 The Icinga Web 2 `monitoring` module should be configured and enabled.
