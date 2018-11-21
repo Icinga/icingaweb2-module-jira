@@ -4,7 +4,9 @@ namespace Icinga\Module\Jira\Web;
 
 use dipl\Html\Html;
 use dipl\Html\Link;
+use Icinga\Application\Config;
 use Icinga\Date\DateFormatter;
+use RuntimeException;
 
 class RenderingHelper
 {
@@ -40,7 +42,18 @@ class RenderingHelper
 
     public function linkToJira($caption, $url, $attributes = [])
     {
-        $baseUrl = 'https://service.itenos.de/';
+        $config = Config::module('jira');
+        $host = $config->get('api', 'host');
+        if ($host === null) {
+            throw new RuntimeException('No JIRA host has been configured');
+        }
+        $baseUrl = sprintf(
+            'https://%s:%d/%s',
+            $host,
+            $config->get('api', 'port', 443),
+            trim($config->get('api', 'path', ''), '/')
+        );
+
         if (is_array($url)) {
             $baseUrl .= array_shift($url)
                 . '/'

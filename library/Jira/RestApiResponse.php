@@ -2,7 +2,7 @@
 
 namespace Icinga\Module\Jira;
 
-use Icinga\Exception\IcingaException;
+use RuntimeException;
 
 class RestApiResponse
 {
@@ -56,7 +56,7 @@ class RestApiResponse
         $result = @json_decode($json);
         if ($result === null) {
             $this->setJsonError();
-            throw new IcingaException('Parsing JSON result failed: ' . $this->errorMessage);
+            throw new RuntimeException('Parsing JSON result failed: ' . $this->errorMessage);
         }
         $this->result = $result;
 

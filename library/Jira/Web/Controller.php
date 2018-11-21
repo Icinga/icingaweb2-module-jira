@@ -32,7 +32,12 @@ class Controller extends CompatController
                 return $callable();
             }
         } catch (Exception $e) {
-            $this->content()->add($e->getMessage());
+            $this->content()->add([
+                Html::tag('p', ['class' => 'state-hint error'], sprintf(
+                    $this->translate('ERROR: %s'),
+                    $e->getMessage()
+                ))
+            ]);
             $this->content()->add(Html::tag('pre', null, $e->getTraceAsString()));
             return false;
         }

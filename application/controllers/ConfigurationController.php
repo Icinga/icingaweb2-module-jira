@@ -21,10 +21,7 @@ class ConfigurationController extends Controller
         $this->assertPermission('director/admin');
     }
 
-    /**
-     * @throws \Icinga\Exception\Http\HttpNotFoundException
-     * @throws \Icinga\Exception\ProgrammingError
-     */
+
     public function indexAction()
     {
         $this->addTitle('JIRA Configuration')->activateTab();
@@ -33,10 +30,6 @@ class ConfigurationController extends Controller
         });
     }
 
-    /**
-     * @throws \Icinga\Exception\Http\HttpNotFoundException
-     * @throws \Icinga\Exception\ProgrammingError
-     */
     public function directorAction()
     {
         $this->addTitle('Director Config Preview')->activateTab();
@@ -80,7 +73,6 @@ class ConfigurationController extends Controller
     /**
      * @param IcingaCommand $command
      * @param DirectorConfig $config
-     * @throws \Icinga\Exception\ProgrammingError
      */
     protected function addCommand(IcingaCommand $command, DirectorConfig $config)
     {
@@ -129,8 +121,6 @@ class ConfigurationController extends Controller
     /**
      * @param null $name
      * @return $this
-     * @throws \Icinga\Exception\Http\HttpNotFoundException
-     * @throws \Icinga\Exception\ProgrammingError
      */
     protected function activateTab($name = null)
     {

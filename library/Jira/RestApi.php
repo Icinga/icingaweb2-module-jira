@@ -9,6 +9,7 @@ use Icinga\Application\Logger;
 use Icinga\Exception\ConfigurationError;
 use Icinga\Exception\IcingaException;
 use Icinga\Exception\NotFoundError;
+use RuntimeException;
 
 class RestApi
 {
@@ -39,9 +40,13 @@ class RestApi
     public static function fromConfig()
     {
         $config = Config::module('jira');
+        $host = $config->get('api', 'host');
+        if ($host === null) {
+            throw new RuntimeException('No JIRA host has been configured');
+        }
         $url = sprintf(
             'https://%s:%d/%s',
-            $config->get('api', 'host'),
+            $host,
             $config->get('api', 'port', 443),
             trim($config->get('api', 'path', ''), '/')
         );
@@ -71,7 +76,6 @@ class RestApi
      * @param $key
      * @return bool
      * @throws ConfigurationError
-     * @throws IcingaException
      */
     public function hasIssue($key)
     {
@@ -152,8 +156,6 @@ class RestApi
      * @param null $service
      * @param bool $onlyOpen
      * @return mixed
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
      */
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)
@@ -186,8 +188,8 @@ class RestApi
 
     /**
      * @param $fields
-     * @return mixed
-     * @throws IcingaException
+     * @throws NotFoundError
+     * @return string
      */
     public function createIssue($fields)
     {
@@ -205,7 +207,7 @@ class RestApi
 
             return $key;
         } else {
-            throw new IcingaException(
+            throw new RuntimeException(
                 'Failed to create a new issue: %s',
                 print_r($result, 1)
             );
@@ -214,8 +216,6 @@ class RestApi
 
     /**
      * @return array|null
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
      */
     public function enumCustomFields()
@@ -240,10 +240,8 @@ class RestApi
 
     /**
      * @param $issue
-     * @return mixed
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
+     * @return object
      */
     public function translateCustomFieldNames($issue)
     {
@@ -264,10 +262,8 @@ class RestApi
 
     /**
      * @param $issue
-     * @return mixed
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
+     * @return object
      */
     public function translateNamesToCustomFields($issue)
     {
@@ -295,10 +291,8 @@ class RestApi
      * @param $method
      * @param $url
      * @param mixed $body
-     * @return RestApiResponse
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
+     * @return RestApiResponse
      */
     protected function request($method, $url, $body = null)
     {
@@ -339,12 +333,12 @@ class RestApi
         Benchmark::measure('Rest Api, sending ' . $url);
         $res = curl_exec($curl);
         if ($res === false) {
-            throw new IcingaException('CURL ERROR: %s', curl_error($curl));
+            throw new RuntimeException('CURL ERROR: %s', curl_error($curl));
         }
 
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if ($statusCode === 401) {
-            throw new ConfigurationError(
+            throw new RuntimeException(
                 'Unable to authenticate, please check your API credentials'
             );
         }
@@ -358,13 +352,13 @@ class RestApi
         if ($statusCode >= 400) {
             $result = @json_decode($res);
             if ($result && property_exists($result, 'errorMessages') && ! empty($result->errorMessages)) {
-                throw new IcingaException(implode('; ', $result->errorMessages));
+                throw new RuntimeException(implode('; ', $result->errorMessages));
             }
             if ($result && property_exists($result, 'errors') && ! empty($result->errors)) {
-                throw new IcingaException(implode('; ', (array) $result->errors));
+                throw new RuntimeException(implode('; ', (array) $result->errors));
             }
 
-            throw new IcingaException(
+            throw new RuntimeException(
                 'REST API Request failed, got %s',
                 $this->getHttpErrorMessage($statusCode)
             );
@@ -379,8 +373,6 @@ class RestApi
      * @param $url
      * @param null $body
      * @return RestApiResponse
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
      */
     public function get($url, $body = null)
@@ -392,8 +384,6 @@ class RestApi
      * @param $url
      * @param null $body
      * @return RestApiResponse
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
      */
     public function post($url, $body = null)
@@ -405,8 +395,6 @@ class RestApi
      * @param $url
      * @param null $body
      * @return RestApiResponse
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
      */
     public function put($url, $body = null)
@@ -418,8 +406,6 @@ class RestApi
      * @param $url
      * @param null $body
      * @return RestApiResponse
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
      */
     public function delete($url, $body = null)
@@ -468,8 +454,6 @@ class RestApi
     }
 
     /**
-     * @throws IcingaException
-     *
      * @return resource
      */
     protected function curl()
@@ -477,7 +461,7 @@ class RestApi
         if ($this->curl === null) {
             $this->curl = curl_init($this->baseUrl);
             if (! $this->curl) {
-                throw new IcingaException('CURL INIT ERROR: ' . curl_error($this->curl));
+                throw new RuntimeException('CURL INIT ERROR: ' . curl_error($this->curl));
             }
         }
 
