@@ -38,7 +38,11 @@ class IssueDetails extends NameValueTable
         } else {
             $service = array_shift($parts);
         }
-        $user = $fields->icingaUser;
+        if (isset($fields->icingaUser)) {
+            $user = $fields->icingaUser;
+        } else {
+            $user = null;
+        }
 
         $this->addNameValuePairs([
             $this->translate('Issue') => $helper->linkToJira(
