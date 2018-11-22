@@ -118,16 +118,17 @@ class RestApi
 
     protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)
     {
-        $project = 'ITSM';
-
-        $query = sprintf('project = "%s" AND creator = currentUser()', $project);
+        // TODO: eventually also filter for project = "..."?
+        $query = 'creator = currentUser()';
 
         if ($onlyOpen) {
             // TODO: make this either configurable or ask JIRA
             $query .= ' AND status NOT IN (Gelöst, Geschlossen, Abgelehnt)';
         }
 
-        if ($host !== null) {
+        if ($host === null) {
+            $query .= ' AND icingaKey ~ "BEGIN*"';
+        } else {
             $icingaKey = static::makeIcingaKey($host, $service);
 
             // There is no exact field matcher out of the box on JIRA, this is
