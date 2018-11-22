@@ -122,8 +122,7 @@ class RestApi
         $query = 'creator = currentUser()';
 
         if ($onlyOpen) {
-            // TODO: make this either configurable or ask JIRA
-            $query .= ' AND status NOT IN (Gelöst, Geschlossen, Abgelehnt)';
+            $query .= ' AND resolution is empty';
         }
 
         if ($host === null) {
