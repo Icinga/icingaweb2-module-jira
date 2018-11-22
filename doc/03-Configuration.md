@@ -4,7 +4,7 @@ Installation and Configuration
 Dependencies
 ------------
 
-* Icinga Web 2 (&gt;= 2.4.1)
+* Icinga Web 2 (&gt;= 2.5.0)
 * Icinga Director (&gt;= v1.5.0)
 * PHP (&gt;= 5.4 or 7.x)
 
@@ -43,8 +43,7 @@ ICINGAWEB_MODULEPATH="/usr/share/icingaweb2/modules"
 REPO_URL="https://github.com/Icinga/icingaweb2-module-jira"
 TARGET_DIR="${ICINGAWEB_MODULEPATH}/jira"
 MODULE_VERSION="1.0.0"
-git clone "${REPO_URL}" "${TARGET_DIR}"
-git checkout "v${MODULE_VERSION}"
+git clone "${REPO_URL}" "${TARGET_DIR}" --branch "v${MODULE_VERSION}"
 ```
 
 You can now directly use our current GIT master or check out a specific version.
@@ -135,6 +134,9 @@ shown anywhere, it shouldn't disturb.
 
 Fill JIRA Custom Fields
 -----------------------
+
+> **Hint**: This is optional, do not blindly copy & paste. Use this as an
+> example in case you need to feed different workflows with special paprameters.
 
 For your customized workflows you might need this module to ship additional
 fields. This is as easy as creating corresponding templates in your `templates.ini`
