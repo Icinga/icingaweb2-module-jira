@@ -105,7 +105,7 @@ class IssueDetails extends NameValueTable
         foreach ($comments as $comment) {
             if (property_exists($comment, 'author')) {
                 $this->addComment(
-                    $comment->author->displayName,
+                    $this->formatAuthor($comment->author),
                     $comment->created,
                     $comment->body
                 );
@@ -113,6 +113,29 @@ class IssueDetails extends NameValueTable
         }
         
         return $this;
+    }
+
+    protected function formatAuthor($author)
+    {
+        $size = 48;
+        $key = "${size}x${size}";
+        if (isset($author->avatarUrls->$key)) {
+            return [
+                // TODO: move styling to CSS
+                Html::tag('img', [
+                    'src' => $author->avatarUrls->$key,
+                    'alt' => '',
+                    'width' => $size,
+                    'height' => $size,
+                    'align' => 'left',
+                    'style' => 'margin-right: 1em; border-radius: 50%;',
+                ]),
+                ' ',
+                $author->displayName
+            ];
+        } else {
+            return $author->displayName;
+        }
     }
 
     protected function addComment($author, $time, $body)
@@ -123,7 +146,7 @@ class IssueDetails extends NameValueTable
                 $this->helper->shortTimeSince($time),
                 $author
             )),
-            Html::tag('pre', null, $body),
+            Html::tag('pre', ['style' => 'background-color: transparent'], $body),
         ]);
     }
 }
