@@ -105,7 +105,10 @@ class NewIssueForm extends QuickForm
     {
         $object = $this->object;
         if ($object->getType() === 'service') {
-            $description = $object->service_output;
+            $description = sprintf("%s\n%s",
+                $object->service_output,
+                str_replace('\n',"\n", $object->service_long_output)
+            );
             $summary = sprintf(
                 '%s on %s is %s',
                 $object->service_description,
@@ -113,7 +116,10 @@ class NewIssueForm extends QuickForm
                 $this->getStateName()
             );
         } else {
-            $description = $object->host_output;
+            $description = sprintf("%s\n%s",
+                $object->host_output,
+                str_replace('\n',"\n",$object->host_long_output)
+            );
             $summary = sprintf(
                 '%s is %s',
                 $object->host_name,
