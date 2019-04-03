@@ -6,14 +6,14 @@ use Exception;
 use Icinga\Application\Benchmark;
 use Icinga\Application\Config;
 use Icinga\Application\Logger;
-use Icinga\Exception\ConfigurationError;
-use Icinga\Exception\IcingaException;
 use Icinga\Exception\NotFoundError;
 use RuntimeException;
 
 class RestApi
 {
     protected $baseUrl;
+
+    protected $icingaUrl;
 
     protected $username;
 
@@ -54,14 +54,17 @@ class RestApi
         $user = $config->get('api', 'username');
         $pass = $config->get('api', 'password');
 
-        return new static($url, $user, $pass);
+        $api = new static($url, $user, $pass);
+        if ($url = $config->get('icingaweb', 'url')) {
+            $api->icingaUrl = rtrim($url, '/');
+        }
+
+        return $api;
     }
 
     /**
      * @param $key
      * @return mixed
-     * @throws ConfigurationError
-     * @throws IcingaException
      * @throws NotFoundError
      */
     public function fetchIssue($key)
@@ -75,7 +78,6 @@ class RestApi
     /**
      * @param $key
      * @return bool
-     * @throws ConfigurationError
      */
     public function hasIssue($key)
     {
@@ -280,6 +282,35 @@ class RestApi
         $issue->fields = $fields;
 
         return $issue;
+    }
+
+    public function linkToIcingaHost($hostname)
+    {
+        if ($this->icingaUrl === null) {
+            return $hostname;
+        } else {
+            return sprintf(
+                '[%s|%s/monitoring/host/show?host=%s]',
+                $hostname,
+                $this->icingaUrl,
+                rawurlencode($hostname)
+            );
+        }
+    }
+
+    public function linkToIcingaService($hostname, $service)
+    {
+        if ($this->icingaUrl === null) {
+            return $service;
+        } else {
+            return sprintf(
+                '[%s|%s/monitoring/host/show?host=%s&service=%s]',
+                $service,
+                $this->icingaUrl,
+                rawurlencode($hostname),
+                rawurlencode($service)
+            );
+        }
     }
 
     protected function url($url)

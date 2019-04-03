@@ -87,11 +87,17 @@ host = "jira.example.com"
 ; path = "/"
 username = "icinga"
 password = "***"
+
+[icingaweb]
+url = "https://icinga.example.com/icingaweb2"
 ```
 
 The `port` and `path` settings are optional, protocol is always HTTPS. The
 given user needs permissions to create (and show) issues in at least one JIRA
 project.
+
+If you want to have links pointing back to your Icinga Installation in your
+JIRA issues, you need to fill the `url` setting.
 
 If you want to run `icingacli` commands (read: send notifications), then your
 Icinga user must be member of the `icingaweb2` group. In case it isn't, this
