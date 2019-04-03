@@ -27,6 +27,10 @@ class NewIssueForm extends QuickForm
         return $this;
     }
 
+    /**
+     * @throws \Icinga\Exception\NotFoundError
+     * @throws \Zend_Form_Exception
+     */
     public function setup()
     {
         $enum = $this->makeEnum(
@@ -72,7 +76,6 @@ class NewIssueForm extends QuickForm
                 'Summary of this incident'
             ),
         ]);
-
         $this->addElement('textarea', 'description', array(
             'label'       => $this->translate('Description'),
             'required'    => true,
@@ -82,6 +85,13 @@ class NewIssueForm extends QuickForm
                 'Message body of this issue'
             ),
         ));
+        $this->addBoolean('acknowledge', [
+            'label'       => $this->translate('Acknowledge'),
+            'description' => $this->translate(
+                'Whether the Icinga problem should be acknowledged. The newly'
+                . ' created JIRA issue will be linked in the related comment.'
+            )
+        ]);
     }
 
     private function getObjectDefault($key)
@@ -91,6 +101,22 @@ class NewIssueForm extends QuickForm
             return $defaults[$key];
         } else {
             return null;
+        }
+    }
+
+    /**
+     * @param $key
+     * @param $options
+     * @param null $default
+     * @throws \Zend_Form_Exception
+     */
+    protected function addBoolean($key, $options, $default = null)
+    {
+        if ($default === null) {
+            $this->addElement('OptionalYesNo', $key, $options);
+        } else {
+            $this->addElement('YesNo', $key, $options);
+            $this->getElement($key)->setValue($default);
         }
     }
 
@@ -139,6 +165,9 @@ class NewIssueForm extends QuickForm
         }
     }
 
+    /**
+     * @throws \Icinga\Exception\NotFoundError
+     */
     public function onSuccess()
     {
         $this->createIssue();
@@ -146,6 +175,9 @@ class NewIssueForm extends QuickForm
         parent::onSuccess();
     }
 
+    /**
+     * @throws \Icinga\Exception\NotFoundError
+     */
     private function createIssue()
     {
         $params = $this->getValues();
@@ -162,6 +194,9 @@ class NewIssueForm extends QuickForm
         // TODO: Should we allow to choose this?
         $template->addByTemplateName('default');
         $key = $this->jira->createIssue($template->getFilled($params));
+        if ($this->getValue('acknowledge') === 'n') {
+            return;
+        }
         $ackMessage = "JIRA issue $key has been created";
 
         try {
