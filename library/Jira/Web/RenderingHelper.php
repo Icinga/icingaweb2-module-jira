@@ -55,9 +55,7 @@ class RenderingHelper
         );
 
         if (is_array($url)) {
-            $baseUrl .= array_shift($url)
-                . '/'
-                . implode('/', array_map('urlencode', $url));
+            $baseUrl .= '/' . implode('/', array_map('urlencode', $url));
         } else {
             $baseUrl .= $url;
         }
