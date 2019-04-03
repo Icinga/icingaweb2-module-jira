@@ -333,7 +333,7 @@ class RestApi
         Benchmark::measure('Rest Api, sending ' . $url);
         $res = curl_exec($curl);
         if ($res === false) {
-            throw new RuntimeException('CURL ERROR: %s', curl_error($curl));
+            throw new RuntimeException('CURL ERROR: ' . curl_error($curl));
         }
 
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
