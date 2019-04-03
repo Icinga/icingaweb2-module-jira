@@ -116,6 +116,11 @@ class DirectorConfig
                 'description' => 'This author name will be used when acknowledging'
                     . ' Icinga problems once a JIRA issue got created',
             ],
+            '--no-acknowledge' => (object) [
+                'value'       => '$jira_no_acknowledge$',
+                'description' => 'D not acknowledge  Icinga problems once a JIRA'
+                    . ' issue got created',
+            ],
             '--command-pipe' => (object) [
                 'value'       => '$jira_command_pipe$',
                 'description' => 'Legacy Icinga command pipe. Should only be'

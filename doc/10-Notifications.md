@@ -39,6 +39,7 @@ OPTIONAL
   --template <template-name> Template name (templates.ini section)
   --ack-author <author>      Username shown for acknowledgements,
                              defaults to "JIRA"
+  --no-acknowledge           Do not acknowledge Icinga problem
   --command-pipe <path>      Legacy command pipe, allows to run without
                              depending on a configured monitoring module
 
@@ -76,6 +77,10 @@ object NotificationCommand "JIRA Host Notification" {
             description = "JIRA issue type (e.g. Incident)"
             required = true
             value = "$jira_issuetype$"
+        }
+        "--no-acknowledge" = {
+            description = "D not acknowledge  Icinga problems once a JIRA issue got created"
+            value = "$jira_no_acknowledge$"
         }
         "--project" = {
             description = "JIRA project name (e.g. ITSM)"
@@ -127,6 +132,10 @@ object NotificationCommand "JIRA Service Notification" {
             description = "JIRA issue type (e.g. Incident)"
             required = true
             value = "$jira_issuetype$"
+        }
+        "--no-acknowledge" = {
+            description = "D not acknowledge  Icinga problems once a JIRA issue got created"
+            value = "$jira_no_acknowledge$"
         }
         "--project" = {
             description = "JIRA project name (e.g. ITSM)"

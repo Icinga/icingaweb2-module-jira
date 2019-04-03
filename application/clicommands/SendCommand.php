@@ -35,6 +35,7 @@ class SendCommand extends Command
      *   --template <template-name> Template name (templates.ini section)
      *   --ack-author <author>      Username shown for acknowledgements,
      *                              defaults to "JIRA"
+     *   --no-acknowledge           Do not acknowledge Icinga problem
      *   --command-pipe <path>      Legacy command pipe, allows to run without
      *                              depending on a configured monitoring module
      *
@@ -77,6 +78,10 @@ class SendCommand extends Command
             $ackMessage = "JIRA issue $key has been created";
         } else {
             $ackMessage = "Existing JIRA issue $key has been found";
+        }
+
+        if ($this->params->shift('no-acknowledge')) {
+            return;
         }
 
         try {
