@@ -304,7 +304,7 @@ class RestApi
             return $service;
         } else {
             return sprintf(
-                '[%s|%s/monitoring/host/show?host=%s&service=%s]',
+                '[%s|%s/monitoring/service/show?host=%s&service=%s]',
                 $service,
                 $this->icingaUrl,
                 rawurlencode($hostname),
