@@ -88,6 +88,10 @@ host = "jira.example.com"
 username = "icinga"
 password = "***"
 
+[ui]
+; default_project = "SO"
+; default_issuetype = "Event"
+
 [icingaweb]
 url = "https://icinga.example.com/icingaweb2"
 ```
@@ -98,6 +102,11 @@ project.
 
 If you want to have links pointing back to your Icinga Installation in your
 JIRA issues, you need to fill the `url` setting.
+
+The `ui` section allows to optionally pre-select a specific project and/or a
+specific issue type in the "Create New Issue" form. Please note that those
+values must represent "real" names, not display names. In the above example
+the project named "Service Operations" had the shortcut "SO".
 
 If you want to run `icingacli` commands (read: send notifications), then your
 Icinga user must be member of the `icingaweb2` group. In case it isn't, this

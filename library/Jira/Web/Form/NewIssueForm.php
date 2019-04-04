@@ -3,6 +3,7 @@
 namespace Icinga\Module\Jira\Web\Form;
 
 use Exception;
+use Icinga\Application\Config;
 use Icinga\Application\Logger;
 use Icinga\Module\Director\Web\Form\QuickForm;
 use Icinga\Module\Jira\IcingaCommandPipe;
@@ -33,6 +34,9 @@ class NewIssueForm extends QuickForm
      */
     public function setup()
     {
+        $config = Config::module('jira');
+        $defaultProject = $config->get('ui', 'default_project');
+
         $enum = $this->makeEnum(
             $this->jira->get('project')->getResult(),
             'key',
@@ -42,11 +46,15 @@ class NewIssueForm extends QuickForm
         $this->addElement('select', 'project', [
             'label' => $this->translate('JIRA project'),
             'multiOptions' => $this->optionalEnum($enum),
+            'value'    => $defaultProject,
             'class'    => 'autosubmit',
             'required' => true,
         ]);
 
         $projectName = $this->getSentValue('project');
+        if ($projectName === null) {
+            $projectName = $defaultProject;
+        }
         if ($projectName === null || ! array_key_exists($projectName, $enum)) {
             return;
         }
@@ -65,7 +73,8 @@ class NewIssueForm extends QuickForm
         $this->addElement('select', 'issuetype', [
             'label' => $this->translate('Issue type'),
             'multiOptions' => $this->optionalEnum($enum),
-            'required' => true,
+            'value'        => $config->get('ui', 'default_issuetype'),
+            'required'     => true,
         ]);
 
         $this->addElement('text', 'summary', [
