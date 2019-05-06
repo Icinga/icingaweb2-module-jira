@@ -48,11 +48,18 @@ class IssueTemplate
         } else {
             $remaining = substr($key, $dot + 1);
             $key = substr($key, 0, $dot);
-            if (! array_key_exists($key, $fields)) {
-                $fields[$key] = [];
-            }
 
-            $this->addToFields($fields[$key], $remaining, $value);
+            if(strpos($remaining, '.') !== false) {
+                $remaining = substr($remaining, 1);
+                $subkey[$remaining] = $value;
+                $fields[$key][] = $subkey;
+            } else {
+                if (! array_key_exists($key, $fields)) {
+                    $fields[$key] = [];
+                }
+
+                $this->addToFields($fields[$key], $remaining, $value);
+            }
         }
     }
 
