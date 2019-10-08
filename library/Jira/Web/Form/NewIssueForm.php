@@ -36,6 +36,7 @@ class NewIssueForm extends QuickForm
     {
         $config = Config::module('jira');
         $defaultProject = $config->get('ui', 'default_project');
+        $defaultAck = $config->get('ui', 'acknowledge');
 
         $enum = $this->makeEnum(
             $this->jira->get('project')->getResult(),
@@ -100,7 +101,7 @@ class NewIssueForm extends QuickForm
                 'Whether the Icinga problem should be acknowledged. The newly'
                 . ' created JIRA issue will be linked in the related comment.'
             )
-        ]);
+        ], $defaultAck );
     }
 
     private function getObjectDefault($key)
