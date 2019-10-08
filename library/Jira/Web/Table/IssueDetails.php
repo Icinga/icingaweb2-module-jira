@@ -149,7 +149,7 @@ class IssueDetails extends NameValueTable
 
     protected function replaceLinks($string)
     {
-        return \preg_replace_callback('/\[[^|]+\|[^]]+]/', function ($match) {
+        return \preg_replace_callback('/\[([^|]+)\|([^]]+)]/', function ($match) {
             return Html::tag('a', ['href' => $match[2], 'target' => '_blank'], $match[1]);
         }, $string);
     }
