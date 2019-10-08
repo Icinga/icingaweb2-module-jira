@@ -7,6 +7,7 @@ use Icinga\Application\Logger;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
 use Icinga\Module\Jira\IssueTemplate;
+use Icinga\Module\Jira\IssueUpdate;
 use Icinga\Module\Jira\LegacyCommandPipe;
 
 class SendCommand extends Command
@@ -53,6 +54,8 @@ class SendCommand extends Command
         $tplName     = $p->shift('template');
         $ackAuthor   = $p->shift('ack-author', 'JIRA');
         $ackPipe     = $p->shift('command-pipe');
+        $status      = $p->shiftRequired('state');
+        $description = $p->shiftRequired('description');
 
         $jira = $this->jira();
         $issue = $jira->eventuallyGetLatestOpenIssueFor($host, $service);
@@ -62,8 +65,8 @@ class SendCommand extends Command
                 'project'     => $p->shiftRequired('project'),
                 'issuetype'   => $p->shiftRequired('issuetype'),
                 'summary'     => $p->shiftRequired('summary'),
-                'description' => $p->shiftRequired('description'),
-                'state'       => $p->shiftRequired('state'),
+                'description' => $description,
+                'state'       => $status,
                 'host'        => $host,
                 'service'     => $service,
             ] + $p->getParams();
@@ -78,7 +81,14 @@ class SendCommand extends Command
             $ackMessage = "JIRA issue $key has been created";
         } else {
             $key = $issue->key;
+            $currentStatus = isset($issue->fields->icingaStatus) ? $issue->fields->icingaStatus : null;
             $ackMessage = "Existing JIRA issue $key has been found";
+            if ($currentStatus !== $status) {
+                $update = new IssueUpdate($jira, $key);
+                $update->setCustomField('icingaStatus', $status);
+                $update->addComment("Status changed to $status\n" . $description);
+                $jira->updateIssue($update);
+            }
         }
 
         if ($this->params->shift('no-acknowledge')) {

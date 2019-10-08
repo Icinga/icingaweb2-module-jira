@@ -111,21 +111,16 @@ class RestApi
             } else {
                 Benchmark::measure('Fetched an (optional) single issues');
 
-                return current($issues);
+                return $this->fetchIssue(current($issues)->key);
             }
         } catch (Exception $e) {
             return null;
         }
     }
 
-    public function eventuallyGetLatestOpenIssueKeyFor($host, $service = null)
+    public function updateIssue(IssueUpdate $update)
     {
-        $issue = $this->eventuallyGetLatestOpenIssueFor($host, $service);
-        if ($issue === null) {
-            return null;
-        } else {
-            return $issue->key;
-        }
+        return $this->put('issue/' . urlencode($update->getKey()), $update->toObject());
     }
 
     protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)

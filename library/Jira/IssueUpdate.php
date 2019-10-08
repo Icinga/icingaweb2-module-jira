@@ -2,10 +2,9 @@
 
 namespace Icinga\Module\Jira;
 
-use JsonSerializable;
 use RuntimeException as RuntimeExceptionAlias;
 
-class IssueUpdate implements JsonSerializable
+class IssueUpdate
 {
     /** @var RestApi */
     protected $api;
@@ -14,9 +13,13 @@ class IssueUpdate implements JsonSerializable
 
     protected $fields = [];
 
-    public function __construct(RestApi $api)
+    /** @var string */
+    protected $key;
+
+    public function __construct(RestApi $api, $issueKey)
     {
         $this->api = $api;
+        $this->key = $issueKey;
     }
 
     public function setCustomField($key, $value)
@@ -31,21 +34,22 @@ class IssueUpdate implements JsonSerializable
         $this->comments[] = $body;
     }
 
-    /**
-     * @return string
-     * @throws \Icinga\Exception\NotFoundError
-     */
-    public function jsonSerialize()
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function toObject()
     {
         $data = (object) [];
         if (! empty($this->comments)) {
-            $data->comments = [];
+            $data->update = (object) ['comment' => []];
             foreach ($this->comments as $body) {
-                $data->comments[] = (object) ['add' => (object) ['body' => $body]];
+                $data->update->comment[] = (object) ['add' => (object) ['body' => $body]];
             }
         }
         if (! empty($this->fields)) {
-            $data->fields = [];
+            $data->fields = (object) [];
             foreach ($this->fields as $name => $value) {
                 $data->fields->$name = $value;
             }
@@ -56,6 +60,6 @@ class IssueUpdate implements JsonSerializable
         }
         $this->api->translateNamesToCustomFields($data);
 
-        return \json_encode($data);
+        return $data;
     }
 }

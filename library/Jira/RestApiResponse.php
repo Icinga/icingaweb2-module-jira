@@ -53,6 +53,11 @@ class RestApiResponse
 
     protected function parseJsonResult($json)
     {
+        if (strlen($json) === 0) {
+            $this->result = null;
+
+            return $this;
+        }
         $result = @json_decode($json);
         if ($result === null) {
             $this->setJsonError();
