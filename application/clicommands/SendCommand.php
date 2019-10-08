@@ -61,6 +61,10 @@ class SendCommand extends Command
         $issue = $jira->eventuallyGetLatestOpenIssueFor($host, $service);
 
         if ($issue === null) {
+            if (\in_array($status, ['UP', 'OK'])) {
+                // No existing issue, no problem, nothing to do
+                return;
+            }
             $params = [
                 'project'     => $p->shiftRequired('project'),
                 'issuetype'   => $p->shiftRequired('issuetype'),
