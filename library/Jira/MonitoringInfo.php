@@ -46,7 +46,7 @@ class MonitoringInfo
             }
 
             if (isset($vars[$varName])) {
-                return $vars[$$varName];
+                return $vars[$varName];
             } else {
                 return null;
             }
