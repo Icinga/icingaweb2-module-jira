@@ -36,6 +36,7 @@ class NewIssueForm extends QuickForm
     {
         $config = Config::module('jira');
         $defaultProject = $config->get('ui', 'default_project');
+        $defaultTemplate = $config->get('ui', 'default_template');
         $defaultAck = $config->get('ui', 'acknowledge');
 
         $enum = $this->makeEnum(
@@ -95,13 +96,29 @@ class NewIssueForm extends QuickForm
                 'Message body of this issue'
             ),
         ));
+        $this->addElement('select', 'template', [
+            'label' => $this->translate('Template'),
+            'multiOptions' => $this->optionalEnum($this->enumTemplates()),
+            'value'    => $defaultTemplate,
+        ]);
         $this->addBoolean('acknowledge', [
             'label'       => $this->translate('Acknowledge'),
             'description' => $this->translate(
                 'Whether the Icinga problem should be acknowledged. The newly'
                 . ' created JIRA issue will be linked in the related comment.'
             )
-        ], $defaultAck );
+        ], $defaultAck);
+    }
+
+    private function enumTemplates()
+    {
+        $templates = [];
+        $templateList = Config::module('jira', 'templates')->keys();
+        foreach ($templateList as $template) {
+            $templates[$template] = $template;
+        }
+
+        return $templates;
     }
 
     private function getObjectDefault($key)
@@ -216,8 +233,7 @@ class NewIssueForm extends QuickForm
         }
 
         $template = new IssueTemplate();
-        // TODO: Should we allow to choose this?
-        $template->addByTemplateName('default');
+        $template->addByTemplateName($this->getValue('template'));
         $key = $this->jira->createIssue($template->getFilled($params));
         if ($this->getValue('acknowledge') === 'n') {
             return;
