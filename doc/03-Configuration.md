@@ -173,6 +173,18 @@ and your issue will fill in and pass all above fields.
   the visible name is also fine. Even special characters like in `Aktivität` are
   allowed
 
+* In case your Custom Field expects an Array of values, please use numeric keys
+  as in this example:
+
+```ini
+[my-workflow]
+; ...
+Teams.0.value = "My Team"
+Teams.1.value = "Another Team"
+Tags.0 = "ama"
+Tags.1 = "zing"
+```
+
 * You can use placeholders for variables via `${varname}`. You can use some of
   the predefined ones, but you can also add new ones. You can for example use
   `${location}` and pass `$host.vars.location$` via `--location`, just make sure
