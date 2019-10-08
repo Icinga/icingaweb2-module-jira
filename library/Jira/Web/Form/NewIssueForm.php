@@ -8,6 +8,7 @@ use Icinga\Application\Logger;
 use Icinga\Module\Director\Web\Form\QuickForm;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\IssueTemplate;
+use Icinga\Module\Jira\MonitoringInfo;
 use Icinga\Module\Jira\RestApi;
 use Icinga\Module\Monitoring\Object\MonitoredObject;
 use Icinga\Module\Monitoring\Object\Host;
@@ -234,6 +235,7 @@ class NewIssueForm extends QuickForm
 
         $template = new IssueTemplate();
         $template->addByTemplateName($this->getValue('template'));
+        $template->setMonitoringInfo(new MonitoringInfo($host, $service));
         $key = $this->jira->createIssue($template->getFilled($params));
         if ($this->getValue('acknowledge') === 'n') {
             return;

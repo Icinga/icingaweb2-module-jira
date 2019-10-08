@@ -8,6 +8,9 @@ class IssueTemplate
 {
     protected $custom = [];
 
+    /** @var MonitoringInfo */
+    protected $monitoringInfo;
+
     public function getFilled($params)
     {
         $fields = [];
@@ -40,6 +43,13 @@ class IssueTemplate
         return $this;
     }
 
+    public function setMonitoringInfo(MonitoringInfo $info)
+    {
+        $this->monitoringInfo = $info;
+
+        return $this;
+    }
+
     protected function addToFields(& $fields, $key, $value)
     {
         $dot = strpos($key, '.');
@@ -58,7 +68,7 @@ class IssueTemplate
 
     protected function fillTemplate($string, $params)
     {
-        $pattern = '/\$\{([a-zA-Z0-9]+)\}/';
+        $pattern = '/\$\{([^}\s]+)\}/';
         return preg_replace_callback(
             $pattern,
             function ($match) use ($params) {
@@ -68,8 +78,19 @@ class IssueTemplate
                 }
                 if (array_key_exists($name, $params)) {
                     return $params[$name];
-                } else {
+                }
+
+                $value = null;
+                if (preg_match('/^(?:host|service\.)/', $name)) {
+                    if ($this->monitoringInfo) {
+                        $value = $this->monitoringInfo->getProperty($name);
+                    }
+                }
+
+                if ($value === null) {
                     return '${' . $name . '}';
+                } else {
+                    return $value;
                 }
             },
             $string

@@ -9,6 +9,7 @@ use Icinga\Module\Jira\Cli\Command;
 use Icinga\Module\Jira\IssueTemplate;
 use Icinga\Module\Jira\IssueUpdate;
 use Icinga\Module\Jira\LegacyCommandPipe;
+use Icinga\Module\Jira\MonitoringInfo;
 
 class SendCommand extends Command
 {
@@ -79,6 +80,7 @@ class SendCommand extends Command
             if ($tplName) {
                 $template->addByTemplateName($tplName);
             }
+            $template->setMonitoringInfo(new MonitoringInfo($host, $service));
 
             $key = $jira->createIssue($template->getFilled($params));
 
