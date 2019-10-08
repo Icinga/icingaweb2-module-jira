@@ -78,6 +78,9 @@ class IssueTemplate
 
     protected function getIcingaKeyFromParams($params)
     {
+        if (! isset($params['host'])) {
+            throw new \InvalidArgumentException('There is no "host" in $params');
+        }
         $host = $params['host'];
         if (array_key_exists('service', $params) && strlen($params['service'])) {
             $service = $params['service'];
