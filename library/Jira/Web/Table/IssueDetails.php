@@ -3,6 +3,7 @@
 namespace Icinga\Module\Jira\Web\Table;
 
 use dipl\Html\Html;
+use dipl\Html\HtmlString;
 use dipl\Translation\TranslationHelper;
 use dipl\Web\Widget\NameValueTable;
 use Icinga\Module\Jira\Web\RenderingHelper;
@@ -138,6 +139,21 @@ class IssueDetails extends NameValueTable
         }
     }
 
+    protected function formatBody($body)
+    {
+        $html = Html::wantHtml($body)->render();
+
+        // This is safe.
+        return new HtmlString($this->replaceLinks($html));
+    }
+
+    protected function replaceLinks($string)
+    {
+        return \preg_replace_callback('/\[[^|]+\|[^]]+]/', function ($match) {
+            return Html::tag('a', ['href' => $match[2], 'target' => '_blank'], $match[1]);
+        }, $string);
+    }
+
     protected function addComment($author, $time, $body)
     {
         return $this->addWideRow([
@@ -146,7 +162,11 @@ class IssueDetails extends NameValueTable
                 $this->helper->shortTimeSince($time),
                 $author
             )),
-            Html::tag('pre', ['style' => 'background-color: transparent'], $body),
+            Html::tag(
+                'pre',
+                ['style' => 'background-color: transparent'],
+                $this->formatBody($body)
+            ),
         ]);
     }
 }
