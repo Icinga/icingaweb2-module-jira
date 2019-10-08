@@ -81,7 +81,7 @@ class IssueTemplate
                 }
 
                 $value = null;
-                if (preg_match('/^(?:host|service\.)/', $name)) {
+                if (preg_match('/^(?:host|service)\./', $name)) {
                     if ($this->monitoringInfo) {
                         $value = $this->monitoringInfo->getProperty($name);
                     }
