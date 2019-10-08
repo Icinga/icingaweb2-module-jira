@@ -90,7 +90,7 @@ class RestApi
         }
     }
 
-    public function eventuallyGetLatestOpenIssueKeyFor($host, $service = null)
+    public function eventuallyGetLatestOpenIssueFor($host, $service = null)
     {
         try {
             $start = 0;
@@ -111,10 +111,20 @@ class RestApi
             } else {
                 Benchmark::measure('Fetched an (optional) single issues');
 
-                return current($issues)->key;
+                return current($issues);
             }
         } catch (Exception $e) {
             return null;
+        }
+    }
+
+    public function eventuallyGetLatestOpenIssueKeyFor($host, $service = null)
+    {
+        $issue = $this->eventuallyGetLatestOpenIssueFor($host, $service);
+        if ($issue === null) {
+            return null;
+        } else {
+            return $issue->key;
         }
     }
 

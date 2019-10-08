@@ -55,9 +55,9 @@ class SendCommand extends Command
         $ackPipe     = $p->shift('command-pipe');
 
         $jira = $this->jira();
-        $key = $jira->eventuallyGetLatestOpenIssueKeyFor($host, $service);
+        $issue = $jira->eventuallyGetLatestOpenIssueFor($host, $service);
 
-        if ($key === null) {
+        if ($issue === null) {
             $params = [
                 'project'     => $p->shiftRequired('project'),
                 'issuetype'   => $p->shiftRequired('issuetype'),
@@ -77,6 +77,7 @@ class SendCommand extends Command
 
             $ackMessage = "JIRA issue $key has been created";
         } else {
+            $key = $issue->key;
             $ackMessage = "Existing JIRA issue $key has been found";
         }
 
