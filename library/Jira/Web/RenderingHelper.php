@@ -2,10 +2,10 @@
 
 namespace Icinga\Module\Jira\Web;
 
-use dipl\Html\Html;
-use dipl\Html\Link;
+use gipfl\IcingaWeb2\Link;
 use Icinga\Application\Config;
 use Icinga\Date\DateFormatter;
+use ipl\Html\Html;
 use RuntimeException;
 
 class RenderingHelper

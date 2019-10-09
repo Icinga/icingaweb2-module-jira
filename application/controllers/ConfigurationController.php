@@ -2,14 +2,14 @@
 
 namespace Icinga\Module\Jira\Controllers;
 
-use dipl\Html\Html;
-use dipl\Html\Link;
+use gipfl\IcingaWeb2\Link;
 use Icinga\Exception\ConfigurationError;
 use Icinga\Module\Director\Objects\IcingaCommand;
 use Icinga\Module\Jira\DirectorConfig;
 use Icinga\Module\Jira\Web\Controller;
 use Icinga\Module\Jira\Web\Form\TemplateForm;
 use Icinga\Web\Notification;
+use ipl\Html\Html;
 
 class ConfigurationController extends Controller
 {

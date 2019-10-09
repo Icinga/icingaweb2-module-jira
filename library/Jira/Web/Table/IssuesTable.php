@@ -2,10 +2,10 @@
 
 namespace Icinga\Module\Jira\Web\Table;
 
-use dipl\Html\Html;
-use dipl\Html\Link;
-use dipl\Html\Table;
+use gipfl\IcingaWeb2\Link;
 use Icinga\Module\Jira\Web\RenderingHelper;
+use ipl\Html\Html;
+use ipl\Html\Table;
 
 class IssuesTable extends Table
 {

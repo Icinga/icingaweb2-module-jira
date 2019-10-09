@@ -2,11 +2,11 @@
 
 namespace Icinga\Module\Jira\Web\Table;
 
-use dipl\Html\Html;
-use dipl\Html\HtmlString;
-use dipl\Translation\TranslationHelper;
-use dipl\Web\Widget\NameValueTable;
+use gipfl\Translation\TranslationHelper;
+use gipfl\IcingaWeb2\Widget\NameValueTable;
 use Icinga\Module\Jira\Web\RenderingHelper;
+use ipl\Html\Html;
+use ipl\Html\HtmlString;
 
 class IssueDetails extends NameValueTable
 {

@@ -5,14 +5,11 @@ Dependencies
 ------------
 
 * Icinga Web 2 (&gt;= 2.5.0)
-* Icinga Director (&gt;= v1.5.0)
-* PHP (&gt;= 5.4 or 7.x)
+* [ipl](https://github.com/Icinga/icingaweb2-module-ipl) (>=0.3.0)
+* [incubator](https://github.com/Icinga/icingaweb2-module-incubator) (>=0.5.0)
+* PHP (&gt;= 5.6 or 7.x)
 
 The Icinga Web 2 `monitoring` module should be configured and enabled.
-
-Even if not using [Icinga Director](https://github.com/Icinga/icingaweb2-module-director),
-it must at least be installed and enabled in your [Icinga Web 2](https://github.com/Icinga/icingaweb2).
-This module borrows some libraries from the Director.
 
 Installation from .tar.gz
 -------------------------
