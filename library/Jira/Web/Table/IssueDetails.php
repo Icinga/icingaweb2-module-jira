@@ -96,7 +96,7 @@ class IssueDetails extends NameValueTable
     
     protected function addWideRow($content)
     {
-        $this->body()->add(static::tr(static::td($content, ['colspan' => 2])));
+        $this->add(static::tr(static::td($content, ['colspan' => 2])));
 
         return $this;
     }
