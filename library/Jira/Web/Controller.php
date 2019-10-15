@@ -38,7 +38,8 @@ class Controller extends CompatController
                     $e->getMessage()
                 ))
             ]);
-            $this->content()->add(Html::tag('pre', null, $e->getTraceAsString()));
+            // $this->content()->add(Html::tag('pre', null, $e->getTraceAsString()));
+
             return false;
         }
     }
