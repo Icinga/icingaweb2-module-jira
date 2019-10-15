@@ -31,7 +31,7 @@ class RestApi
     {
         $this->username = $username;
         $this->password = $password;
-        $this->baseUrl = rtrim($baseUrl, '/') . '/rest';
+        $this->baseUrl = \rtrim($baseUrl, '/') . '/rest';
     }
 
     /**
@@ -41,22 +41,24 @@ class RestApi
     {
         $config = Config::module('jira');
         $host = $config->get('api', 'host');
+        $scheme = $config->get('scheme', 'https');
         if ($host === null) {
             throw new RuntimeException('No JIRA host has been configured');
         }
-        $url = sprintf(
-            'https://%s:%d/%s',
+        $url = \rtrim(\sprintf(
+            '%s://%s:%d/%s',
+            $scheme,
             $host,
-            $config->get('api', 'port', 443),
-            trim($config->get('api', 'path', ''), '/')
-        );
+            $config->get('api', 'port', $scheme === 'https' ? 443 : 80),
+            \trim($config->get('api', 'path', ''), '/')
+        ), '/');
 
         $user = $config->get('api', 'username');
         $pass = $config->get('api', 'password');
 
         $api = new static($url, $user, $pass);
         if ($url = $config->get('icingaweb', 'url')) {
-            $api->icingaUrl = rtrim($url, '/');
+            $api->icingaUrl = \rtrim($url, '/');
         }
 
         return $api;
@@ -140,7 +142,7 @@ class RestApi
             // There is no exact field matcher out of the box on JIRA, this is
             // an ugly work-around. We search for "BEGINhostnameEND" or
             // "BEGINhostname!serviceEND"
-            $query .= sprintf(' AND icingaKey ~ "\"%s\""', $icingaKey);
+            $query .= \sprintf(' AND icingaKey ~ "\"%s\""', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
@@ -188,7 +190,7 @@ class RestApi
             'fields'     => $fields,
         ])->getResult()->issues;
 
-        Benchmark::measure(sprintf('Fetched %s issues', count($issues)));
+        Benchmark::measure(sprintf('Fetched %s issues', \count($issues)));
 
         return $issues;
     }
@@ -216,7 +218,7 @@ class RestApi
         } else {
             throw new RuntimeException(
                 'Failed to create a new issue: %s',
-                print_r($result, 1)
+                \print_r($result, 1)
             );
         }
     }
@@ -236,10 +238,10 @@ class RestApi
                     $result[$field->id] = $field->name;
                 }
             }
-            natcasesort($result);
+            \natcasesort($result);
 
             $this->enumCustomFields = $result;
-            Benchmark::measure(sprintf('Got %d custom field mappings', count($result)));
+            Benchmark::measure(\sprintf('Got %d custom field mappings', \count($result)));
         }
 
         return $this->enumCustomFields;
@@ -275,9 +277,9 @@ class RestApi
     public function translateNamesToCustomFields($issue)
     {
         $fields = (object) [];
-        $map = array_flip($this->enumCustomFields());
+        $map = \array_flip($this->enumCustomFields());
         foreach ($issue->fields as $key => $value) {
-            if (array_key_exists($key, $map)) {
+            if (\array_key_exists($key, $map)) {
                 $fields->{$map[$key]} = $value;
             } else {
                 $fields->$key = $value;
@@ -294,11 +296,11 @@ class RestApi
         if ($this->icingaUrl === null) {
             return $hostname;
         } else {
-            return sprintf(
+            return \sprintf(
                 '[%s|%s/monitoring/host/show?host=%s]',
                 $hostname,
                 $this->icingaUrl,
-                rawurlencode($hostname)
+                \rawurlencode($hostname)
             );
         }
     }
@@ -308,19 +310,19 @@ class RestApi
         if ($this->icingaUrl === null) {
             return $service;
         } else {
-            return sprintf(
+            return \sprintf(
                 '[%s|%s/monitoring/service/show?host=%s&service=%s]',
                 $service,
                 $this->icingaUrl,
-                rawurlencode($hostname),
-                rawurlencode($service)
+                \rawurlencode($hostname),
+                \rawurlencode($service)
             );
         }
     }
 
     protected function url($url)
     {
-        return implode('/', [$this->baseUrl, $this->apiName, $this->apiVersion, $url]);
+        return \implode('/', [$this->baseUrl, $this->apiName, $this->apiVersion, $url]);
     }
 
     /**
@@ -332,16 +334,15 @@ class RestApi
      */
     protected function request($method, $url, $body = null)
     {
-        $auth = sprintf('%s:%s', $this->username, $this->password);
-        $headers = array(
-            'User-Agent: IcingaWeb2-Jira/v0.0.1',
-            // 'Connection: close'
-        );
+        $auth = \sprintf('%s:%s', $this->username, $this->password);
+        $headers = [
+            'User-Agent: IcingaWeb2-Jira/v1.0',
+        ];
 
         $headers[] = 'Accept: application/json';
 
         if ($body !== null) {
-            $body = json_encode($body);
+            $body = \json_encode($body);
         }
         $headers[] = 'Content-Type: application/json';
 
@@ -350,7 +351,7 @@ class RestApi
             CURLOPT_URL            => $this->url($url),
             CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_USERPWD        => $auth,
-            CURLOPT_CUSTOMREQUEST  => strtoupper($method),
+            CURLOPT_CUSTOMREQUEST  => \strtoupper($method),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => 3,
 
@@ -367,12 +368,12 @@ class RestApi
         // TODO: request headers, validate status code
 
         Benchmark::measure('Rest Api, sending ' . $url);
-        $res = curl_exec($curl);
+        $res = \curl_exec($curl);
         if ($res === false) {
-            throw new RuntimeException('CURL ERROR: ' . curl_error($curl));
+            throw new RuntimeException('CURL ERROR: ' . \curl_error($curl));
         }
 
-        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $statusCode = \curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if ($statusCode === 401) {
             throw new RuntimeException(
                 'Unable to authenticate, please check your API credentials'
@@ -386,12 +387,12 @@ class RestApi
         }
 
         if ($statusCode >= 400) {
-            $result = @json_decode($res);
-            if ($result && property_exists($result, 'errorMessages') && ! empty($result->errorMessages)) {
-                throw new RuntimeException(implode('; ', $result->errorMessages));
+            $result = @\json_decode($res);
+            if ($result && \property_exists($result, 'errorMessages') && ! empty($result->errorMessages)) {
+                throw new RuntimeException(\implode('; ', $result->errorMessages));
             }
-            if ($result && property_exists($result, 'errors') && ! empty($result->errors)) {
-                throw new RuntimeException(implode('; ', (array) $result->errors));
+            if ($result && \property_exists($result, 'errors') && ! empty($result->errors)) {
+                throw new RuntimeException(\implode('; ', (array) $result->errors));
             }
 
             throw new RuntimeException(
@@ -480,12 +481,12 @@ class RestApi
             505 => 'HTTP Version Not Supported',
         ];
         
-        if (array_key_exists($statusCode, $errors)) {
-            return sprintf('%d: %s', $statusCode, $errors[$statusCode]);
+        if (\array_key_exists($statusCode, $errors)) {
+            return \sprintf('%d: %s', $statusCode, $errors[$statusCode]);
         } elseif ($statusCode >= 400 && $statusCode < 500) {
-            return sprintf('%d: Unknown 4xx Client Error', $statusCode);
+            return \sprintf('%d: Unknown 4xx Client Error', $statusCode);
         } else {
-            return sprintf('%d: Unknown HTTP Server Error', $statusCode);
+            return \sprintf('%d: Unknown HTTP Server Error', $statusCode);
         }
     }
 
@@ -495,9 +496,9 @@ class RestApi
     protected function curl()
     {
         if ($this->curl === null) {
-            $this->curl = curl_init($this->baseUrl);
+            $this->curl = \curl_init($this->baseUrl);
             if (! $this->curl) {
-                throw new RuntimeException('CURL INIT ERROR: ' . curl_error($this->curl));
+                throw new RuntimeException('CURL INIT ERROR: ' . \curl_error($this->curl));
             }
         }
 
