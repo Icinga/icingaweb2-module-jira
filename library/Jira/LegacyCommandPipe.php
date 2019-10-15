@@ -2,7 +2,7 @@
 
 namespace Icinga\Module\Jira;
 
-use Icinga\Exception\IcingaException;
+use RuntimeException;
 
 class LegacyCommandPipe
 {
@@ -22,18 +22,18 @@ class LegacyCommandPipe
 
                 return $result !== false;
             } else {
-                throw new IcingaException(
+                throw new RuntimeException(\sprintf(
                     '%s is not writable, cannot send %s',
                     $pipe,
                     $this->shorten($message, 60)
-                );
+                ));
             }
         } else {
-            throw new IcingaException(
+            throw new RuntimeException(\sprintf(
                 '%s does not exist, cannot send %s',
-                 $pipe,
-                 $this->shorten($message, 60)
-             );
+                $pipe,
+                $this->shorten($message, 60)
+            ));
         }
     }
 

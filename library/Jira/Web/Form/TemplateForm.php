@@ -121,10 +121,10 @@ class TemplateForm extends BaseHtmlElement
                 $this->getPropertyName('caption', $propertyMap),
                 $value
             ) .  $this->getProperty(
-                    $entry,
-                    $this->getPropertyName('description', $propertyMap) . 'NO',
-                    ' '
-                );
+                $entry,
+                $this->getPropertyName('description', $propertyMap) . 'NO',
+                ' '
+            );
 
             $image = $this->getProperty($entry, $this->getPropertyName('imagesrc', $propertyMap));
             if ($image !== null) {
