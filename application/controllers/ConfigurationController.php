@@ -21,10 +21,13 @@ class ConfigurationController extends Controller
         $this->assertPermission('director/admin');
     }
 
-
-    public function indexAction()
+    public function inspectAction()
     {
-        $this->addTitle('JIRA Configuration')->activateTab();
+        $this->addTitle('JIRA Inspection')->activateTab();
+        $this->content()->add(Html::tag('div', ['class' => 'state-hint warning'], $this->translate(
+            'This page serves no special purpose right now, but gives some insight'
+            . ' into available projects and Custom Fields'
+        )));
         $this->runFailSafe(function () {
             $this->content()->add(new TemplateForm($this->jira()));
         });
@@ -127,12 +130,12 @@ class ConfigurationController extends Controller
         if ($name === null) {
             $name = $this->getRequest()->getActionName();
         }
-        $this->tabs()->add('index', [
-            'label' => 'Jira Config',
-            'url' => 'jira/configuration',
-        ])->add('director', [
-            'label' => 'Director Config',
+        $this->tabs()->add('director', [
+            'label' => $this->translate('Director Config'),
             'url' => 'jira/configuration/director',
+        ])->add('inspect', [
+            'label' => $this->translate('Inspect'),
+            'url' => 'jira/configuration/inspect',
         ])->activate($name);
         
         return $this;

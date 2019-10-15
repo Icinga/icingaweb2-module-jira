@@ -7,6 +7,6 @@ $section = $this->menuSection(N_('Jira'))
     ->setIcon('tasks');
 $section->add(N_('Issues'))->setUrl('jira/issues');
 $section->add(N_('Configuration'))
-    ->setUrl('jira/configuration')
+    ->setUrl('jira/configuration/director')
     ->setPermission('director/admin');
 $this->providePermission('jira/issue/create', $this->translate('Allow to manually create issues'));
