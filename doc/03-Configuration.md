@@ -82,6 +82,7 @@ We need a new file named `config.ini` in this newly created directory:
 host = "jira.example.com"
 ; port = 443
 ; path = "/"
+; scheme = "https"
 username = "icinga"
 password = "***"
 
