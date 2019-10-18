@@ -1,7 +1,7 @@
-Icinga Module for JIRA
-======================
+Icinga Module for JIRA®
+=======================
 
-Hassle-free deep integration with Atlassian Jira. Depending on your needs, this
+Hassle-free deep integration with Atlassian Jira®. Depending on your needs, this
 module is able to:
 
 * create **JIRA Issues for Problems** detected by Icinga
