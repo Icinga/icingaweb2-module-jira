@@ -41,7 +41,7 @@ class RestApi
     {
         $config = Config::module('jira');
         $host = $config->get('api', 'host');
-        $scheme = $config->get('scheme', 'https');
+        $scheme = $config->get('api', 'scheme', 'https');
         if ($host === null) {
             throw new RuntimeException('No JIRA host has been configured');
         }
