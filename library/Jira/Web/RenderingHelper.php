@@ -5,11 +5,14 @@ namespace Icinga\Module\Jira\Web;
 use gipfl\IcingaWeb2\Link;
 use Icinga\Application\Config;
 use Icinga\Date\DateFormatter;
+use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
 use RuntimeException;
 
 class RenderingHelper
 {
+    protected $api;
+
     public function linkToMonitoring($host, $service)
     {
         if ($service === null) {
@@ -47,20 +50,11 @@ class RenderingHelper
         if ($host === null) {
             throw new RuntimeException('No JIRA host has been configured');
         }
-        $baseUrl = sprintf(
-            'https://%s:%d/%s',
-            $host,
-            $config->get('api', 'port', 443),
-            trim($config->get('api', 'path', ''), '/')
-        );
-
         if (is_array($url)) {
-            $baseUrl .= '/' . implode('/', array_map('urlencode', $url));
-        } else {
-            $baseUrl .= $url;
+            $url = implode('/', array_map('urlencode', $url));
         }
         
-        $attributes['href'] = $baseUrl;
+        $attributes['href'] = $this->api()->url($url);
         $attributes += [
             'target' => '_blank',
             'title'  => 'Open in new JIRA tab'
@@ -128,5 +122,14 @@ class RenderingHelper
         $test = preg_replace('/1\d+\.\d+\./', '192.168.', $test);
 
         return $test;
+    }
+
+    protected function api()
+    {
+        if ($this->api === null) {
+            $this->api = RestApi::fromConfig();
+        }
+
+        return $this->api;
     }
 }

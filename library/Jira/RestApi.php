@@ -320,7 +320,7 @@ class RestApi
         }
     }
 
-    protected function url($url)
+    public function url($url)
     {
         return \implode('/', [$this->baseUrl, $this->apiName, $this->apiVersion, $url]);
     }
