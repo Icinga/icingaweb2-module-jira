@@ -5,16 +5,16 @@ namespace Icinga\Module\Jira\Web\Form;
 use Exception;
 use Icinga\Application\Config;
 use Icinga\Application\Logger;
-use Icinga\Module\Director\Web\Form\QuickForm;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\IssueTemplate;
 use Icinga\Module\Jira\MonitoringInfo;
 use Icinga\Module\Jira\RestApi;
+use Icinga\Module\Jira\Web\Form;
 use Icinga\Module\Monitoring\Object\MonitoredObject;
 use Icinga\Module\Monitoring\Object\Host;
 use Icinga\Module\Monitoring\Object\Service;
 
-class NewIssueForm extends QuickForm
+class NewIssueForm extends Form
 {
     /** @var RestApi */
     private $jira;
@@ -29,16 +29,16 @@ class NewIssueForm extends QuickForm
         return $this;
     }
 
-    /**
-     * @throws \Icinga\Exception\NotFoundError
-     * @throws \Zend_Form_Exception
-     */
-    public function setup()
+    protected function assemble()
     {
+        $this-> prepareWebForm();
+        $this->addAttributes([
+            'class' => 'icinga-form icinga-controls'
+        ]);
         $config = Config::module('jira');
         $defaultProject = $config->get('ui', 'default_project');
         $defaultTemplate = $config->get('ui', 'default_template');
-        $defaultAck = $config->get('ui', 'acknowledge');
+        $defaultAck = $config->get('ui', 'acknowledge', 'y');
 
         $enum = $this->makeEnum(
             $this->jira->get('project')->getResult(),
@@ -102,13 +102,22 @@ class NewIssueForm extends QuickForm
             'multiOptions' => $this->optionalEnum($this->enumTemplates()),
             'value'    => $defaultTemplate,
         ]);
-        $this->addBoolean('acknowledge', [
+        $this->addElement('select', 'acknowledge', [
             'label'       => $this->translate('Acknowledge'),
+            'options' => [
+                'y'  => $this->translate('Yes'),
+                'n'  => $this->translate('No'),
+            ],
+            'value' =>  $defaultAck,
             'description' => $this->translate(
                 'Whether the Icinga problem should be acknowledged. The newly'
                 . ' created JIRA issue will be linked in the related comment.'
             )
-        ], $defaultAck);
+        ]);
+
+        $this->addElement('submit', 'submit', [
+            'label' => $this->translate('Create Issue')
+        ]);
     }
 
     private function enumTemplates()
@@ -208,20 +217,14 @@ class NewIssueForm extends QuickForm
         }
     }
 
-    /**
-     * @throws \Icinga\Exception\NotFoundError
-     */
     public function onSuccess()
     {
-        $this->createIssue();
-        $this->setSuccessMessage('A new incident has been created');
-        parent::onSuccess();
     }
 
     /**
      * @throws \Icinga\Exception\NotFoundError
      */
-    private function createIssue()
+    public function createIssue()
     {
         $params = $this->getValues();
         $params['state'] = $this->getStateName();

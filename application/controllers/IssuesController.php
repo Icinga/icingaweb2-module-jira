@@ -3,11 +3,14 @@
 namespace Icinga\Module\Jira\Controllers;
 
 use Icinga\Module\Jira\Web\Controller;
+use Icinga\Module\Jira\Web\Form;
 use Icinga\Module\Jira\Web\Form\NewIssueForm;
 use Icinga\Module\Jira\Web\Table\IssuesTable;
 use Icinga\Module\Monitoring\Object\Host;
 use Icinga\Module\Monitoring\Object\Service;
 use Icinga\Module\Monitoring\Backend;
+use Icinga\Web\Notification;
+use Icinga\Web\Url;
 
 class IssuesController extends Controller
 {
@@ -79,12 +82,13 @@ class IssuesController extends Controller
         $form = new NewIssueForm();
         $form->setJira($this->jira())
             ->setObject($object)
-            ->setSuccessUrl('jira/issues', $params)
-            ->handleRequest();
-
-        $this->content()
-            ->add($form)
-            ->addAttributes(['class' => 'icinga-module module-director']);
+            ->on(Form::ON_SUCCESS, function (NewIssueForm $form) use ($params) {
+                $form->createIssue();
+                Notification::success('A new incident has been created');
+                $this->redirectNow(Url::fromPath('jira/issues', $params));
+            })
+            ->handleRequest($this->getServerRequest());
+        $this->content()->add($form);
     }
 
     /**
