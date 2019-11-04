@@ -19,3 +19,13 @@ assign monitored objects to their **related CIs** or to trigger dedicated
 This is 100% free Open Source Software. Interested? Then let's [get started](doc/01-Introduction.md)!
 
 ![JIRA integration](doc/screenshot/issue_list_and_details-new.png)
+
+Changes
+-------
+
+### v1.0.1
+
+* FIX: Ticket URLs pointing to JIRA for Setups sitting in the DocumentRoot (#30)
+* FIX: The new HTTP/HTTPS scheme setting didn't work (#30)
+* FIX: There still was a dependency on Icinga Director (#28)
+* FIX: Form for manually created issues didn't work without Icinga Director (#27)
