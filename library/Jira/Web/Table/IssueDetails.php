@@ -60,6 +60,11 @@ class IssueDetails extends NameValueTable
                 ' ',
                 sprintf(' %s: %s', $fields->issuetype->name, $fields->issuetype->description)
             ],
+            $this->translate('Status') => [
+                $helper->renderIcon($fields->status),
+                ' ',
+                sprintf(' %s', $fields->status->name)
+            ],
             $this->translate('Priority') => [
                 $helper->renderIcon($fields->priority),
                 ' ' . $fields->priority->name
@@ -93,14 +98,14 @@ class IssueDetails extends NameValueTable
             $helper->anonymize($fields->description)
         );
     }
-    
+
     protected function addWideRow($content)
     {
         $this->add(static::tr(static::td($content, ['colspan' => 2])));
 
         return $this;
     }
-    
+
     protected function addComments($comments)
     {
         foreach ($comments as $comment) {
@@ -112,7 +117,7 @@ class IssueDetails extends NameValueTable
                 );
             }
         }
-        
+
         return $this;
     }
 
