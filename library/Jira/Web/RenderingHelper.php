@@ -54,7 +54,7 @@ class RenderingHelper
             $url = implode('/', array_map('urlencode', $url));
         }
         
-        $attributes['href'] = $this->api()->url($url);
+        $attributes['href'] = $this->api()->urlLink($url);
         $attributes += [
             'target' => '_blank',
             'title'  => 'Open in new JIRA tab'
