@@ -1,3 +1,4 @@
+Module: jira
 Name: JIRA
 Version: 1.0.1
 Depends: monitoring (>=2.6.0), ipl (>=0.3.0), incubator (>=0.5.0)
