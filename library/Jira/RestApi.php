@@ -13,6 +13,8 @@ class RestApi
 {
     protected $baseUrl;
 
+    protected $baseUrlForLink;
+
     protected $icingaUrl;
 
     protected $username;
@@ -31,6 +33,7 @@ class RestApi
     {
         $this->username = $username;
         $this->password = $password;
+        $this->baseUrlForLink = $baseUrl;
         $this->baseUrl = \rtrim($baseUrl, '/') . '/rest';
     }
 
@@ -323,6 +326,11 @@ class RestApi
     public function url($url)
     {
         return \implode('/', [$this->baseUrl, $this->apiName, $this->apiVersion, $url]);
+    }
+
+    public function urlLink($url)
+    {
+        return \implode('/', [$this->baseUrlForLink, $url]);
     }
 
     /**
