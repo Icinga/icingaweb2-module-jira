@@ -346,9 +346,7 @@ class RestApi
             $headers[] = 'Content-Length: ' . strlen($body);
         }
         $headers[] = 'Content-Type: application/json';
-
-       
-
+   
         $curl = $this->curl();
         $opts = array(
             CURLOPT_URL            => $this->url($url),
