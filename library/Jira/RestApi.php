@@ -343,10 +343,11 @@ class RestApi
 
         if ($body !== null) {
             $body = \json_encode($body);
+            $headers[] = 'Content-Length: ' . strlen($body);
         }
         $headers[] = 'Content-Type: application/json';
-        $headers[] = 'Transfer-Encoding: chunked';
 
+       
 
         $curl = $this->curl();
         $opts = array(
