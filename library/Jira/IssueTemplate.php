@@ -125,7 +125,7 @@ class IssueTemplate
             'summary'        => '${summary}',
             'description'    => '${description}',
             'Reference'      => '${icingaKey}',
-            'Reference Status'   => '${state}',
+            'icingaStatus'   => '${state}',
         ];
     }
 }
