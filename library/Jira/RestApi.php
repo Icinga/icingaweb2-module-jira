@@ -106,7 +106,7 @@ class RestApi
                 'jql'        => $query,
                 'startAt'    => $start,
                 'maxResults' => $limit,
-                'fields'     => [ 'Reference' ],
+                'fields'     => [ 'icingaKey' ],
             ])->getResult()->issues;
 
             if (empty($issues)) {
@@ -139,14 +139,14 @@ class RestApi
         }
 
         if ($host === null) {
-            $query .= ' AND Reference ~ "BEGIN*"';
+            $query .= ' AND icingaKey ~ "BEGIN*"';
         } else {
             $icingaKey = static::makeIcingaKey($host, $service);
 
             // There is no exact field matcher out of the box on JIRA, this is
             // an ugly work-around. We search for "BEGINhostnameEND" or
             // "BEGINhostname!serviceEND"
-            $query .= \sprintf(' AND Reference ~ "\"%s\""', $icingaKey);
+            $query .= \sprintf(' AND icingaKey ~ "\"%s\""', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
@@ -183,8 +183,8 @@ class RestApi
             'summary',
             'status',
             'created',
-            'Reference status',
-            'Reference',
+            'icingaStatus',
+            'icingaKey',
         ];
 
         $issues = $this->post('search', [
