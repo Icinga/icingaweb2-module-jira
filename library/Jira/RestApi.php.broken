@@ -131,7 +131,8 @@ class RestApi
     protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)
     {
         // TODO: eventually also filter for project = "..."?
-        $query = 'creator = currentUser()';
+        #$query = 'creator = currentUser()';
+        $query = 'project = "OASE"';
 
         if ($onlyOpen) {
             $query .= ' AND resolution is empty';
@@ -375,6 +376,9 @@ class RestApi
 
         curl_setopt_array($curl, $opts);
         // TODO: request headers, validate status code
+
+	printf('CURL: ' . $curl);
+	print_r($opts);
 
         Benchmark::measure('Rest Api, sending ' . $url);
         $res = \curl_exec($curl);

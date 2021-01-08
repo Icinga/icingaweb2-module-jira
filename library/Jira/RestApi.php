@@ -106,7 +106,7 @@ class RestApi
                 'jql'        => $query,
                 'startAt'    => $start,
                 'maxResults' => $limit,
-                'fields'     => [ 'icingaKey' ],
+                'fields'     => [ 'Reference' ],
             ])->getResult()->issues;
 
             if (empty($issues)) {
@@ -131,22 +131,21 @@ class RestApi
     protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)
     {
         // TODO: eventually also filter for project = "..."?
-        #$query = 'creator = currentUser()';
-        $query = 'project = "OASE"';
+        $query = 'creator = currentUser()';
 
         if ($onlyOpen) {
             $query .= ' AND resolution is empty';
         }
 
         if ($host === null) {
-            $query .= ' AND icingaKey ~ "BEGIN*"';
+            $query .= ' AND Reference ~ "BEGIN*"';
         } else {
             $icingaKey = static::makeIcingaKey($host, $service);
 
             // There is no exact field matcher out of the box on JIRA, this is
             // an ugly work-around. We search for "BEGINhostnameEND" or
             // "BEGINhostname!serviceEND"
-            $query .= \sprintf(' AND icingaKey ~ "\"%s\""', $icingaKey);
+            $query .= \sprintf(' AND Reference ~ "\"%s\""', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
@@ -183,8 +182,8 @@ class RestApi
             'summary',
             'status',
             'created',
-            'icingaStatus',
-            'icingaKey',
+            'Reference Status',
+            'Reference',
         ];
 
         $issues = $this->post('search', [
@@ -376,9 +375,6 @@ class RestApi
 
         curl_setopt_array($curl, $opts);
         // TODO: request headers, validate status code
-
-	printf('CURL: ' . $curl);
-	print_r($opts);
 
         Benchmark::measure('Rest Api, sending ' . $url);
         $res = \curl_exec($curl);
