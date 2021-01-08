@@ -182,7 +182,7 @@ class RestApi
             'summary',
             'status',
             'created',
-            'icingaStatus',
+            'customfield_19220',
             'Reference',
         ];
 

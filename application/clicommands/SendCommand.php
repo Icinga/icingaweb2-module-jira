@@ -91,7 +91,7 @@ class SendCommand extends Command
             $ackMessage = "Existing JIRA issue $key has been found";
             if ($currentStatus !== $status) {
                 $update = new IssueUpdate($jira, $key);
-                $update->setCustomField('icingaStatus', $status);
+                $update->setCustomField('customfield_19220', $status);
                 $update->addComment("Status changed to $status\n" . $description);
                 $jira->updateIssue($update);
             }

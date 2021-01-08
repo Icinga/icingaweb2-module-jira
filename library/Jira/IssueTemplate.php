@@ -125,7 +125,7 @@ class IssueTemplate
             'summary'        => '${summary}',
             'description'    => '${description}',
             'Reference'      => '${icingaKey}',
-            'icingaStatus'   => '${state}',
+            'customfield_19220'   => '${state}',
         ];
     }
 }
