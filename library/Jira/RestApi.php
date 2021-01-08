@@ -182,6 +182,7 @@ class RestApi
             'summary',
             'status',
             'created',
+            'Reference Status',
             'Reference',
         ];
 
