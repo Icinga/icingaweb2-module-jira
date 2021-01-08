@@ -182,7 +182,7 @@ class RestApi
             'summary',
             'status',
             'created',
-            'Reference Status',
+            'icingaStatus',
             'Reference',
         ];
 
