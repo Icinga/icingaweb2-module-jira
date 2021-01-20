@@ -22,7 +22,7 @@ You might want to use a script as follows for this task:
 ICINGAWEB_MODULEPATH="/usr/share/icingaweb2/modules"
 REPO_URL="https://github.com/Icinga/icingaweb2-module-jira"
 TARGET_DIR="${ICINGAWEB_MODULEPATH}/jira"
-MODULE_VERSION="1.0.0"
+MODULE_VERSION="1.0.1"
 URL="${REPO_URL}/archive/v${MODULE_VERSION}.tar.gz"
 install -d -m 0755 "${TARGET_DIR}"
 wget -q -O - "$URL" | tar xfz - -C "${TARGET_DIR}" --strip-components 1
@@ -39,7 +39,7 @@ It will be immediately ready for use:
 ICINGAWEB_MODULEPATH="/usr/share/icingaweb2/modules"
 REPO_URL="https://github.com/Icinga/icingaweb2-module-jira"
 TARGET_DIR="${ICINGAWEB_MODULEPATH}/jira"
-MODULE_VERSION="1.0.0"
+MODULE_VERSION="1.0.1"
 git clone "${REPO_URL}" "${TARGET_DIR}" --branch "v${MODULE_VERSION}"
 ```
 
