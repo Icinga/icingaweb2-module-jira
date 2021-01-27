@@ -89,6 +89,9 @@ password = "***"
 [ui]
 ; default_project = "SO"
 ; default_issuetype = "Event"
+; field_icingaStatus = "icingaStatus"
+; field_icingaKey = "icingaKey"
+
 
 [icingaweb]
 url = "https://icinga.example.com/icingaweb2"

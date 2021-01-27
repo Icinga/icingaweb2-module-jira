@@ -102,7 +102,7 @@ class RestApi
             $limit = 1;
             $config = Config::module('jira');
             $query = $this->prepareIssueQuery($host, $service, true);
-            $KeyField = $config->get('ui', 'field_icingaKey');
+            $KeyField = $config->get('ui', 'field_icingaKey', 'icingaKey');
     
             $issues = $this->post('search', [
                 'jql'        => $query,
@@ -135,7 +135,7 @@ class RestApi
         $config = Config::module('jira');
         // TODO: eventually also filter for project = "..."?
         $query = 'creator = currentUser()';
-        $KeyField = $config->get('ui', 'field_icingaKey');
+        $KeyField = $config->get('ui', 'field_icingaKey', 'icingaKey');
 
         if ($onlyOpen) {
             $query .= ' AND resolution is empty';
@@ -177,8 +177,8 @@ class RestApi
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)
     {
         $config = Config::module('jira');
-        $KeyField = $config->get('ui', 'field_icingaKey');
-        $KeyStatus = $config->get('ui', 'field_icingaStatus');
+        $KeyField = $config->get('ui', 'field_icingaKey', 'icingaKey');
+        $KeyStatus = $config->get('ui', 'field_icingaStatus', 'icingaStatus');
         $start = 0;
         $limit = 15;
         $query = $this->prepareIssueQuery($host, $service, $onlyOpen);

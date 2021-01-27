@@ -120,8 +120,8 @@ class IssueTemplate
     protected function getDefaultFields()
     {
         $config = Config::module('jira');
-        $Key = $config->get('ui', 'field_icingaKey');
-        $Status = $config->get('ui', 'field_icingaStatus');
+        $Key = $config->get('ui', 'field_icingaKey', 'icingaKey');
+        $Status = $config->get('ui', 'field_icingaStatus', 'icingaStatus');
         return [
             'project.key'    => '${project}',
             'issuetype.name' => '${issuetype}',

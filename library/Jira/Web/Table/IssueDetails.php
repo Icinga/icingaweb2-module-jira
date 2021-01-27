@@ -32,7 +32,7 @@ class IssueDetails extends NameValueTable
 
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
-        $KeyField = $config->get('ui', 'field_icingaKey');
+        $KeyField = $config->get('ui', 'field_icingaKey', 'icingaKey');
 
         $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$KeyField);
         $parts = explode('!', $icingaKey);
