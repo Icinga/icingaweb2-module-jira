@@ -7,6 +7,7 @@ use gipfl\IcingaWeb2\Widget\NameValueTable;
 use Icinga\Module\Jira\Web\RenderingHelper;
 use ipl\Html\Html;
 use ipl\Html\HtmlString;
+use Icinga\Application\Config;
 
 class IssueDetails extends NameValueTable
 {

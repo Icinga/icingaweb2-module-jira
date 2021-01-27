@@ -4,6 +4,7 @@ namespace Icinga\Module\Jira\Clicommands;
 
 use Exception;
 use Icinga\Application\Logger;
+use Icinga\Application\Config;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
 use Icinga\Module\Jira\IssueTemplate;
