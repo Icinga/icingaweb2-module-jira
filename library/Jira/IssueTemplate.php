@@ -119,6 +119,7 @@ class IssueTemplate
 
     protected function getDefaultFields()
     {
+        $config = Config::module('jira');
         $Key = $config->get('ui', 'field_icingaKey');
         $Status = $config->get('ui', 'field_icingaStatus');
         return [

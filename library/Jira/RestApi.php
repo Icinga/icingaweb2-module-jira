@@ -100,6 +100,7 @@ class RestApi
         try {
             $start = 0;
             $limit = 1;
+            $config = Config::module('jira');
             $query = $this->prepareIssueQuery($host, $service, true);
             $KeyField = $config->get('ui', 'field_icingaKey');
     
@@ -131,6 +132,7 @@ class RestApi
 
     protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)
     {
+        $config = Config::module('jira');
         // TODO: eventually also filter for project = "..."?
         $query = 'creator = currentUser()';
         $KeyField = $config->get('ui', 'field_icingaKey');
@@ -174,6 +176,7 @@ class RestApi
      */
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)
     {
+        $config = Config::module('jira');
         $KeyField = $config->get('ui', 'field_icingaKey');
         $KeyStatus = $config->get('ui', 'field_icingaStatus');
         $start = 0;

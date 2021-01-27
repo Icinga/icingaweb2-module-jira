@@ -27,6 +27,7 @@ class IssueDetails extends NameValueTable
         $helper = $this->helper;
         $issue = $this->issue;
         $key = $issue->key;
+        $config = Config::module('jira');
 
         $fields = $issue->fields;
         $projectKey = $fields->project->key;

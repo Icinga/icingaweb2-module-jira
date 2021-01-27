@@ -61,6 +61,8 @@ class SendCommand extends Command
         $jira = $this->jira();
         $issue = $jira->eventuallyGetLatestOpenIssueFor($host, $service);
 
+        $config = Config::module('jira');
+
         if ($issue === null) {
             if (\in_array($status, ['UP', 'OK'])) {
                 // No existing issue, no problem, nothing to do
