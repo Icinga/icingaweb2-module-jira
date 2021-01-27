@@ -119,13 +119,15 @@ class IssueTemplate
 
     protected function getDefaultFields()
     {
+        $Key = $config->get('ui', 'field_icingaKey');
+        $Status = $config->get('ui', 'field_icingaStatus');
         return [
             'project.key'    => '${project}',
             'issuetype.name' => '${issuetype}',
             'summary'        => '${summary}',
             'description'    => '${description}',
-            'Reference'      => '${icingaKey}',
-            'customfield_19220'   => '${state}',
+            $Key             => '${icingaKey}',
+            $Status          => '${state}',
         ];
     }
 }

@@ -101,12 +101,13 @@ class RestApi
             $start = 0;
             $limit = 1;
             $query = $this->prepareIssueQuery($host, $service, true);
-
+            $KeyField = $config->get('ui', 'field_icingaKey');
+    
             $issues = $this->post('search', [
                 'jql'        => $query,
                 'startAt'    => $start,
                 'maxResults' => $limit,
-                'fields'     => [ 'Reference' ],
+                'fields'     => [ $KeyField ],
             ])->getResult()->issues;
 
             if (empty($issues)) {
@@ -132,20 +133,21 @@ class RestApi
     {
         // TODO: eventually also filter for project = "..."?
         $query = 'creator = currentUser()';
+        $KeyField = $config->get('ui', 'field_icingaKey');
 
         if ($onlyOpen) {
             $query .= ' AND resolution is empty';
         }
 
         if ($host === null) {
-            $query .= ' AND Reference ~ "BEGIN*"';
+            $query .= ' AND '.$KeyField.' ~ "BEGIN*"';
         } else {
             $icingaKey = static::makeIcingaKey($host, $service);
 
             // There is no exact field matcher out of the box on JIRA, this is
             // an ugly work-around. We search for "BEGINhostnameEND" or
             // "BEGINhostname!serviceEND"
-            $query .= \sprintf(' AND Reference ~ "\"%s\""', $icingaKey);
+            $query .= \sprintf(' AND '.$KeyField.' ~ "\"%s\""', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
@@ -172,6 +174,8 @@ class RestApi
      */
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)
     {
+        $KeyField = $config->get('ui', 'field_icingaKey');
+        $KeyStatus = $config->get('ui', 'field_icingaStatus');
         $start = 0;
         $limit = 15;
         $query = $this->prepareIssueQuery($host, $service, $onlyOpen);
@@ -182,8 +186,8 @@ class RestApi
             'summary',
             'status',
             'created',
-            'customfield_19220',
-            'Reference',
+            $KeyStatus,
+            $KeyField,
         ];
 
         $issues = $this->post('search', [
