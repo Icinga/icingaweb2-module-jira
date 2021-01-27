@@ -31,7 +31,7 @@ class IssueDetails extends NameValueTable
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
 
-        $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->icingaKey);
+	$icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->Reference);
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
         if (empty($parts)) {
