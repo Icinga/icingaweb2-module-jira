@@ -89,6 +89,8 @@ password = "***"
 [ui]
 ; default_project = "SO"
 ; default_issuetype = "Event"
+
+[jira_key_fields]
 ; field_icingaStatus = "icingaStatus"
 ; field_icingaKey = "icingaKey"
 

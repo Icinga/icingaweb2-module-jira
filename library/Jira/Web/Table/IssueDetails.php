@@ -32,9 +32,9 @@ class IssueDetails extends NameValueTable
 
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
-        $KeyField = $config->get('ui', 'field_icingaKey', 'icingaKey');
+        $keyField = $config->get('jira_key_fields', 'field_icingaKey', 'icingaKey');
 
-        $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$KeyField);
+        $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$keyField);
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
         if (empty($parts)) {
