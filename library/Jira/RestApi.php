@@ -371,6 +371,8 @@ class RestApi
 
         if ($body !== null) {
             $opts[CURLOPT_POSTFIELDS] = $body;
+        } else {
+            $opts[CURLOPT_POSTFIELDS] = null;
         }
 
         curl_setopt_array($curl, $opts);
