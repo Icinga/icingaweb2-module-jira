@@ -15,7 +15,11 @@ class IssueTemplate
     {
         $fields = [];
         foreach ($this->getUnfilledFields() as $key => $tpl) {
-            $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            $value = $this->fillTemplate($tpl, $params);
+            if (!empty($value)) {
+                $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            }
+
         }
 
         return $fields;
@@ -88,7 +92,7 @@ class IssueTemplate
                 }
 
                 if ($value === null) {
-                    return '${' . $name . '}';
+                    return '';
                 } else {
                     return $value;
                 }
