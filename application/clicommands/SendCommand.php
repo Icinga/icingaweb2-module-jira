@@ -66,6 +66,21 @@ class SendCommand extends Command
                 // No existing issue, no problem, nothing to do
                 return;
             }
+            $description .= "\n\n";
+            if (!empty($service)) {
+                $description .= sprintf(
+                        "Service: %s\n",
+                        $jira->linkToIcingaService($host, $service)
+                ) . sprintf(
+                        "Host: %s\n",
+                         $jira->linkToIcingaHost($host)
+                );
+            } else {
+                $description .= sprintf(
+                        "Host: %s\n",
+                        $jira->linkToIcingaHost($host)
+                );
+            }
             $params = [
                 'project'     => $p->shiftRequired('project'),
                 'issuetype'   => $p->shiftRequired('issuetype'),
