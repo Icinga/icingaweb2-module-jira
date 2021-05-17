@@ -18,6 +18,10 @@ class IssueTemplate
             $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
         }
 
+        if (isset($fields['description'])) {
+            $fields['description'] = $this->monitoringInfo->getDescriptionHeader() . "\n" . $fields['description'];
+        }
+
         return $fields;
     }
 

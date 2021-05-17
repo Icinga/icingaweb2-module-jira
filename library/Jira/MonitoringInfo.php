@@ -19,6 +19,9 @@ class MonitoringInfo
     /** @var MonitoredObject */
     protected $object;
 
+    /** @var string */
+    protected $notificationType;
+
     protected $vars;
 
     protected $fetched;
@@ -27,6 +30,13 @@ class MonitoringInfo
     {
         $this->hostName = $hostName;
         $this->serviceName = $serviceName;
+    }
+
+    public function setNotificationType($type)
+    {
+        $this->notificationType = $type;
+
+        return $this;
     }
 
     public function getProperty($name)
@@ -147,10 +157,15 @@ class MonitoringInfo
         return sprintf('%s is %s', $this->getObjectLabel(), $this->getStateName());
     }
 
-    public function getDescriptionHeader($notificationType = 'MANUAL')
+    public function getDescriptionHeader()
     {
         $object = $this->object();
-        $description = sprintf("Notification Type: %s\n", rawurlencode($notificationType));
+        if ($this->notificationType) {
+            $description = sprintf("Notification Type: %s\n", rawurlencode($this->notificationType));
+        } else {
+            $description = '';
+        }
+
         if ($object->getType() === 'service') {
             $description .= sprintf(
                 "Service: %s\n",

@@ -91,8 +91,7 @@ class NewIssueForm extends Form
         $this->addElement('textarea', 'description', array(
             'label'       => $this->translate('Description'),
             'required'    => true,
-            'value'       => $this->monitoringInfo->getDescriptionHeader()
-                . "\n" . $this->monitoringInfo->getOutput(),
+            'value'       => $this->monitoringInfo->getOutput(),
             'rows'        => 8,
             'description' => $this->translate(
                 'Message body of this issue'

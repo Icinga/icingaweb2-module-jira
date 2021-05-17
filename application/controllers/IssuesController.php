@@ -48,6 +48,7 @@ class IssuesController extends Controller
     protected function showNewIssueForm()
     {
         $info = $this->requireMonitoringInfo();
+        $info->setNotificationType('MANUAL'); // Not sure about this, but that's how it used to be
         $this->addTitle($this->translate('Create JIRA Issue') . ': ' . $info->getObjectLabel())
             ->activateTab();
 

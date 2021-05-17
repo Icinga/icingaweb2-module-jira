@@ -80,7 +80,9 @@ class SendCommand extends Command
             if ($tplName) {
                 $template->addByTemplateName($tplName);
             }
-            $template->setMonitoringInfo(new MonitoringInfo($host, $service));
+            $info = new MonitoringInfo($host, $service);
+            $info->setNotificationType('PROBLEM'); // TODO: Once passed, we could deal with RECOVERY
+            $template->setMonitoringInfo($info);
 
             $key = $jira->createIssue($template->getFilled($params));
 

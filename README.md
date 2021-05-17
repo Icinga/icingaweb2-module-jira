@@ -26,6 +26,7 @@ Changes
 ### v1.1.0 (unreleased)
 
 * FIX: Render status badge in case there is no related icon (#39)
+* FIX: Use the same notification header via Web Form and CLI (#42)
 
 ### v1.0.1
 
