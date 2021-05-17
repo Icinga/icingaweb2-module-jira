@@ -15,7 +15,7 @@ class LinkHelper
 
     public static function linkToIcingaHost($hostname)
     {
-        if ($url = self::getIcingaWebUrl() === null) {
+        if (($url = self::getIcingaWebUrl()) === null) {
             return $hostname;
         }
 
@@ -24,7 +24,7 @@ class LinkHelper
 
     public static function linkToIcingaService($hostname, $service)
     {
-        if ($url = self::getIcingaWebUrl() === null) {
+        if (($url = self::getIcingaWebUrl()) === null) {
             return $service;
         }
 
