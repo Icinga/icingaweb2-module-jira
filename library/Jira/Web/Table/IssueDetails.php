@@ -60,11 +60,7 @@ class IssueDetails extends NameValueTable
                 ' ',
                 sprintf(' %s: %s', $fields->issuetype->name, $fields->issuetype->description)
             ],
-            $this->translate('Status') => [
-                $helper->renderIcon($fields->status),
-                ' ',
-                sprintf(' %s', $fields->status->name)
-            ],
+            $this->translate('Status') => $helper->renderStatusBadge($fields->status),
             $this->translate('Priority') => [
                 $helper->renderIcon($fields->priority),
                 ' ' . $fields->priority->name

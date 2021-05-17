@@ -23,6 +23,10 @@ This is 100% free Open Source Software. Interested? Then let's [get started](doc
 Changes
 -------
 
+### v1.1.0 (unreleased)
+
+* FIX: Render status badge in case there is no related icon (#39)
+
 ### v1.0.1
 
 * FIX: Ticket URLs pointing to JIRA for Setups sitting in the DocumentRoot (#30)
