@@ -243,6 +243,11 @@ class NewIssueForm extends Form
         if ($this->getValue('acknowledge') === 'n') {
             return;
         }
+        $this->eventuallyAcknowledge($key, $host, $service);
+    }
+
+    protected function eventuallyAcknowledge($key, $host, $service)
+    {
         $ackMessage = "JIRA issue $key has been created";
 
         try {
