@@ -50,7 +50,7 @@ class IssueTemplate
         return $this;
     }
 
-    protected function addToFields(& $fields, $key, $value)
+    protected function addToFields(&$fields, $key, $value)
     {
         $dot = strpos($key, '.');
         if (false === $dot) {
@@ -68,7 +68,7 @@ class IssueTemplate
 
     protected function fillTemplate($string, $params)
     {
-        $pattern = '/\$\{([^}\s]+)\}/';
+        $pattern = '/\${([^}\s]+)}/';
         return preg_replace_callback(
             $pattern,
             function ($match) use ($params) {
