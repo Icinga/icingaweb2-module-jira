@@ -15,8 +15,6 @@ class RestApi
 
     protected $baseUrlForLink;
 
-    protected $icingaUrl;
-
     protected $username;
 
     protected $password;
@@ -60,9 +58,6 @@ class RestApi
         $pass = $config->get('api', 'password');
 
         $api = new static($url, $user, $pass);
-        if ($url = $config->get('icingaweb', 'url')) {
-            $api->icingaUrl = \rtrim($url, '/');
-        }
 
         return $api;
     }
@@ -292,35 +287,6 @@ class RestApi
         $issue->fields = $fields;
 
         return $issue;
-    }
-
-    public function linkToIcingaHost($hostname)
-    {
-        if ($this->icingaUrl === null) {
-            return $hostname;
-        } else {
-            return \sprintf(
-                '[%s|%s/monitoring/host/show?host=%s]',
-                $hostname,
-                $this->icingaUrl,
-                \rawurlencode($hostname)
-            );
-        }
-    }
-
-    public function linkToIcingaService($hostname, $service)
-    {
-        if ($this->icingaUrl === null) {
-            return $service;
-        } else {
-            return \sprintf(
-                '[%s|%s/monitoring/service/show?host=%s&service=%s]',
-                $service,
-                $this->icingaUrl,
-                \rawurlencode($hostname),
-                \rawurlencode($service)
-            );
-        }
     }
 
     public function url($url)

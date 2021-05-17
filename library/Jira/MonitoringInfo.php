@@ -61,6 +61,43 @@ class MonitoringInfo
         }
     }
 
+    public function getHostname()
+    {
+        return $this->object()->host_name;
+    }
+
+    public function getService()
+    {
+        $object = $this->object();
+        if ($object instanceof Service) {
+            return $object->service_description;
+        } else {
+            return $object->host_name;
+        }
+    }
+
+    public function getStateName()
+    {
+        $object = $this->object();
+        if ($object instanceof Service) {
+            return strtoupper(Service::getStateText($object->service_state));
+        } else {
+            return strtoupper(Host::getStateText($object->host_state));
+        }
+    }
+
+    public function getOutput()
+    {
+        $object = $this->object();
+        if ($object instanceof Service) {
+            return $object->service_output . "\n"
+                . str_replace('\n', "\n", $object->service_long_output);
+        } else {
+            return $object->host_output . "\n"
+                . str_replace('\n', "\n", $object->host_long_output);
+        }
+    }
+
     public function vars()
     {
         return $this->object()->variables;
@@ -78,6 +115,54 @@ class MonitoringInfo
         } else {
             return [];
         }
+    }
+
+    public function getObjectParams()
+    {
+        $object = $this->object();
+        $params = ['host' => $object->host_name];
+        if ($object instanceof Service) {
+            $params['service'] = $object->service_description;
+        }
+
+        return $params;
+    }
+
+    public function getObjectLabel()
+    {
+        $object = $this->object();
+        if ($object instanceof Service) {
+            return sprintf(
+                '%s on %s',
+                $object->service_description,
+                $object->host_name
+            );
+        }
+
+        return $object->host_name;
+    }
+
+    public function getDefaultSummary()
+    {
+        return sprintf('%s is %s', $this->getObjectLabel(), $this->getStateName());
+    }
+
+    public function getDescriptionHeader($notificationType = 'MANUAL')
+    {
+        $object = $this->object();
+        $description = sprintf("Notification Type: %s\n", rawurlencode($notificationType));
+        if ($object->getType() === 'service') {
+            $description .= sprintf(
+                "Service: %s\n",
+                LinkHelper::linkToIcingaService($object->host_name, $object->service_description)
+            );
+        }
+        $description .= sprintf(
+            "Host: %s\n",
+            LinkHelper::linkToIcingaHost($object->host_name)
+        );
+
+        return $description;
     }
 
     public function object()
