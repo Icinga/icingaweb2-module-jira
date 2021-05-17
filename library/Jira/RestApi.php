@@ -327,6 +327,7 @@ class RestApi
             CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_USERPWD        => $auth,
             CURLOPT_CUSTOMREQUEST  => \strtoupper($method),
+            CURLOPT_POSTFIELDS    => $body,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => 3,
 
@@ -334,10 +335,6 @@ class RestApi
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
         );
-
-        if ($body !== null) {
-            $opts[CURLOPT_POSTFIELDS] = $body;
-        }
 
         curl_setopt_array($curl, $opts);
         // TODO: request headers, validate status code
