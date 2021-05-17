@@ -27,6 +27,10 @@ Changes
 
 * FIX: Render status badge in case there is no related icon (#39)
 * FIX: Use the same notification header via Web Form and CLI (#42)
+* FIX: broken IssueDetails link has been fixed (#31, #48)
+* FIX: we're sending Content-Length to make proxies happy (#51)
+* FEATURE: Show status for created issues (#44)
+* FEATURE: Allow choosing a default template (#36)
 
 ### v1.0.1
 
