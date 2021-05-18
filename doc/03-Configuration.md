@@ -162,6 +162,7 @@ SearchCategory = "CI"
 SearchTerm = "${host}.example.com"
 Activity.value = "proactive"
 customfield_1232 = "Icinga"
+duedate = "3 days"
 ```
 
 Pass `my-workflow` to your NotificationCommand through the `--template` parameter

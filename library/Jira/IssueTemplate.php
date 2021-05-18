@@ -15,7 +15,11 @@ class IssueTemplate
     {
         $fields = [];
         foreach ($this->getUnfilledFields() as $key => $tpl) {
-            $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            if ($key === 'duedate') {
+                $fields['duedate'] = $this->processDuedate($tpl);
+            } else {
+                $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            }
         }
 
         if (isset($fields['description'])) {
@@ -131,5 +135,31 @@ class IssueTemplate
             'icingaKey'      => '${icingaKey}',
             'icingaStatus'   => '${state}',
         ];
+    }
+
+    /**
+     * Adds the configured time from the config to todays date
+     *
+     * @param       string          $dateString     The configured time until the ticket is due
+     * @return      false|string
+     */
+    public function processDuedate($dateString) {
+        //TODO: error handling when configured time does not fit in date_interval_create_from_date_string()
+
+        try {
+            $formattedDate = date_format(
+                date_add(
+                    (new \DateTime('now')),
+                    date_interval_create_from_date_string($dateString)
+                ),
+                "Y-m-d"
+            );
+
+            return $formattedDate;
+        } catch (Exception $e) {
+            Logger::error($e->getMessage());
+        }
+
+        return null;
     }
 }

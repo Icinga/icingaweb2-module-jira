@@ -177,6 +177,7 @@ class RestApi
             'summary',
             'status',
             'created',
+            'duedate',
             'icingaStatus',
             'icingaKey',
         ];
