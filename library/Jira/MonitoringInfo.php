@@ -57,33 +57,27 @@ class MonitoringInfo
 
             if (isset($vars[$varName])) {
                 return $vars[$varName];
-            } else {
-                return null;
             }
-        } else {
-            $name = str_replace('.', '_', $name);
 
-            try {
-                return $this->object()->$name;
-            } catch (Exception $e) {
-                return null;
-            }
+            return null;
+        }
+
+        $name = str_replace('.', '_', $name);
+        try {
+            return $this->object()->$name;
+        } catch (Exception $e) {
+            return null;
         }
     }
 
     public function getHostname()
     {
-        return $this->object()->host_name;
+        return $this->hostName;
     }
 
     public function getService()
     {
-        $object = $this->object();
-        if ($object instanceof Service) {
-            return $object->service_description;
-        } else {
-            return $object->host_name;
-        }
+        return $this->serviceName;
     }
 
     public function getStateName()
@@ -91,9 +85,9 @@ class MonitoringInfo
         $object = $this->object();
         if ($object instanceof Service) {
             return strtoupper(Service::getStateText($object->service_state));
-        } else {
-            return strtoupper(Host::getStateText($object->host_state));
         }
+
+        return strtoupper(Host::getStateText($object->host_state));
     }
 
     public function getOutput()
@@ -102,10 +96,10 @@ class MonitoringInfo
         if ($object instanceof Service) {
             return $object->service_output . "\n"
                 . str_replace('\n', "\n", $object->service_long_output);
-        } else {
-            return $object->host_output . "\n"
-                . str_replace('\n', "\n", $object->host_long_output);
         }
+
+        return $object->host_output . "\n"
+            . str_replace('\n', "\n", $object->host_long_output);
     }
 
     public function vars()
@@ -122,34 +116,42 @@ class MonitoringInfo
     {
         if ($this->object() instanceof Service) {
             return $this->object()->serviceVariables;
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     public function getObjectParams()
     {
-        $object = $this->object();
-        $params = ['host' => $object->host_name];
-        if ($object instanceof Service) {
-            $params['service'] = $object->service_description;
+        $params = ['host' => $this->hostName];
+        if ($this->serviceName !== null) {
+            $params['service'] = $this->serviceName;
         }
 
         return $params;
     }
 
-    public function getObjectLabel()
+    public function getObjectProperties()
     {
-        $object = $this->object();
-        if ($object instanceof Service) {
-            return sprintf(
-                '%s on %s',
-                $object->service_description,
-                $object->host_name
-            );
+        $props = ['host_name' => $this->hostName];
+        if ($this->serviceName !== null) {
+            $props['service_description'] = $this->serviceName;
         }
 
-        return $object->host_name;
+        return $props;
+    }
+
+    public function getObjectLabel()
+    {
+        if ($this->serviceName === null) {
+            return $this->hostName;
+        }
+
+        return sprintf(
+            '%s on %s',
+            $this->serviceName,
+            $this->hostName
+        );
     }
 
     public function getDefaultSummary()
@@ -166,15 +168,15 @@ class MonitoringInfo
             $description = '';
         }
 
-        if ($object->getType() === 'service') {
+        if ($this->serviceName !== null) {
             $description .= sprintf(
                 "Service: %s\n",
-                LinkHelper::linkToIcingaService($object->host_name, $object->service_description)
+                LinkHelper::linkToIcingaService($this->hostName, $this->serviceName)
             );
         }
         $description .= sprintf(
             "Host: %s\n",
-            LinkHelper::linkToIcingaHost($object->host_name)
+            LinkHelper::linkToIcingaHost($this->hostName)
         );
 
         return $description;
@@ -189,7 +191,9 @@ class MonitoringInfo
                 $this->object = new Service(Backend::instance(), $this->hostName, $this->serviceName);
             }
 
-            $this->object->fetch();
+            if (! $this->object->fetch()) {
+                $this->object->setProperties((object) $this->getObjectProperties());
+            }
         }
 
         return $this->object;
