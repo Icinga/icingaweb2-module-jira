@@ -31,6 +31,7 @@ Changes
 * FIX: we're sending Content-Length to make proxies happy (#51)
 * FEATURE: Show status for created issues (#44)
 * FEATURE: Allow choosing a default template (#36)
+* FEATURE: Add configurable duedate for created JIRA issues (#37)
 
 ### v1.0.1
 

@@ -15,7 +15,11 @@ class IssueTemplate
     {
         $fields = [];
         foreach ($this->getUnfilledFields() as $key => $tpl) {
-            $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            if ($key === 'duedate') {
+                $fields['duedate'] = date('Y-m-d', strtotime($tpl));
+            } else {
+                $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            }
         }
 
         if (isset($fields['description'])) {
