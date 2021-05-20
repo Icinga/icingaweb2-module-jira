@@ -34,8 +34,8 @@ class SendCommand extends Command
      * OPTIONAL
      *
      *   --service <service-name>   Icinga Service name
-     *   --duedate <duedate>        When the Jira ticket is to be due.
-     *                              It is a date in 'YYYY-MM-DD' format.
+     *   --due-date <due-date>        When the Jira ticket is to be due.
+     *                              It can be a date  or time difference in textual datetime format.
      *   --template <template-name> Template name (templates.ini section)
      *   --ack-author <author>      Username shown for acknowledgements,
      *                              defaults to "JIRA"
@@ -59,7 +59,7 @@ class SendCommand extends Command
         $ackPipe     = $p->shift('command-pipe');
         $status      = $p->shiftRequired('state');
         $description = $p->shiftRequired('description');
-        $duedate     = $p->shift('duedate');
+        $duedate     = $p->shift('due-date');
 
         $jira = $this->jira();
         $issue = $jira->eventuallyGetLatestOpenIssueFor($host, $service);
