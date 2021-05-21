@@ -23,7 +23,7 @@ This is 100% free Open Source Software. Interested? Then let's [get started](doc
 Changes
 -------
 
-### v1.1.0 (unreleased)
+### v1.1.0
 
 * FIX: Render status badge in case there is no related icon (#39)
 * FIX: Use the same notification header via Web Form and CLI (#42)
