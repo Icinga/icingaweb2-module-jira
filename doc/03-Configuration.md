@@ -39,7 +39,7 @@ It will be immediately ready for use:
 ICINGAWEB_MODULEPATH="/usr/share/icingaweb2/modules"
 REPO_URL="https://github.com/Icinga/icingaweb2-module-jira"
 TARGET_DIR="${ICINGAWEB_MODULEPATH}/jira"
-MODULE_VERSION="1.0.1"
+MODULE_VERSION="1.1.0"
 git clone "${REPO_URL}" "${TARGET_DIR}" --branch "v${MODULE_VERSION}"
 ```
 
