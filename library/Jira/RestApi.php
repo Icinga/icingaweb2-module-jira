@@ -368,10 +368,10 @@ class RestApi
                 throw new RuntimeException(\implode('; ', (array) $result->errors));
             }
 
-            throw new RuntimeException(
+            throw new RuntimeException(sprintf(
                 'REST API Request failed, got %s',
                 $this->getHttpErrorMessage($statusCode)
-            );
+            ));
         }
 
         Benchmark::measure('Rest Api, got response');
