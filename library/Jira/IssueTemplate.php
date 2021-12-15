@@ -129,7 +129,7 @@ class IssueTemplate
     {
         $config = Config::module('jira');
         $Key = $config->get('jira_key_fields', 'field_icingaKey', 'icingaKey');
-        $Status = $config->get('jira_key_fields', 'field_icingaStatus', 'icingaStatus');
+        $Status = $config->get('jira_key_fields', 'field_icingaStatus', 'customfield_19220');
         return [
             'project.key'    => '${project}',
             'issuetype.name' => '${issuetype}',

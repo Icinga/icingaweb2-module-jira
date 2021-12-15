@@ -173,7 +173,7 @@ class RestApi
     {
         $config = Config::module('jira');
         $keyField = $config->get('ui', 'field_icingaKey', 'icingaKey');
-        $keyStatus = $config->get('jira_key_fields', 'field_icingaStatus', 'icingaStatus');
+        $keyStatus = $config->get('jira_key_fields', 'field_icingaStatus', 'customfield_19220');
         $start = 0;
         $limit = 15;
         $query = $this->prepareIssueQuery($host, $service, $onlyOpen);
