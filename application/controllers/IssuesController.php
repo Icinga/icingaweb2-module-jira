@@ -2,22 +2,16 @@
 
 namespace Icinga\Module\Jira\Controllers;
 
+use Icinga\Module\Jira\MonitoringInfo;
 use Icinga\Module\Jira\Web\Controller;
 use Icinga\Module\Jira\Web\Form;
 use Icinga\Module\Jira\Web\Form\NewIssueForm;
 use Icinga\Module\Jira\Web\Table\IssuesTable;
-use Icinga\Module\Monitoring\Object\Host;
-use Icinga\Module\Monitoring\Object\Service;
-use Icinga\Module\Monitoring\Backend;
 use Icinga\Web\Notification;
 use Icinga\Web\Url;
 
 class IssuesController extends Controller
 {
-    /**
-     * @throws \Icinga\Exception\Http\HttpNotFoundException
-     * @throws \Icinga\Exception\ProgrammingError
-     */
     public function indexAction()
     {
         $host = $this->params->get('host');
@@ -33,11 +27,7 @@ class IssuesController extends Controller
         $this->addTitle($title)->activateTab()->setAutorefreshInterval(60);
 
         $this->runFailSafe(function () use ($host, $service, $showAll) {
-            $issues = $this->jira()->fetchIssues(
-                $host,
-                $service,
-                ! $showAll
-            );
+            $issues = $this->jira()->fetchIssues($host, $service, ! $showAll);
             if (empty($issues)) {
                 $this->content()->add($this->translate('No issue found'));
             } else {
@@ -55,47 +45,31 @@ class IssuesController extends Controller
         $this->runFailSafe('showNewIssueForm');
     }
 
-    /**
-     * @throws \Icinga\Exception\ConfigurationError
-     * @throws \Icinga\Exception\Http\HttpNotFoundException
-     * @throws \Icinga\Exception\MissingParameterException
-     * @throws \Icinga\Exception\ProgrammingError
-     */
     protected function showNewIssueForm()
     {
-        $host = $this->params->getRequired('host');
-        $service = $this->params->get('service');
+        $info = $this->requireMonitoringInfo();
+        $info->setNotificationType('MANUAL'); // Not sure about this, but that's how it used to be
+        $this->addTitle($this->translate('Create JIRA Issue') . ': ' . $info->getObjectLabel())
+            ->activateTab();
 
-        $this->addTitle(
-            $this->translate('Create JIRA Issue') . $this->titleSuffix($host, $service)
-        )->activateTab();
-
-        $params = ['host' => $host];
-        if ($service) {
-            $params['service'] = $service;
-            $object = new Service(Backend::instance(), $host, $service);
-        } else {
-            $object = new Host(Backend::instance(), $host);
-        }
-        $object->fetch();
-
-        $form = new NewIssueForm();
-        $form->setJira($this->jira())
-            ->setObject($object)
-            ->on(Form::ON_SUCCESS, function (NewIssueForm $form) use ($params) {
+        $form = (new NewIssueForm($this->jira(), $this->getModuleConfig(), $info))
+            ->on(Form::ON_SUCCESS, function (NewIssueForm $form) use ($info) {
                 $form->createIssue();
                 Notification::success('A new incident has been created');
-                $this->redirectNow(Url::fromPath('jira/issues', $params));
+                $this->redirectNow(Url::fromPath('jira/issues', $info->getObjectParams()));
             })
             ->handleRequest($this->getServerRequest());
         $this->content()->add($form);
     }
 
+    protected function requireMonitoringInfo()
+    {
+        return new MonitoringInfo($this->params->getRequired('host'), $this->params->get('service'));
+    }
+
     /**
      * @param null $name
      * @return $this
-     * @throws \Icinga\Exception\Http\HttpNotFoundException
-     * @throws \Icinga\Exception\ProgrammingError
      */
     protected function activateTab($name = null)
     {

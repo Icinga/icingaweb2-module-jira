@@ -15,8 +15,6 @@ class RestApi
 
     protected $baseUrlForLink;
 
-    protected $icingaUrl;
-
     protected $username;
 
     protected $password;
@@ -60,9 +58,6 @@ class RestApi
         $pass = $config->get('api', 'password');
 
         $api = new static($url, $user, $pass);
-        if ($url = $config->get('icingaweb', 'url')) {
-            $api->icingaUrl = \rtrim($url, '/');
-        }
 
         return $api;
     }
@@ -189,6 +184,7 @@ class RestApi
             'summary',
             'status',
             'created',
+            'duedate',
             $keyStatus,
             $keyField,
         ];
@@ -301,35 +297,6 @@ class RestApi
         return $issue;
     }
 
-    public function linkToIcingaHost($hostname)
-    {
-        if ($this->icingaUrl === null) {
-            return $hostname;
-        } else {
-            return \sprintf(
-                '[%s|%s/monitoring/host/show?host=%s]',
-                $hostname,
-                $this->icingaUrl,
-                \rawurlencode($hostname)
-            );
-        }
-    }
-
-    public function linkToIcingaService($hostname, $service)
-    {
-        if ($this->icingaUrl === null) {
-            return $service;
-        } else {
-            return \sprintf(
-                '[%s|%s/monitoring/service/show?host=%s&service=%s]',
-                $service,
-                $this->icingaUrl,
-                \rawurlencode($hostname),
-                \rawurlencode($service)
-            );
-        }
-    }
-
     public function url($url)
     {
         return \implode('/', [$this->baseUrl, $this->apiName, $this->apiVersion, $url]);
@@ -368,6 +335,7 @@ class RestApi
             CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_USERPWD        => $auth,
             CURLOPT_CUSTOMREQUEST  => \strtoupper($method),
+            CURLOPT_POSTFIELDS    => $body,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => 3,
 
@@ -375,10 +343,6 @@ class RestApi
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
         );
-
-        if ($body !== null) {
-            $opts[CURLOPT_POSTFIELDS] = $body;
-        }
 
         curl_setopt_array($curl, $opts);
         // TODO: request headers, validate status code
@@ -411,10 +375,10 @@ class RestApi
                 throw new RuntimeException(\implode('; ', (array) $result->errors));
             }
 
-            throw new RuntimeException(
+            throw new RuntimeException(sprintf(
                 'REST API Request failed, got %s',
                 $this->getHttpErrorMessage($statusCode)
-            );
+            ));
         }
 
         Benchmark::measure('Rest Api, got response');

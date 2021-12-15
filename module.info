@@ -1,5 +1,5 @@
 Name: JIRA
-Version: 1.0.1
+Version: 1.1.0
 Depends: monitoring (>=2.6.0), ipl (>=0.3.0), incubator (>=0.5.0)
 Description: JIRA integration
  This module allows to send notifications to JIRA and integrates nicely into

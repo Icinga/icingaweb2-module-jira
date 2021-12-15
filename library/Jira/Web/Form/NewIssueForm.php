@@ -10,23 +10,23 @@ use Icinga\Module\Jira\IssueTemplate;
 use Icinga\Module\Jira\MonitoringInfo;
 use Icinga\Module\Jira\RestApi;
 use Icinga\Module\Jira\Web\Form;
-use Icinga\Module\Monitoring\Object\MonitoredObject;
-use Icinga\Module\Monitoring\Object\Host;
-use Icinga\Module\Monitoring\Object\Service;
 
 class NewIssueForm extends Form
 {
     /** @var RestApi */
     private $jira;
 
-    /** @var  MonitoredObject */
-    private $object;
+    /** @var MonitoringInfo */
+    private $monitoringInfo;
 
-    public function setJira(RestApi $jira)
+    /** @var Config */
+    private $config;
+
+    public function __construct(RestApi $jira, Config $config, MonitoringInfo $info)
     {
         $this->jira = $jira;
-
-        return $this;
+        $this->config = $config;
+        $this->monitoringInfo = $info;
     }
 
     protected function assemble()
@@ -35,7 +35,7 @@ class NewIssueForm extends Form
         $this->addAttributes([
             'class' => 'icinga-form icinga-controls'
         ]);
-        $config = Config::module('jira');
+        $config = $this->config;
         $defaultProject = $config->get('ui', 'default_project');
         $defaultTemplate = $config->get('ui', 'default_template');
         $defaultAck = $config->get('ui', 'acknowledge', 'y');
@@ -83,7 +83,7 @@ class NewIssueForm extends Form
         $this->addElement('text', 'summary', [
             'label'       => $this->translate('Summary'),
             'required'    => true,
-            'value'       => $this->getObjectDefault('summary'),
+            'value'       => $this->monitoringInfo->getDefaultSummary(),
             'description' => $this->translate(
                 'Summary of this incident'
             ),
@@ -91,7 +91,7 @@ class NewIssueForm extends Form
         $this->addElement('textarea', 'description', array(
             'label'       => $this->translate('Description'),
             'required'    => true,
-            'value'       => $this->getObjectDefault('description'),
+            'value'       => $this->monitoringInfo->getOutput(),
             'rows'        => 8,
             'description' => $this->translate(
                 'Message body of this issue'
@@ -131,16 +131,6 @@ class NewIssueForm extends Form
         return $templates;
     }
 
-    private function getObjectDefault($key)
-    {
-        $defaults = $this->getObjectDefaults();
-        if (array_key_exists($key, $defaults)) {
-            return $defaults[$key];
-        } else {
-            return null;
-        }
-    }
-
     /**
      * @param $key
      * @param $options
@@ -157,66 +147,6 @@ class NewIssueForm extends Form
         }
     }
 
-    public function setObject(MonitoredObject $object)
-    {
-        $this->object = $object;
-
-        return $this;
-    }
-
-    private function getObjectDefaults()
-    {
-        $object = $this->object;
-        $description = "Notification Type: MANUAL\n";
-
-        if ($object->getType() === 'service') {
-            $description .= sprintf(
-                "Service: %s\n",
-                $this->jira->linkToIcingaService($object->host_name, $object->service_description)
-            ) . sprintf(
-                "Host: %s\n",
-                $this->jira->linkToIcingaHost($object->host_name)
-            );
-            $description .= "\n$object->service_output\n"
-                . str_replace('\n', "\n", $object->service_long_output);
-            $summary = sprintf(
-                '%s on %s is %s',
-                $object->service_description,
-                $object->host_name,
-                $this->getStateName()
-            );
-        } else {
-            $description .= sprintf(
-                "Host: %s\n",
-                $this->jira->linkToIcingaHost($object->host_name)
-            );
-            $description .= "\n$object->host_output\n"
-                . str_replace('\n', "\n", $object->host_long_output);
-            $summary = sprintf(
-                '%s is %s',
-                $object->host_name,
-                $this->getStateName()
-            );
-        }
-
-        $defaults = [
-            'summary'     => $summary,
-            'description' => $description,
-        ];
-
-        return $defaults;
-    }
-
-    protected function getStateName()
-    {
-        $object = $this->object;
-        if ($object->getType() === 'service') {
-            return strtoupper(Service::getStateText($object->service_state));
-        } else {
-            return strtoupper(Host::getStateText($object->host_state));
-        }
-    }
-
     public function onSuccess()
     {
     }
@@ -226,23 +156,25 @@ class NewIssueForm extends Form
      */
     public function createIssue()
     {
-        $params = $this->getValues();
-        $params['state'] = $this->getStateName();
-        $object = $this->object;
-        $params['host'] = $host = $object->host_name;
-        if ($object->getType() === 'service') {
-            $params['service'] = $service = $object->service_description;
-        } else {
-            $service = null;
-        }
+        $info = $this->monitoringInfo;
+        $params = [
+            'state'   => $info->getStateName(),
+            'host'    => $host = $info->getHostname(),
+            'service' => $service = $info->getService(),
+        ] + $this->getValues();
 
         $template = new IssueTemplate();
         $template->addByTemplateName($this->getValue('template'));
-        $template->setMonitoringInfo(new MonitoringInfo($host, $service));
+        $template->setMonitoringInfo($this->monitoringInfo);
         $key = $this->jira->createIssue($template->getFilled($params));
         if ($this->getValue('acknowledge') === 'n') {
             return;
         }
+        $this->eventuallyAcknowledge($key, $host, $service);
+    }
+
+    protected function eventuallyAcknowledge($key, $host, $service)
+    {
         $ackMessage = "JIRA issue $key has been created";
 
         try {

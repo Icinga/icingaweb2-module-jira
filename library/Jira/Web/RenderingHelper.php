@@ -74,6 +74,20 @@ class RenderingHelper
         );
     }
 
+    public function renderStatusBadge($status)
+    {
+        // TODO: a color map for $status->statusCategory->colorName could be helpful
+        if (substr($status->iconUrl, -1) === '/') {
+            if (isset($status->statusCategory->name)) {
+                return Html::tag('span', [
+                    'class' => 'badge status-badge',
+                ], $status->statusCategory->name);
+            }
+        }
+
+        return [$this->renderIcon($status), ' ', $status->name];
+    }
+
     public function renderIcon($object)
     {
         return $this->renderIconImage(
@@ -99,8 +113,6 @@ class RenderingHelper
 
     public function shortTimeSince($time, $onlyTime = true)
     {
-        $int = strtotime($time);
-
         return Html::tag(
             'span',
             ['title' => $time, 'class' => 'time-since'],

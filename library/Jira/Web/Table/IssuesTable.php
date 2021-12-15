@@ -36,7 +36,7 @@ class IssuesTable extends Table
                 static::td([
                     $helper->renderAvatar($issue->fields->project),
                     $helper->renderIcon($issue->fields->issuetype),
-                    $helper->renderIcon($issue->fields->status),
+                    $helper->renderStatusBadge($issue->fields->status),
                 ])->setSeparator(' '),
                 static::td([
                     Html::tag('strong')->add(

@@ -23,6 +23,16 @@ This is 100% free Open Source Software. Interested? Then let's [get started](doc
 Changes
 -------
 
+### v1.1.0
+
+* FIX: Render status badge in case there is no related icon (#39)
+* FIX: Use the same notification header via Web Form and CLI (#42)
+* FIX: broken IssueDetails link has been fixed (#31, #48)
+* FIX: we're sending Content-Length to make proxies happy (#51)
+* FEATURE: Show status for created issues (#44)
+* FEATURE: Allow choosing a default template (#36)
+* FEATURE: Add configurable duedate for created JIRA issues (#37)
+
 ### v1.0.1
 
 * FIX: Ticket URLs pointing to JIRA for Setups sitting in the DocumentRoot (#30)

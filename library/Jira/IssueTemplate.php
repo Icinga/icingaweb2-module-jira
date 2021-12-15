@@ -15,7 +15,15 @@ class IssueTemplate
     {
         $fields = [];
         foreach ($this->getUnfilledFields() as $key => $tpl) {
-            $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            if ($key === 'duedate') {
+                $fields['duedate'] = date('Y-m-d', strtotime($tpl));
+            } else {
+                $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
+            }
+        }
+
+        if (isset($fields['description'])) {
+            $fields['description'] = $this->monitoringInfo->getDescriptionHeader() . "\n" . $fields['description'];
         }
 
         return $fields;
@@ -50,7 +58,7 @@ class IssueTemplate
         return $this;
     }
 
-    protected function addToFields(& $fields, $key, $value)
+    protected function addToFields(&$fields, $key, $value)
     {
         $dot = strpos($key, '.');
         if (false === $dot) {
@@ -68,7 +76,7 @@ class IssueTemplate
 
     protected function fillTemplate($string, $params)
     {
-        $pattern = '/\$\{([^}\s]+)\}/';
+        $pattern = '/\${([^}\s]+)}/';
         return preg_replace_callback(
             $pattern,
             function ($match) use ($params) {
