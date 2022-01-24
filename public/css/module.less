@@ -6,6 +6,7 @@
     vertical-align: middle;
   }
 }
+
 .status-badge {
     border: 1px solid @icinga-blue;
     border-radius: 0.25em;
@@ -34,32 +35,40 @@ p.state-hint {
     line-height: 2em;
     max-width: 60em;
     border-left-width: 3em;
+
     &:before {
         position: relative;
         margin-left: -1.5em;
         margin-right: 0.5em;
         font-family: 'ifont';
-        color: @text-color;
+        color: @text-color-on-icinga-blue;
         font-size: 2em;
     }
+
     &.ok {
         border-color: @color-ok;
     }
+
     &.warning {
         border-color: @color-warning;
     }
+
     &.error {
         border-color: @color-critical;
     }
+
     &.critical:before, &.error:before {
         content: '\e885';
     }
+
     &.warning:before {
         content: '\e885';
     }
+
     &.ok:before {
         content: '\e803';
     }
+
     a {
         text-decoration: underline;
     }
@@ -79,13 +88,14 @@ img.icon {
     padding-left: 0.5em;
     width: 100%;
 }
-.form-compat26 {
 
+.form-compat26 {
     .form-element-description {
         max-width: 36em;
         padding: 0;
         width: auto;
     }
+
     .control-label-group {
         width: 15em;
     }
