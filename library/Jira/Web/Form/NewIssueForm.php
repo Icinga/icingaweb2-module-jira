@@ -73,6 +73,8 @@ class NewIssueForm extends Form
             return $type->subtask;
         });
 
+        asort($enum, SORT_FLAG_CASE | SORT_NATURAL);
+
         $this->addElement('select', 'issuetype', [
             'label' => $this->translate('Issue type'),
             'multiOptions' => $this->optionalEnum($enum),
