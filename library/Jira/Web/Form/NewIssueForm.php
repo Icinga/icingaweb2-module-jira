@@ -73,7 +73,7 @@ class NewIssueForm extends Form
             return $type->subtask;
         });
 
-        asort($enum, SORT_STRING | SORT_FLAG_CASE | SORT_NATURAL);
+        asort($enum, SORT_FLAG_CASE | SORT_NATURAL);
 
         $this->addElement('select', 'issuetype', [
             'label' => $this->translate('Issue type'),
