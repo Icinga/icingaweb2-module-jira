@@ -12,11 +12,11 @@ class IssueController extends Controller
         $key = $this->params->get('key');
         $issue = $this->runFailSafe(function () use ($key) {
             $issue = $this->jira()->fetchIssue($key);
-            $this->content()->add(new IssueDetails($issue));
+            $this->addContent(new IssueDetails($issue));
             return $issue;
         });
 
-        $this->addSingleTab('Issue details');
+        $this->addTitleTab('Issue details');
         if ($issue) {
             $this->addTitle('%s: %s', $key, $issue->fields->summary);
             // $this->dump($issue);

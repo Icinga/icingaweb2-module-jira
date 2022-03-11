@@ -3,9 +3,9 @@
 namespace Icinga\Module\Jira\Web;
 
 use Exception;
-use gipfl\IcingaWeb2\CompatController;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
+use ipl\Web\Compat\CompatController;
 
 class Controller extends CompatController
 {
@@ -14,7 +14,7 @@ class Controller extends CompatController
 
     protected function dump($what)
     {
-        $this->content()->add(
+        $this->addContent(
             Html::tag('pre', null, print_r($what, true))
         );
 
@@ -32,13 +32,13 @@ class Controller extends CompatController
                 return $callable();
             }
         } catch (Exception $e) {
-            $this->content()->add([
+            $this->addContent(
                 Html::tag('p', ['class' => 'state-hint error'], sprintf(
                     $this->translate('ERROR: %s'),
                     $e->getMessage()
                 ))
-            ]);
-            // $this->content()->add(Html::tag('pre', null, $e->getTraceAsString()));
+            );
+            // $this->addContent(Html::tag('pre', null, $e->getTraceAsString()));
 
             return false;
         }
@@ -62,5 +62,22 @@ class Controller extends CompatController
     protected function connectToJira()
     {
         return RestApi::fromConfig();
+    }
+
+    /**
+     * Set the window's title and add it as h1 in the controls
+     *
+     * @param string $title
+     * @param mixed ...$args
+     *
+     * @return $this
+     */
+    protected function addTitle($title, ...$args)
+    {
+        $this->setTitle($title, ...$args);
+
+        $this->controls->prependHtml(Html::tag('h1', null, vsprintf($title, $args)));
+
+        return $this;
     }
 }
