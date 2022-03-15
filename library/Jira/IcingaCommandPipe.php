@@ -2,24 +2,49 @@
 
 namespace Icinga\Module\Jira;
 
-use Icinga\Module\Monitoring\Backend;
+use Icinga\Application\Modules\Module;
+use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Monitoring\Command\Object\AcknowledgeProblemCommand;
 use Icinga\Module\Monitoring\Command\Transport\CommandTransport;
-use Icinga\Module\Monitoring\Object\Host;
-use Icinga\Module\Monitoring\Object\Service;
+use Icinga\Module\Icingadb\Command\Transport\CommandTransport as IcingadbCommandTransport;
+use Icinga\Module\Icingadb\Command\Object\AcknowledgeProblemCommand as IcingadbAcknowledgeProblemCommand;
 use Icinga\Exception\IcingaException;
+use Icinga\Module\Monitoring\Object\MonitoredObject;
 
 class IcingaCommandPipe
 {
+    private $monitoringInfo;
+
     public function acknowledge($author, $message, $host, $service = null)
     {
-        $object = $this->getObject($host, $service);
-        if ($object->acknowledged) {
+        if ($this->monitoringInfo === null) {
+            if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
+                $backend = new IcingadbBackend();
+            } else {
+                $backend = new IdoBackend();
+            }
+
+            $this->setMonitoringInfo($backend->getMonitoringInfo($host, $service));
+        }
+
+        if (! $this->monitoringInfo->hasObject()) {
+            if ($service !== null) {
+                throw new IcingaException(
+                    'No service "%s" found on host "%s"',
+                    $service,
+                    $host
+                );
+            } else {
+                throw new IcingaException('No such host found: %s', $host);
+            }
+        }
+
+        if ($this->monitoringInfo->isAcknowledged()) {
             return false;
         }
 
-        $cmd = new AcknowledgeProblemCommand();
-        $cmd->setObject($object)
+        $cmd = $this->getAcknowledgeProblemCommand();
+        $cmd->setObject($this->monitoringInfo->getObject())
             ->setAuthor($author)
             ->setComment($message)
             ->setPersistent(false)
@@ -27,44 +52,34 @@ class IcingaCommandPipe
             ->setNotify(false)
             ;
 
-        $transport = new CommandTransport();
+        $transport = $this->getCommandTransport();
         $transport->send($cmd);
 
         return true;
     }
 
-    protected function getObject($hostname, $service)
+    public function setMonitoringInfo(MonitoringInfo $info)
     {
-        if ($service === null) {
-            return $this->getHostObject($hostname);
-        } else {
-            return $this->getServiceObject($hostname, $service);
-        }
+        $this->monitoringInfo = $info;
+
+        return $this;
     }
 
-    protected function getHostObject($hostname)
+    protected function getAcknowledgeProblemCommand()
     {
-        $host = new Host(Backend::instance(), $hostname);
-
-        if ($host->fetch() === false) {
-            throw new IcingaException('No such host found: %s', $hostname);
+        if ($this->monitoringInfo->getObject() instanceof MonitoredObject) {
+            return new AcknowledgeProblemCommand();
         }
 
-        return $host;
+        return new IcingadbAcknowledgeProblemCommand();
     }
 
-    protected function getServiceObject($hostname, $service)
+    protected function getCommandTransport()
     {
-        $service = new Service(Backend::instance(), $hostname, $service);
-
-        if ($service->fetch() === false) {
-            throw new IcingaException(
-                'No service "%s" found on host "%s"',
-                $service,
-                $hostname
-            );
+        if ($this->monitoringInfo->getObject() instanceof MonitoredObject) {
+            return new CommandTransport();
         }
 
-        return $service;
+        return new IcingadbCommandTransport();
     }
 }

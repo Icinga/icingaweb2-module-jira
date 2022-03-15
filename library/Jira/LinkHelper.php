@@ -22,6 +22,15 @@ class LinkHelper
         return LinkHelper::jiraLink($hostname, "$url/monitoring/host/show?host=" . \rawurlencode($hostname));
     }
 
+    public static function linkToIcingadbHost($hostname)
+    {
+        if (($url = self::getIcingaWebUrl()) === null) {
+            return $hostname;
+        }
+
+        return LinkHelper::jiraLink($hostname, "$url/icingadb/host?name=" . \rawurlencode($hostname));
+    }
+
     public static function linkToIcingaService($hostname, $service)
     {
         if (($url = self::getIcingaWebUrl()) === null) {
@@ -32,6 +41,19 @@ class LinkHelper
             "$url/monitoring/service/show?host=%s&service=%s",
             \rawurlencode($hostname),
             \rawurlencode($service)
+        ));
+    }
+
+    public static function linkToIcingadbService($hostname, $service)
+    {
+        if (($url = self::getIcingaWebUrl()) === null) {
+            return $service;
+        }
+
+        return LinkHelper::jiraLink($service, \sprintf(
+            "$url/icingadb/service?name=%s&host.name=%s",
+            \rawurlencode($service),
+            \rawurlencode($hostname)
         ));
     }
 

@@ -2,21 +2,19 @@
 
 namespace Icinga\Module\Jira;
 
-use Icinga\Module\Monitoring\Backend;
+use Icinga\Exception\IcingaException;
+use Icinga\Module\Icingadb\Model\CustomvarFlat;
 use Icinga\Module\Monitoring\Object\Host;
 use Icinga\Module\Monitoring\Object\MonitoredObject;
 use Icinga\Module\Monitoring\Object\Service;
+use Icinga\Module\Icingadb\Model\Host as IcingadbHost;
+use Icinga\Module\Icingadb\Model\Service as IcingadbService;
 use Exception;
+use InvalidArgumentException;
 
 class MonitoringInfo
 {
-    /** @var string */
-    protected $hostName;
-
-    /** @var string|null */
-    protected $serviceName;
-
-    /** @var MonitoredObject */
+    /** @var MonitoredObject|IcingadbHost|IcingadbService */
     protected $object;
 
     /** @var string */
@@ -26,10 +24,24 @@ class MonitoringInfo
 
     protected $fetched;
 
-    public function __construct($hostName, $serviceName = null)
+    /**
+     * @throws IcingaException  When the given object does not belong to the expected classes
+     */
+    public function __construct($object)
     {
-        $this->hostName = $hostName;
-        $this->serviceName = $serviceName;
+        if (! $object instanceof MonitoredObject
+            && ! $object instanceof IcingadbHost
+            && ! $object instanceof IcingadbService) {
+            throw new InvalidArgumentException(sprintf(
+                'Expects the given object to be an instance of %s, %s or %s: got %s',
+                MonitoredObject::class,
+                IcingadbHost::class,
+                IcingadbService::class,
+                get_class($object)
+            ));
+        }
+
+        $this->object = $object;
     }
 
     public function setNotificationType($type)
@@ -64,7 +76,7 @@ class MonitoringInfo
 
         $name = str_replace('.', '_', $name);
         try {
-            return $this->object()->$name;
+            return $this->object->$name;
         } catch (Exception $e) {
             return null;
         }
@@ -72,50 +84,80 @@ class MonitoringInfo
 
     public function getHostname()
     {
-        return $this->hostName;
+        if ($this->object instanceof MonitoredObject) {
+            return $this->object->host_name;
+        }
+
+        if ($this->object instanceof IcingadbService) {
+            return $this->object->host->name;
+        }
+
+        return $this->object->name;
     }
 
     public function getService()
     {
-        return $this->serviceName;
+        if ($this->object instanceof Service) {
+            return $this->object->service;
+        }
+
+        if ($this->object instanceof IcingadbService) {
+            return $this->object->name;
+        }
+
+        return null;
     }
 
     public function getStateName()
     {
-        $object = $this->object();
-        if ($object instanceof Service) {
-            return strtoupper(Service::getStateText($object->service_state));
+        if ($this->object instanceof MonitoredObject) {
+            if ($this->object instanceof Service) {
+                return strtoupper(Service::getStateText($this->object->service_state));
+            }
+
+            return strtoupper(Host::getStateText($this->object->host_state));
         }
 
-        return strtoupper(Host::getStateText($object->host_state));
+        return strtoupper($this->object->state->getStateText());
     }
 
     public function getOutput()
     {
-        $object = $this->object();
-        if ($object instanceof Service) {
-            return $object->service_output . "\n"
-                . str_replace('\n', "\n", $object->service_long_output);
+        if ($this->object instanceof MonitoredObject) {
+            if ($this->object instanceof Service) {
+                return $this->object->service_output . "\n"
+                    . str_replace('\n', "\n", $this->object->service_long_output);
+            }
+
+            return $this->object->host_output . "\n"
+                . str_replace('\n', "\n", $this->object->host_long_output);
         }
 
-        return $object->host_output . "\n"
-            . str_replace('\n', "\n", $object->host_long_output);
-    }
-
-    public function vars()
-    {
-        return $this->object()->variables;
+        return $this->object->state->output . "\n"
+            . str_replace('\n', "\n", $this->object->state->long_output);
     }
 
     public function hostVars()
     {
-        return $this->object()->hostVariables;
+        if ($this->object instanceof MonitoredObject) {
+            return $this->object->hostVariables;
+        }
+
+        if ($this->object instanceof IcingadbService) {
+            return (new CustomvarFlat())->unFlattenVars($this->object->host->customvar_flat);
+        }
+
+        return (new CustomvarFlat())->unFlattenVars($this->object->customvar_flat);
     }
 
     public function serviceVars()
     {
-        if ($this->object() instanceof Service) {
-            return $this->object()->serviceVariables;
+        if ($this->object instanceof Service) {
+            return $this->object->serviceVariables;
+        }
+
+        if ($this->object instanceof IcingadbService) {
+            return (new CustomvarFlat())->unFlattenVars($this->object->customvar_flat);
         }
 
         return [];
@@ -123,34 +165,24 @@ class MonitoringInfo
 
     public function getObjectParams()
     {
-        $params = ['host' => $this->hostName];
-        if ($this->serviceName !== null) {
-            $params['service'] = $this->serviceName;
+        $params = ['host' => $this->getHostname()];
+        if ($this->getService() !== null) {
+            $params['service'] = $this->getService();
         }
 
         return $params;
     }
 
-    public function getObjectProperties()
-    {
-        $props = ['host_name' => $this->hostName];
-        if ($this->serviceName !== null) {
-            $props['service_description'] = $this->serviceName;
-        }
-
-        return $props;
-    }
-
     public function getObjectLabel()
     {
-        if ($this->serviceName === null) {
-            return $this->hostName;
+        if ($this->getService() === null) {
+            return $this->getHostname();
         }
 
         return sprintf(
             '%s on %s',
-            $this->serviceName,
-            $this->hostName
+            $this->getService(),
+            $this->getHostname()
         );
     }
 
@@ -161,41 +193,50 @@ class MonitoringInfo
 
     public function getDescriptionHeader()
     {
-        $object = $this->object();
         if ($this->notificationType) {
             $description = sprintf("Notification Type: %s\n", rawurlencode($this->notificationType));
         } else {
             $description = '';
         }
 
-        if ($this->serviceName !== null) {
-            $description .= sprintf(
-                "Service: %s\n",
-                LinkHelper::linkToIcingaService($this->hostName, $this->serviceName)
-            );
+        $hostLink = $this->object instanceof MonitoredObject
+            ? LinkHelper::linkToIcingaHost($this->getHostname())
+            : LinkHelper::linkToIcingadbHost($this->getHostname());
+
+        if ($this->getService() !== null) {
+            $serviceLink = $this->object instanceof MonitoredObject
+                ? LinkHelper::linkToIcingaService($this->getHostname(), $this->getService())
+                : LinkHelper::linkToIcingadbService($this->getHostname(), $this->getService());
+
+            $description .= sprintf("Service: %s\n", $serviceLink);
         }
-        $description .= sprintf(
-            "Host: %s\n",
-            LinkHelper::linkToIcingaHost($this->hostName)
-        );
+
+        $description .= sprintf("Host: %s\n", $hostLink);
 
         return $description;
     }
 
-    public function object()
+    public function isAcknowledged()
     {
-        if ($this->object === null) {
-            if ($this->serviceName ===  null) {
-                $this->object = new Host(Backend::instance(), $this->hostName);
-            } else {
-                $this->object = new Service(Backend::instance(), $this->hostName, $this->serviceName);
-            }
+        return $this->object instanceof MonitoredObject
+            ? $this->object->acknowledged
+            : $this->object->state->is_acknowledged;
+    }
 
-            if (! $this->object->fetch()) {
-                $this->object->setProperties((object) $this->getObjectProperties());
-            }
+    public function hasObject()
+    {
+        if ($this->object instanceof MonitoredObject) {
+            return $this->object->fetch() !== false;
         }
 
+        return $this->object->hasProperty('is_empty') === false;
+    }
+
+    /**
+     * @return IcingadbHost|IcingadbService|MonitoredObject
+     */
+    public function getObject()
+    {
         return $this->object;
     }
 }

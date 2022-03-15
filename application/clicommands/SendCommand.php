@@ -3,13 +3,15 @@
 namespace Icinga\Module\Jira\Clicommands;
 
 use Exception;
+use Icinga\Application\Icinga;
 use Icinga\Application\Logger;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
+use Icinga\Module\Jira\IcingadbBackend;
+use Icinga\Module\Jira\IdoBackend;
 use Icinga\Module\Jira\IssueTemplate;
 use Icinga\Module\Jira\IssueUpdate;
 use Icinga\Module\Jira\LegacyCommandPipe;
-use Icinga\Module\Jira\MonitoringInfo;
 
 class SendCommand extends Command
 {
@@ -42,6 +44,8 @@ class SendCommand extends Command
      *   --no-acknowledge           Do not acknowledge Icinga problem
      *   --command-pipe <path>      Legacy command pipe, allows to run without
      *                              depending on a configured monitoring module
+     *   --icingadb                 Use icingadb as backend, the IDO backend (if available)
+     *                              is used if not passed
      *
      * FLAGS
      *   --verbose    More log information
@@ -63,6 +67,20 @@ class SendCommand extends Command
 
         $jira = $this->jira();
         $issue = $jira->eventuallyGetLatestOpenIssueFor($host, $service);
+        $mm = $this->app->getModuleManager();
+        if ($p->shift('icingadb') || ! $mm->hasEnabled('monitoring')) {
+            if (! $mm->hasEnabled('icingadb')) {
+                Logger::error('Icingadb module is not enabled');
+
+                return;
+            }
+
+            $backend = new IcingadbBackend();
+        } else {
+            $backend = new IdoBackend();
+        }
+
+        $info = $backend->getMonitoringInfo($host, $service);
 
         if ($issue === null) {
             if (\in_array($status, ['UP', 'OK'])) {
@@ -84,7 +102,7 @@ class SendCommand extends Command
             if ($tplName) {
                 $template->addByTemplateName($tplName);
             }
-            $info = new MonitoringInfo($host, $service);
+
             $info->setNotificationType('PROBLEM'); // TODO: Once passed, we could deal with RECOVERY
             $template->setMonitoringInfo($info);
             if (! empty($duedate)) {
@@ -114,7 +132,7 @@ class SendCommand extends Command
             if ($ackPipe) {
                 $cmd = new LegacyCommandPipe($ackPipe);
             } else {
-                $cmd = new IcingaCommandPipe();
+                $cmd = (new IcingaCommandPipe())->setMonitoringInfo($info);
             }
             if ($cmd->acknowledge($ackAuthor, $ackMessage, $host, $service)) {
                 Logger::info("Problem has been acknowledged for $key");
