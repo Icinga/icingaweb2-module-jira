@@ -2,15 +2,15 @@
 
 namespace Icinga\Module\Jira\Web\Form;
 
-use gipfl\Translation\TranslationHelper;
 use Exception;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
 use ipl\Html\BaseHtmlElement;
+use ipl\I18n\Translation;
 
 class TemplateForm extends BaseHtmlElement
 {
-    use TranslationHelper;
+    use Translation;
 
     protected $tag = 'form';
 

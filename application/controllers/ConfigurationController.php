@@ -2,7 +2,6 @@
 
 namespace Icinga\Module\Jira\Controllers;
 
-use gipfl\IcingaWeb2\Link;
 use Icinga\Exception\ConfigurationError;
 use Icinga\Module\Director\Objects\IcingaCommand;
 use Icinga\Module\Jira\DirectorConfig;
@@ -10,6 +9,9 @@ use Icinga\Module\Jira\Web\Controller;
 use Icinga\Module\Jira\Web\Form\TemplateForm;
 use Icinga\Web\Notification;
 use ipl\Html\Html;
+use ipl\Web\Url;
+use ipl\Web\Widget\ActionLink;
+use ipl\Web\Widget\Link;
 
 class ConfigurationController extends Controller
 {
@@ -24,12 +26,12 @@ class ConfigurationController extends Controller
     public function inspectAction()
     {
         $this->addTitle('JIRA Inspection')->activateTab();
-        $this->content()->add(Html::tag('div', ['class' => 'state-hint warning'], $this->translate(
+        $this->addContent(Html::tag('div', ['class' => 'state-hint warning'], $this->translate(
             'This page serves no special purpose right now, but gives some insight'
             . ' into available projects and Custom Fields'
         )));
         $this->runFailSafe(function () {
-            $this->content()->add(new TemplateForm($this->jira()));
+            $this->addContent(new TemplateForm($this->jira()));
         });
     }
 
@@ -40,11 +42,10 @@ class ConfigurationController extends Controller
             $this->runFailSafe('sync');
             return;
         }
-        $this->actions()->add(Link::create(
+        $this->addControl(new ActionLink(
             'Sync to Director',
-            'jira/configuration/director',
-            ['action' => 'sync'],
-            ['class'  => 'icon-flapping']
+            Url::fromPath('jira/configuration/director', ['action' => 'sync']),
+            'sync'
         ));
         $this->runFailSafe(function () {
             try {
@@ -52,12 +53,12 @@ class ConfigurationController extends Controller
                 $this->addCommand($config->createHostCommand(), $config);
                 $this->addCommand($config->createServiceCommand(), $config);
             } catch (ConfigurationError $e) {
-                $this->content()->add([
+                $this->addContent(
                     Html::tag('h1', ['class' => 'state-hint error'], $this->translate(
                         'Icinga Director has not been configured on this system: %s',
                         $e->getMessage()
                     ))
-                ]);
+                );
             }
         });
     }
@@ -70,7 +71,7 @@ class ConfigurationController extends Controller
         } else {
             Notification::success('Nothing changed, commands are fine');
         }
-        $this->redirectNow($this->url()->without('action'));
+        $this->redirectNow($this->getRequest()->getUrl()->without('action'));
     }
 
     /**
@@ -79,19 +80,17 @@ class ConfigurationController extends Controller
      */
     protected function addCommand(IcingaCommand $command, DirectorConfig $config)
     {
-        $c = $this->content();
         $name = $command->getObjectName();
-        $c->add(Html::tag('h1', null, $name));
+        $this->addContent(Html::tag('h1', null, $name));
         if ($config->commandExists($command)) {
-            $link = Link::create(
+            $link = new Link(
                 $name,
-                'director/command',
-                ['name' => $name],
+                Url::fromPath('director/command', ['name' => $name]),
                 ['data-base-target' => '_next']
             );
 
             if ($config->commandDiffers($command)) {
-                $c->add($this->createHint(
+                $this->addContent($this->createHint(
                     Html::sprintf(
                         'The CheckCommand %s exists but differs in your Icinga Director',
                         $link
@@ -99,7 +98,7 @@ class ConfigurationController extends Controller
                     'warning'
                 ));
             } else {
-                $c->add($this->createHint(
+                $this->addContent($this->createHint(
                     Html::sprintf(
                         'The CheckCommand definition for %s is fine',
                         $link
@@ -108,12 +107,12 @@ class ConfigurationController extends Controller
                 ));
             }
         } else {
-            $c->add($this->createHint(
+            $this->addContent($this->createHint(
                 'Command does not exist in your Icinga Director',
                 'warning'
             ));
         }
-        $c->add(Html::tag('pre', null, (string) $command));
+        $this->addContent(Html::tag('pre', null, (string) $command));
     }
 
     protected function createHint($msg, $state)
@@ -130,7 +129,7 @@ class ConfigurationController extends Controller
         if ($name === null) {
             $name = $this->getRequest()->getActionName();
         }
-        $this->tabs()->add('director', [
+        $this->getTabs()->add('director', [
             'label' => $this->translate('Director Config'),
             'url' => 'jira/configuration/director',
         ])->add('inspect', [

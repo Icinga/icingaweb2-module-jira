@@ -4,10 +4,10 @@ Installation and Configuration
 Dependencies
 ------------
 
-* Icinga Web 2 (&gt;= 2.5.0)
-* [ipl](https://github.com/Icinga/icingaweb2-module-ipl) (>=0.3.0)
-* [incubator](https://github.com/Icinga/icingaweb2-module-incubator) (>=0.5.0)
+* Icinga Web 2 (&gt;= 2.9.0)
 * PHP (&gt;= 5.6 or 7.x)
+* Icinga Web 2 libraries:
+  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (>= 0.8)
 
 The Icinga Web 2 `monitoring` module should be configured and enabled.
 

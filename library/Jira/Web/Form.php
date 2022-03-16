@@ -2,18 +2,18 @@
 
 namespace Icinga\Module\Jira\Web;
 
-use gipfl\Translation\TranslationHelper;
 use Icinga\Application\Version;
 use Icinga\Module\Jira\Validator\PhpSessionBasedCsrfTokenValidator;
 use Icinga\Module\Jira\Web\Form\LegacyDecorator;
 use ipl\Html\Form as iplForm;
 use ipl\Html\FormElement\HiddenElement;
 use ipl\Html\Html;
+use ipl\I18n\Translation;
 use RuntimeException;
 
 class Form extends iplForm
 {
-    use TranslationHelper;
+    use Translation;
 
     protected $formNameElementName = '__FORM_NAME';
 

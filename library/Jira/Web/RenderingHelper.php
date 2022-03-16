@@ -2,13 +2,15 @@
 
 namespace Icinga\Module\Jira\Web;
 
-use gipfl\IcingaWeb2\Link;
 use Icinga\Application\Config;
 use Icinga\Application\Modules\Module;
 use Icinga\Date\DateFormatter;
 use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
+use ipl\Web\Url;
+use ipl\Web\Widget\Icon;
+use ipl\Web\Widget\Link;
 use RuntimeException;
 
 class RenderingHelper
@@ -27,18 +29,16 @@ class RenderingHelper
     public function linkToMonitoringHost($host)
     {
         if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
-            return Link::create($host, 'icingadb/host', [
+            return new Link([new Icon('server'), $host], Url::fromPath('icingadb/host', [
                 'name' => $host
-            ], [
-                'class' => 'icon-host',
+            ]), [
                 'title' => t('Show Icinga Host State'),
             ]);
         }
 
-        return Link::create($host, 'monitoring/host/show', [
+        return new Link([new Icon('laptop'), $host], Url::fromPath('monitoring/host/show', [
             'host' => $host
-        ], [
-            'class' => 'icon-host',
+        ]), [
             'title' => t('Show Icinga Host State'),
         ]);
     }
@@ -46,20 +46,18 @@ class RenderingHelper
     public function linkToMonitoringService($host, $service)
     {
         if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
-            return Link::create($service, 'icingadb/service', [
+            return new Link([new Icon('cog'), $service], Url::fromPath('icingadb/service', [
                 'name'          => $service,
                 'host.name'     => $host,
-            ], [
-                'class' => 'icon-service',
+            ]), [
                 'title' => t('Show Icinga Service State'),
             ]);
         }
 
-        return Link::create($service, 'monitoring/service/show', [
+        return new Link([new Icon('cog'), $service], Url::fromPath('monitoring/service/show', [
             'host'    => $host,
             'service' => $service,
-        ], [
-            'class' => 'icon-service',
+        ]), [
             'title' => t('Show Icinga Service State'),
         ]);
     }

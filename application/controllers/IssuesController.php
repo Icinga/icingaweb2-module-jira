@@ -12,6 +12,7 @@ use Icinga\Module\Jira\Web\Form\NewIssueForm;
 use Icinga\Module\Jira\Web\Table\IssuesTable;
 use Icinga\Web\Notification;
 use Icinga\Web\Url;
+use ipl\Html\Text;
 
 class IssuesController extends Controller
 {
@@ -32,9 +33,9 @@ class IssuesController extends Controller
         $this->runFailSafe(function () use ($host, $service, $showAll) {
             $issues = $this->jira()->fetchIssues($host, $service, ! $showAll);
             if (empty($issues)) {
-                $this->content()->add($this->translate('No issue found'));
+                $this->addContent(Text::create($this->translate('No issue found')));
             } else {
-                $this->content()->add(new IssuesTable($issues));
+                $this->addContent(new IssuesTable($issues));
             }
         });
     }
@@ -62,7 +63,7 @@ class IssuesController extends Controller
                 $this->redirectNow(Url::fromPath('jira/issues', $info->getObjectParams()));
             })
             ->handleRequest($this->getServerRequest());
-        $this->content()->add($form);
+        $this->addContent($form);
     }
 
     protected function requireMonitoringInfo()
@@ -88,7 +89,7 @@ class IssuesController extends Controller
         if ($name === null) {
             $name = $this->getRequest()->getActionName();
         }
-        $tabs = $this->tabs();
+        $tabs = $this->getTabs();
 
         $params = [];
         foreach (['host', 'service'] as $param) {

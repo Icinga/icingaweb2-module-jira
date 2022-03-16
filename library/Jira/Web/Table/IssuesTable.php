@@ -2,10 +2,11 @@
 
 namespace Icinga\Module\Jira\Web\Table;
 
-use gipfl\IcingaWeb2\Link;
 use Icinga\Module\Jira\Web\RenderingHelper;
 use ipl\Html\Html;
 use ipl\Html\Table;
+use ipl\Web\Url;
+use ipl\Web\Widget\Link;
 
 class IssuesTable extends Table
 {
@@ -40,7 +41,7 @@ class IssuesTable extends Table
                 ])->setSeparator(' '),
                 static::td([
                     Html::tag('strong')->add(
-                        Link::create($issue->key, 'jira/issue/show', ['key' => $issue->key])
+                        new Link($issue->key, Url::fromPath('jira/issue/show', ['key' => $issue->key]))
                     ),
                     $helper->anonymize($issue->fields->summary),
                     Html::tag(

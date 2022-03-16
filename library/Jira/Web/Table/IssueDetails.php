@@ -2,15 +2,18 @@
 
 namespace Icinga\Module\Jira\Web\Table;
 
-use gipfl\Translation\TranslationHelper;
-use gipfl\IcingaWeb2\Widget\NameValueTable;
 use Icinga\Module\Jira\Web\RenderingHelper;
 use ipl\Html\Html;
 use ipl\Html\HtmlString;
+use ipl\Html\Table;
+use ipl\I18n\Translation;
+use ipl\Web\Widget\Icon;
 
-class IssueDetails extends NameValueTable
+class IssueDetails extends Table
 {
-    use TranslationHelper;
+    use Translation;
+
+    protected $defaultAttributes = ['class' => 'name-value-table'];
 
     protected $helper;
 
@@ -47,9 +50,8 @@ class IssueDetails extends NameValueTable
 
         $this->addNameValuePairs([
             $this->translate('Issue') => $helper->linkToJira(
-                $key,
-                ['browse', $key],
-                ['class'  => 'icon-right-big']
+                [new Icon('arrow-right'), $key],
+                ['browse', $key]
             ),
             $this->translate('Project') => $helper->linkToJira(
                 [$helper->renderAvatar($fields->project), $projectKey],
@@ -169,5 +171,24 @@ class IssueDetails extends NameValueTable
                 $this->formatBody($body)
             ),
         ]);
+    }
+
+    protected function createNameValueRow($name, $value)
+    {
+        return $this::tr([$this::th($name), $this::td($value)]);
+    }
+
+    protected function addNameValueRow($name, $value)
+    {
+        return $this->add($this->createNameValueRow($name, $value));
+    }
+
+    protected function addNameValuePairs($pairs)
+    {
+        foreach ($pairs as $name => $value) {
+            $this->addNameValueRow($name, $value);
+        }
+
+        return $this;
     }
 }
