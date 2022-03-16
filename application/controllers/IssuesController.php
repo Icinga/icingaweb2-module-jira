@@ -2,7 +2,10 @@
 
 namespace Icinga\Module\Jira\Controllers;
 
-use Icinga\Module\Jira\MonitoringInfo;
+use Icinga\Application\Modules\Module;
+use Icinga\Module\Jira\IcingadbBackend;
+use Icinga\Module\Jira\IdoBackend;
+use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Jira\Web\Controller;
 use Icinga\Module\Jira\Web\Form;
 use Icinga\Module\Jira\Web\Form\NewIssueForm;
@@ -64,7 +67,16 @@ class IssuesController extends Controller
 
     protected function requireMonitoringInfo()
     {
-        return new MonitoringInfo($this->params->getRequired('host'), $this->params->get('service'));
+        if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
+            $backend = new IcingadbBackend();
+        } else {
+            $backend = new IdoBackend();
+        }
+
+        return $backend->getMonitoringInfo(
+            $this->params->getRequired('host'),
+            $this->params->get('service')
+        );
     }
 
     /**

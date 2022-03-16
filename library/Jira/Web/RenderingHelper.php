@@ -4,7 +4,9 @@ namespace Icinga\Module\Jira\Web;
 
 use gipfl\IcingaWeb2\Link;
 use Icinga\Application\Config;
+use Icinga\Application\Modules\Module;
 use Icinga\Date\DateFormatter;
+use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
 use RuntimeException;
@@ -24,22 +26,41 @@ class RenderingHelper
 
     public function linkToMonitoringHost($host)
     {
+        if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
+            return Link::create($host, 'icingadb/host', [
+                'name' => $host
+            ], [
+                'class' => 'icon-host',
+                'title' => t('Show Icinga Host State'),
+            ]);
+        }
+
         return Link::create($host, 'monitoring/host/show', [
             'host' => $host
         ], [
             'class' => 'icon-host',
-            'title' => 'Show Icinga Host State',
+            'title' => t('Show Icinga Host State'),
         ]);
     }
 
     public function linkToMonitoringService($host, $service)
     {
+        if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
+            return Link::create($service, 'icingadb/service', [
+                'name'          => $service,
+                'host.name'     => $host,
+            ], [
+                'class' => 'icon-service',
+                'title' => t('Show Icinga Service State'),
+            ]);
+        }
+
         return Link::create($service, 'monitoring/service/show', [
             'host'    => $host,
             'service' => $service,
         ], [
             'class' => 'icon-service',
-            'title' => 'Show Icinga Service State',
+            'title' => t('Show Icinga Service State'),
         ]);
     }
 
