@@ -1,70 +1,20 @@
-Installation and Configuration
-==============================
+# Installation and Configuration
 
-Dependencies
-------------
+## Requirements
 
-* Icinga Web 2 (&gt;= 2.9.0)
-* PHP (&gt;= 5.6 or 7.x)
+* PHP (>= 7.0)
+* Icinga Web 2 (>= 2.9.0)
 * Icinga Web 2 libraries:
   * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (>= 0.8)
+* Icinga Web 2 modules:
+  * The `monitoring` or `icingadb` module needs to be configured and enabled.
 
-The Icinga Web 2 `monitoring` module should be configured and enabled.
+## Install the Icinga Module for JIRA®
 
-Installation from .tar.gz
--------------------------
+Install it [like any other module](https://icinga.com/docs/icinga-web-2/latest/doc/08-Modules/#installation).
+Use `jira` as name.
 
-Download the latest version and extract it to a folder named `jira`
-in one of your Icinga Web 2 module path directories.
-
-You might want to use a script as follows for this task:
-```sh
-ICINGAWEB_MODULEPATH="/usr/share/icingaweb2/modules"
-REPO_URL="https://github.com/Icinga/icingaweb2-module-jira"
-TARGET_DIR="${ICINGAWEB_MODULEPATH}/jira"
-MODULE_VERSION="1.0.1"
-URL="${REPO_URL}/archive/v${MODULE_VERSION}.tar.gz"
-install -d -m 0755 "${TARGET_DIR}"
-wget -q -O - "$URL" | tar xfz - -C "${TARGET_DIR}" --strip-components 1
-```
-
-Installation from GIT repository
---------------------------------
-
-Another convenient method is the installation directly from our GIT repository.
-Just clone the repository to one of your Icinga Web 2 module path directories.
-It will be immediately ready for use:
-
-```sh
-ICINGAWEB_MODULEPATH="/usr/share/icingaweb2/modules"
-REPO_URL="https://github.com/Icinga/icingaweb2-module-jira"
-TARGET_DIR="${ICINGAWEB_MODULEPATH}/jira"
-MODULE_VERSION="1.1.0"
-git clone "${REPO_URL}" "${TARGET_DIR}" --branch "v${MODULE_VERSION}"
-```
-
-You can now directly use our current GIT master or check out a specific version.
-
-Enable the newly installed module
----------------------------------
-
-Enable the `jira` module either on the CLI by running
-
-```sh
-icingacli module enable jira
-```
-
-Or go to your Icinga Web 2 frontend, choose `Configuration` -&gt; `Modules`...
-
-![Configuration - Modules](screenshot/menu_configuration_modules.png)
-
-select the `jira` module and `enable` it:
-
-![Jira module details](screenshot/configuration_module_details.png)
-
-
-Configuration
--------------
+## Configuration
 
 Currently you have to manually create a related configuration file. In future
 we'd love to allow you to provide these settings directly in the Web GUI. For now
@@ -117,8 +67,7 @@ afterwards:
 
     systemctl restart icinga2.service
 
-Required JIRA Custom Fields
----------------------------
+### Required JIRA Custom Fields
 
 This module requires you to create two custom fields in JIRA:
 
@@ -145,8 +94,7 @@ following JQL construct:
 A little bit weird, but it should work fine. And as this field is usually not
 shown anywhere, it shouldn't disturb.
 
-Fill JIRA Custom Fields
------------------------
+### Fill JIRA Custom Fields
 
 > **Hint**: This is optional, do not blindly copy & paste. Use this as an
 > example in case you need to feed different workflows with special paprameters.
