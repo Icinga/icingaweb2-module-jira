@@ -13,18 +13,18 @@ class ServiceActions extends ServiceActionsHook
 {
     public function getActionsForObject(Service $service): array
     {
-         return [
-             new Link(
-                 'JIRA Issues',
-                 Url::fromPath(
-                     'jira/issues',
-                     [
-                         'service'  => $service->name,
-                         'host'     => $service->host->name,
-                         'all'      => true
-                     ]
-                 )
-             )
+        return [
+            new Link(
+                'JIRA Issues',
+                Url::fromPath(
+                    'jira/issues',
+                    [
+                        'service' => $service->name,
+                        'host' => $service->host->name,
+                        'all' => true
+                    ]
+                )
+            )
         ];
     }
 }

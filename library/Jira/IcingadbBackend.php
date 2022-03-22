@@ -25,7 +25,7 @@ class IcingadbBackend
      */
     protected function getObject($hostName, $serviceName = null)
     {
-        if ($serviceName ===  null) {
+        if ($serviceName === null) {
             $query = Host::on($this->getDb())->with(['state', 'icon_image']);
             $query->setResultSetClass(VolatileStateResults::class);
             $query->filter(
@@ -49,16 +49,16 @@ class IcingadbBackend
             ));
 
             $this->applyRestrictions($query);
-            $object =  $query->first();
+            $object = $query->first();
         }
 
-         if ($object === null) {
-             if ($serviceName === null) {
+        if ($object === null) {
+            if ($serviceName === null) {
                 $object = (new Host())->setProperties($this->getObjectProperties($hostName));
-             } else {
-                 $object = (new Service())->setProperties($this->getObjectProperties($hostName, $serviceName));
-             }
-         }
+            } else {
+                $object = (new Service())->setProperties($this->getObjectProperties($hostName, $serviceName));
+            }
+        }
 
 
         return $object;
