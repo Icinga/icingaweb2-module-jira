@@ -30,12 +30,10 @@ Changes
 
 ### v1.2.0
 
-* FEATURE: Support for PHP 8.0
+* FEATURE: Support for PHP 8.1
+* FEATURE: Support for Icinga DB
 * FEATURE: Support for Icinga's dark and light mode
-* FEATURE: Support for scan targets which require client certificates (#66)
-* FIX: Importing expired certificates should now work (#60)
-* FIX: Long hostnames don't require dynamic index sizes in the database anymore (#61)
-* FIX: Connection errors to SNI-enabled hosts now don't remove certificate information of all targets with the same IP (#65)
+* FEATURE: Project dropdown is now sorted ()#73)
 
 ### v1.1.0
 
