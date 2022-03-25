@@ -12,6 +12,21 @@ class Controller extends CompatController
     /** @var RestApi */
     private $jira;
 
+    protected function getModuleConfig($file = null)
+    {
+        if ($file === null) {
+            if ($this->config === null) {
+                $this->config = Config::module($this->getModuleName());
+            }
+            return $this->config;
+        } else {
+            if (! array_key_exists($file, $this->configs)) {
+                $this->configs[$file] = Config::module($this->getModuleName(), $file);
+            }
+            return $this->configs[$file];
+        }
+    }
+
     protected function dump($what)
     {
         $this->addContent(
