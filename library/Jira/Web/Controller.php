@@ -3,6 +3,7 @@
 namespace Icinga\Module\Jira\Web;
 
 use Exception;
+use Icinga\Application\Config;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
 use ipl\Web\Compat\CompatController;
