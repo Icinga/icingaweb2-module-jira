@@ -28,6 +28,10 @@ This is 100% free Open Source Software. Interested? Then let's [get started](doc
 Changes
 -------
 
+### v1.2.1
+
+* FIX: Creating tickets in JIRA now works again (#77)
+
 ### v1.2.0
 
 * FEATURE: Support for PHP 8.1
