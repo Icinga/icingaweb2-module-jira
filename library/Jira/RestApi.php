@@ -121,11 +121,14 @@ class RestApi
             $limit = 1;
             $query = $this->prepareProjectIssueQuery($project, $host, $service, true);
 
+            $config = Config::module('jira');
+            $keyField = $config->get('jira_key_fields', 'icingaKey', 'icingaKey');
+
             $issues = $this->post('search', [
                 'jql'        => $query,
                 'startAt'    => $start,
                 'maxResults' => $limit,
-                'fields'     => [ 'icingaKey' ],
+                'fields'     => [ $keyField ],
             ])->getResult()->issues;
 
             if (empty($issues)) {
@@ -175,6 +178,7 @@ class RestApi
      */
     protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)
     {
+        // TODO: eventually also filter for project = "..."?
         $query = 'creator = currentUser()';
 
         return $this->finalizeIssueQuery($query, $host, $service, $onlyOpen);
@@ -196,15 +200,18 @@ class RestApi
             $query .= ' AND resolution is empty';
         }
 
+        $config = Config::module('jira');
+        $keyField = $config->get('jira_key_fields', 'icingaKey', 'icingaKey');
+
         if ($host === null) {
-            $query .= ' AND icingaKey ~ "BEGIN*"';
+            $query .= ' AND ' . $keyField . ' ~ "BEGIN*"';
         } else {
             $icingaKey = static::makeIcingaKey($host, $service);
 
             // There is no exact field matcher out of the box on JIRA, this is
             // an ugly work-around. We search for "BEGINhostnameEND" or
             // "BEGINhostname!serviceEND"
-            $query .= \sprintf(' AND icingaKey ~ "\"%s\""', $icingaKey);
+            $query .= \sprintf(' AND ' . $keyField . ' ~ "\"%s\""', $icingaKey);
         }
 
         $query .= ' ORDER BY created DESC';
@@ -231,6 +238,9 @@ class RestApi
      */
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)
     {
+        $config = Config::module('jira');
+        $keyField = $config->get('jira_key_fields', 'icingaKey', 'icingaKey');
+        $keyStatus = $config->get('jira_key_fields', 'icingaStatus', 'icingaStatus');
         $start = 0;
         $limit = 15;
         $query = $this->prepareIssueQuery($host, $service, $onlyOpen);
@@ -242,8 +252,8 @@ class RestApi
             'status',
             'created',
             'duedate',
-            'icingaStatus',
-            'icingaKey',
+            $keyStatus,
+            $keyField,
         ];
 
         $issues = $this->post('search', [
