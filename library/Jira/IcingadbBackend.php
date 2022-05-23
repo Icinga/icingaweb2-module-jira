@@ -26,27 +26,27 @@ class IcingadbBackend
     protected function getObject($hostName, $serviceName = null)
     {
         if ($serviceName === null) {
-            $query = Host::on($this->getDb())->with(['state', 'icon_image']);
-            $query->setResultSetClass(VolatileStateResults::class);
-            $query->filter(
-                Filter::equal('host.name', $hostName)
-            );
+            $query = Host::on($this->getDb())
+                ->with('state')
+                ->with('icon_image')
+                ->setResultSetClass(VolatileStateResults::class)
+                ->filter(
+                    Filter::equal('host.name', $hostName)
+                );
 
             $this->applyRestrictions($query);
             $object = $query->first();
         } else {
-            $query = Service::on($this->getDb())->with([
-                'state',
-                'icon_image',
-                'host',
-                'host.state'
-            ]);
-            $query->setResultSetClass(VolatileStateResults::class);
-
-            $query->filter(Filter::all(
-                Filter::equal('service.name', $serviceName),
-                Filter::equal('host.name', $hostName)
-            ));
+            $query = Service::on($this->getDb())
+                ->with('state')
+                ->with('icon_image')
+                ->with('host')
+                ->with('host.state')
+                ->setResultSetClass(VolatileStateResults::class)
+                ->filter(Filter::all(
+                    Filter::equal('service.name', $serviceName),
+                    Filter::equal('host.name', $hostName)
+                ));
 
             $this->applyRestrictions($query);
             $object = $query->first();
