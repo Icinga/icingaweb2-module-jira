@@ -4,7 +4,7 @@
 
 namespace Icinga\Module\Jira;
 
-use Icinga\Module\Monitoring\Backend;
+use Icinga\Module\Monitoring\Backend\MonitoringBackend;
 use Icinga\Module\Monitoring\Object\Host;
 use Icinga\Module\Monitoring\Object\MonitoredObject;
 use Icinga\Module\Monitoring\Object\Service;
@@ -21,9 +21,9 @@ class IdoBackend
     protected function getObject($hostName, $serviceName = null)
     {
         if ($serviceName ===  null) {
-            $object = new Host(Backend::instance(), $hostName);
+            $object = new Host(MonitoringBackend::instance(), $hostName);
         } else {
-            $object = new Service(Backend::instance(), $hostName, $serviceName);
+            $object = new Service(MonitoringBackend::instance(), $hostName, $serviceName);
         }
 
         if (! $object->fetch()) {
