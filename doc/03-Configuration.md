@@ -34,7 +34,7 @@ host = "jira.example.com"
 ; path = "/"
 ; scheme = "https"
 username = "icinga"
-password = "Base64 encoded password here"
+password = "password"
 
 [ui]
 ; default_project = "SO"
