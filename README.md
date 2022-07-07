@@ -28,6 +28,11 @@ This is 100% free Open Source Software. Interested? Then let's [get started](doc
 Changes
 -------
 
+### v1.2.2
+
+* FIX: Support for Icinga Web 2.11.0
+* FIX: Some PHP 8.1 related issues
+
 ### v1.2.1
 
 * FIX: Creating tickets in JIRA now works again (#77)
