@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira\Web\Form;
 
+use Closure;
 use Exception;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
@@ -138,7 +139,7 @@ class TemplateForm extends BaseHtmlElement
 
     protected function getProperty($entry, $name, $default = null)
     {
-        if (is_callable($name)) {
+        if ($name instanceof Closure) {
             $value = $name($entry);
         } elseif (is_object($entry)) {
             if (property_exists($entry, $name)) {

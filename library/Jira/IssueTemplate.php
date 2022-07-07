@@ -111,7 +111,7 @@ class IssueTemplate
             throw new \InvalidArgumentException('There is no "host" in $params');
         }
         $host = $params['host'];
-        if (array_key_exists('service', $params) && strlen($params['service'])) {
+        if (array_key_exists('service', $params) && $params['service']) {
             $service = $params['service'];
         } else {
             $service = null;

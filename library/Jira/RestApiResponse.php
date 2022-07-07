@@ -53,7 +53,7 @@ class RestApiResponse
 
     protected function parseJsonResult($json)
     {
-        if (strlen($json) === 0) {
+        if (! $json) {
             $this->result = null;
 
             return $this;
