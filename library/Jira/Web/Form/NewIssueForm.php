@@ -62,14 +62,33 @@ class NewIssueForm extends Form
             return;
         }
 
-        $projects = $this->jira->get(sprintf(
-            'issue/createmeta?projectKeys=%s',
-            rawurlencode($projectName)
-        ))->getResult()->projects;
+        $deployment = $this->config->getSection('deployment');
 
-        $project = current($projects);
+        //Createmeta for the jira server above v9.x.x has been updated
+        // check https://docs.atlassian.com/software/jira/docs/api/REST/9.0.0/#project-getProject
+        if (($this->jira->isServer() && version_compare($this->jira->getJiraVersion(), '9', '>='))
+            || (
+                $deployment->get('type') === 'cloud'
+                && ! (int) $deployment->get('legacy')
+            )
+        ) {
+            $project = $this->jira->get(sprintf(
+                'issue/createmeta/%s/issuetypes/',
+                rawurlencode($projectName)
+            ))->getResult();
 
-        $enum = $this->makeEnum($project->issuetypes, 'name', 'name', function ($type) {
+            $data = $project->values;
+        } else {
+            $projects = $this->jira->get(sprintf(
+                'issue/createmeta?projectKeys=%s',
+                rawurlencode($projectName)
+            ))->getResult()->projects;
+
+            $project = current($projects);
+            $data = $project->issuetypes;
+        }
+
+        $enum = $this->makeEnum($data, 'name', 'name', function ($type) {
             return $type->subtask;
         });
 

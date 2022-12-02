@@ -26,12 +26,10 @@ class ConfigForm extends CompatForm
             'validators'    => [
                 'Callback' => function ($value, $validator) {
                     /** @var CallbackValidator $validator */
-                    $serverInfo = RestApi::fromConfig()->get('serverInfo')->getResult();
+                    $serverInfo = RestApi::fromConfig()->getServerInfo();
 
                     if ($value !== strtolower($serverInfo->deploymentType)) {
-                        $validator->addMessage(
-                            t('Jira Software seems to be deployed differently.')
-                        );
+                        $validator->addMessage(t('Jira Software seems to be deployed differently.'));
                         return false;
                     }
 

@@ -25,6 +25,9 @@ class RestApi
     
     protected $apiVersion = '2';
 
+    /** @var object Server info of Jira Software */
+    protected $serverInfo;
+
     protected $enumCustomFields;
 
     public function __construct($baseUrl, $username, $password)
@@ -33,6 +36,7 @@ class RestApi
         $this->password = $password;
         $this->baseUrlForLink = $baseUrl;
         $this->baseUrl = \rtrim($baseUrl, '/') . '/rest';
+        $this->serverInfo = $this->get('serverInfo')->getResult();
     }
 
     /**
@@ -60,6 +64,26 @@ class RestApi
         $api = new static($url, $user, $pass);
 
         return $api;
+    }
+
+    /**
+     * Get Jira Software Version
+     *
+     * @return string
+     */
+    public function getJiraVersion(): string
+    {
+        return $this->serverInfo->version;
+    }
+
+    /**
+     * Check if Jira Software is deployed on server (on-prem)
+     *
+     * @return bool
+     */
+    public function isServer(): bool
+    {
+        return strtolower($this->serverInfo->deploymentType) === 'server';
     }
 
     /**
@@ -476,5 +500,15 @@ class RestApi
         }
 
         return $this->curl;
+    }
+
+    /**
+     * Get server info of Jira Software
+     *
+     * @return object
+     */
+    public function getServerInfo(): object
+    {
+        return $this->serverInfo;
     }
 }

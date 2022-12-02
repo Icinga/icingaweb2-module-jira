@@ -4,6 +4,7 @@ namespace Icinga\Module\Jira\Web\Form;
 
 use Closure;
 use Exception;
+use Icinga\Application\Config;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
 use ipl\Html\BaseHtmlElement;
@@ -50,21 +51,49 @@ class TemplateForm extends BaseHtmlElement
             return;
         }
 
-        $projects = $this->jira->get(sprintf(
-            // 'issue/createmeta?projectKeys=%s&expand=projects.issuetypes.fields',
-            'issue/createmeta?projectKeys=%s',
-            rawurlencode($projectName)
-        ))->getResult()->projects;
+        $deployment = Config::module('jira')->getSection('deployment');
 
-        foreach ($projects as $project) {
-            $this->add($this->makeSelect('issue_type', $project->issuetypes, [
-                'imagesrc' => 'iconUrl',
-                'caption'  => 'name',
-                'value'    => 'id',
-                'reject'   => function ($type) {
-                    return $type->subtask;
-                }
-            ]));
+        //Createmeta for the jira server above v9.x.x has been updated
+        // check https://docs.atlassian.com/software/jira/docs/api/REST/9.0.0/#project-getProject
+        if (($this->jira->isServer() && version_compare($this->jira->getJiraVersion(), '9', '>='))
+            || (
+                $deployment->get('type') === 'cloud'
+                && ! (int) $deployment->get('legacy')
+            )
+        ) {
+            foreach ($projects as $project) {
+                $project = $this->jira->get(sprintf(
+                // 'issue/createmeta/{projectIdOrKey}/issuetypes/{issueTypeId}?expand=values.fields',
+                    'issue/createmeta/%s/issuetypes/',
+                    rawurlencode($project->key)
+                ))->getResult();
+
+                $this->add($this->makeSelect('issue_type', $project->values, [
+                    'imagesrc' => 'iconUrl',
+                    'caption'  => 'name',
+                    'value'    => 'id',
+                    'reject'   => function ($type) {
+                        return $type->subtask;
+                    }
+                ]));
+            }
+        } else {
+            $projects = $this->jira->get(sprintf(
+            // 'issue/createmeta?projectKeys=%s&expand=projects.issuetypes.fields',
+                'issue/createmeta?projectKeys=%s',
+                rawurlencode($projectName)
+            ))->getResult()->projects;
+
+            foreach ($projects as $project) {
+                $this->add($this->makeSelect('issue_type', $project->issuetypes, [
+                    'imagesrc' => 'iconUrl',
+                    'caption'  => 'name',
+                    'value'    => 'id',
+                    'reject'   => function ($type) {
+                        return $type->subtask;
+                    }
+                ]));
+            }
         }
 
         $this->add($this->createCustomFieldSelect());
