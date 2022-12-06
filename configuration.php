@@ -13,3 +13,11 @@ if ($this->app->getModuleManager()->hasEnabled('director')) {
         ->setPermission('director/admin');
 }
 $this->providePermission('jira/issue/create', $this->translate('Allow to manually create issues'));
+
+$this->provideConfigTab(
+    'deployment',
+    [
+        'label' => t('Configuration'),
+        'url'   => 'configuration'
+    ]
+);

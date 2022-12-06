@@ -2,12 +2,16 @@
 
 namespace Icinga\Module\Jira\Controllers;
 
+use Icinga\Application\Config;
 use Icinga\Exception\ConfigurationError;
 use Icinga\Module\Director\Objects\IcingaCommand;
 use Icinga\Module\Jira\DirectorConfig;
+use Icinga\Module\Jira\Forms\Config\ConfigForm;
 use Icinga\Module\Jira\Web\Controller;
 use Icinga\Module\Jira\Web\Form\TemplateForm;
 use Icinga\Web\Notification;
+use Icinga\Web\Widget\Tab;
+use Icinga\Web\Widget\Tabs;
 use ipl\Html\Html;
 use ipl\Web\Url;
 use ipl\Web\Widget\ActionLink;
@@ -20,7 +24,25 @@ class ConfigurationController extends Controller
      */
     public function init()
     {
-        $this->assertPermission('director/admin');
+        $this->assertPermission('config/modules');
+    }
+
+    public function indexAction()
+    {
+        $this->mergeTabs($this->Module()->getConfigTabs()->activate('deployment'));
+
+        $config = Config::module('jira');
+        $form = (new ConfigForm())
+            ->populate($config->getSection('deployment'))
+            ->on(ConfigForm::ON_SUCCESS, function ($form) use ($config) {
+                $config
+                    ->setSection('deployment', $form->getValues())
+                    ->saveIni();
+
+                Notification::success(t('Jira Software deployment configuration has been saved successfully'));
+            })->handleRequest($this->getServerRequest());
+
+        $this->addContent($form);
     }
 
     public function inspectAction()
@@ -37,6 +59,8 @@ class ConfigurationController extends Controller
 
     public function directorAction()
     {
+        $this->assertPermission('director/admin');
+
         $this->addTitle('Director Config Preview')->activateTab();
         if ($this->params->get('action') === 'sync') {
             $this->runFailSafe('sync');
@@ -138,5 +162,20 @@ class ConfigurationController extends Controller
         ])->activate($name);
         
         return $this;
+    }
+
+    /**
+     * Merge tabs with other tabs contained in this tab panel
+     *
+     * @param Tabs $tabs
+     *
+     * @return void
+     */
+    protected function mergeTabs(Tabs $tabs): void
+    {
+        /** @var Tab $tab */
+        foreach ($tabs->getTabs() as $tab) {
+            $this->tabs->add($tab->getName(), $tab);
+        }
     }
 }
