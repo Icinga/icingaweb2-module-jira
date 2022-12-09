@@ -102,7 +102,7 @@ class LegacyDecorator extends BaseHtmlElement implements DecoratorInterface
 
     protected function assemble()
     {
-        if ($this->formElement->hasBeenValidatedAndIsNotValid()) {
+        if ($this->formElement->hasMessages()) {
             $this->getAttributes()->add('class', 'has-error');
         }
 
