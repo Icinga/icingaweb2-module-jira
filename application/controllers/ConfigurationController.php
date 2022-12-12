@@ -45,9 +45,11 @@ class ConfigurationController extends Controller
         $this->addContent($form);
     }
 
+    // For testing purpose only
     public function inspectAction()
     {
-        $this->addTitle('JIRA Inspection')->activateTab();
+        $this->addTitleTab(t('Inspect'));
+        $this->addTitle(t('Jira Inspection'));
         $this->addContent(Html::tag('div', ['class' => 'state-hint warning'], $this->translate(
             'This page serves no special purpose right now, but gives some insight'
             . ' into available projects and Custom Fields'
@@ -142,23 +144,6 @@ class ConfigurationController extends Controller
     protected function createHint($msg, $state)
     {
         return Html::tag('p', ['class' => ['state-hint', $state]], $msg);
-    }
-
-    /**
-     * @param null $name
-     * @return $this
-     */
-    protected function activateTab($name = null)
-    {
-        if ($name === null) {
-            $name = $this->getRequest()->getActionName();
-        }
-        $this->getTabs()->add('inspect', [
-            'label' => $this->translate('Inspect'),
-            'url' => 'jira/configuration/inspect',
-        ])->activate($name);
-        
-        return $this;
     }
 
     /**
