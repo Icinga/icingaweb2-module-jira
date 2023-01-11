@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira;
 
+use Icinga\Date\DateFormatter;
 use Icinga\Exception\IcingaException;
 use Icinga\Module\Icingadb\Model\CustomvarFlat;
 use Icinga\Module\Monitoring\Object\Host;
@@ -121,6 +122,15 @@ class MonitoringInfo
         return strtoupper($this->object->state->getStateText());
     }
 
+    public function getLastStateChange()
+    {
+        if ($this->object instanceof MonitoredObject) {
+            return DateFormatter::formatDateTime($this->object->last_state_change);
+        }
+
+        return DateFormatter::formatDateTime($this->object->state->last_state_change);
+    }
+
     public function getOutput()
     {
         if ($this->object instanceof MonitoredObject) {
@@ -198,6 +208,8 @@ class MonitoringInfo
         } else {
             $description = '';
         }
+
+        $description .= sprintf("Last state change: %s\n", $this->getLastStateChange());
 
         $hostLink = $this->object instanceof MonitoredObject
             ? LinkHelper::linkToIcingaHost($this->getHostname())
