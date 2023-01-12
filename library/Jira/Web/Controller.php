@@ -92,7 +92,11 @@ class Controller extends CompatController
     {
         $this->setTitle($title, ...$args);
 
-        $this->controls->prependHtml(Html::tag('h1', null, vsprintf($title, $args)));
+        if (! empty($args)) {
+            $title = vsprintf($title, $args);
+        }
+
+        $this->controls->prependHtml(Html::tag('h1', null, $title));
 
         return $this;
     }

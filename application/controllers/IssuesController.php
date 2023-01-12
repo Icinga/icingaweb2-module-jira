@@ -22,7 +22,7 @@ class IssuesController extends Controller
         $service = $this->params->get('service');
         $showAll = $this->params->get('all');
 
-        $title = $this->translate('Ticket Search') . $this->titleSuffix($host, $service);
+        $title = sprintf($this->translate('Ticket Search%s'), $this->titleSuffix($host, $service));
 
         if ($showAll) {
             $title .= sprintf(' (%s)', $this->translate('with closed ones'));
@@ -53,7 +53,7 @@ class IssuesController extends Controller
     {
         $info = $this->requireMonitoringInfo();
         $info->setNotificationType('MANUAL'); // Not sure about this, but that's how it used to be
-        $this->addTitle($this->translate('Create JIRA Issue') . ': ' . $info->getObjectLabel())
+        $this->addTitle($this->translate('Create JIRA Issue') . ': %s', $info->getObjectLabel())
             ->activateTab();
 
         $form = (new NewIssueForm($this->jira(), $this->getModuleConfig(), $info))
