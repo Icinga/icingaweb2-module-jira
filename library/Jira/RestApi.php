@@ -114,12 +114,12 @@ class RestApi
         }
     }
 
-    public function eventuallyGetLatestOpenIssueFor($host, $service = null)
+    public function eventuallyGetLatestOpenIssueFor($project, $host, $service = null)
     {
         try {
             $start = 0;
             $limit = 1;
-            $query = $this->prepareIssueQuery($host, $service, true);
+            $query = $this->prepareProjectIssueQuery($project, $host, $service, true);
 
             $issues = $this->post('search', [
                 'jql'        => $query,
@@ -147,11 +147,51 @@ class RestApi
         return $this->put('issue/' . urlencode($update->getKey()), $update->toObject());
     }
 
+    /**
+     * Prepare JQL query to fetch issues from the specified project
+     *
+     * @param string $project Project Key
+     * @param ?string $host Host Name
+     * @param ?string $service Service Name
+     * @param bool $onlyOpen Set to true to fetch only open issues
+     *
+     * @return string
+     */
+    protected function prepareProjectIssueQuery(string $project, $host = null, $service = null, $onlyOpen = true)
+    {
+        $query = "creator = currentUser() AND project = $project";
+
+        return $this->finalizeIssueQuery($query, $host, $service, $onlyOpen);
+    }
+
+    /**
+     * Prepare JQL query to fetch all issues
+     *
+     * @param ?string $host Host Name
+     * @param ?string $service Service Name
+     * @param bool $onlyOpen Set to true to fetch only open issues
+     *
+     * @return string
+     */
     protected function prepareIssueQuery($host = null, $service = null, $onlyOpen = true)
     {
-        // TODO: eventually also filter for project = "..."?
         $query = 'creator = currentUser()';
 
+        return $this->finalizeIssueQuery($query, $host, $service, $onlyOpen);
+    }
+
+    /**
+     * Finalize the given JQL query
+     *
+     * @param string $query Given JQL query
+     * @param ?string $host Host Name
+     * @param ?string $service Service Name
+     * @param bool $onlyOpen Set to true to fetch only open issues
+     *
+     * @return string
+     */
+    private function finalizeIssueQuery(string $query, $host = null, $service = null, $onlyOpen = true)
+    {
         if ($onlyOpen) {
             $query .= ' AND resolution is empty';
         }

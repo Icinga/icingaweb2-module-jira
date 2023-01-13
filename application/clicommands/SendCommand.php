@@ -64,9 +64,10 @@ class SendCommand extends Command
         $status      = $p->shiftRequired('state');
         $description = $p->shiftRequired('description');
         $duedate     = $p->shift('due-date');
+        $project     = $p->shiftRequired('project');
 
         $jira = $this->jira();
-        $issue = $jira->eventuallyGetLatestOpenIssueFor($host, $service);
+        $issue = $jira->eventuallyGetLatestOpenIssueFor($project, $host, $service);
         $mm = $this->app->getModuleManager();
         if ($p->shift('icingadb') || ! $mm->hasEnabled('monitoring')) {
             if (! $mm->hasEnabled('icingadb')) {
@@ -88,7 +89,7 @@ class SendCommand extends Command
                 return;
             }
             $params = [
-                'project'     => $p->shiftRequired('project'),
+                'project'     => $project,
                 'issuetype'   => $p->shiftRequired('issuetype'),
                 'summary'     => $p->shiftRequired('summary'),
                 'description' => $description,
