@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira\Web\Table;
 
+use Icinga\Application\Config;
 use Icinga\Module\Jira\Web\RenderingHelper;
 use ipl\Html\Html;
 use ipl\Html\HtmlString;
@@ -30,11 +31,13 @@ class IssueDetails extends Table
         $helper = $this->helper;
         $issue = $this->issue;
         $key = $issue->key;
+        $config = Config::module('jira');
 
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
+        $keyField = $config->get('jira_key_fields', 'field_icingaKey', 'icingaKey');
 
-        $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->icingaKey);
+        $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$keyField);
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
         if (empty($parts)) {
