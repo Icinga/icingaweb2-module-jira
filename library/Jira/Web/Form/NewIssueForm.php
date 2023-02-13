@@ -22,11 +22,15 @@ class NewIssueForm extends Form
     /** @var Config */
     private $config;
 
+    /** @var Config */
+    protected $templatesConfig;
+
     public function __construct(RestApi $jira, Config $config, MonitoringInfo $info)
     {
         $this->jira = $jira;
         $this->config = $config;
         $this->monitoringInfo = $info;
+        $this->templatesConfig = $this->config::module('jira', 'templates');
     }
 
     protected function assemble()
@@ -96,10 +100,11 @@ class NewIssueForm extends Form
         asort($enum, SORT_FLAG_CASE | SORT_NATURAL);
 
         $this->addElement('select', 'issuetype', [
-            'label' => $this->translate('Issue type'),
+            'label'        => $this->translate('Issue type'),
             'multiOptions' => $this->optionalEnum($enum),
             'value'        => $config->get('ui', 'default_issuetype'),
             'required'     => true,
+            'class'        => 'autosubmit',
         ]);
 
         $this->addElement('text', 'summary', [
@@ -120,9 +125,10 @@ class NewIssueForm extends Form
             ),
         ));
         $this->addElement('select', 'template', [
-            'label' => $this->translate('Template'),
+            'label'        => $this->translate('Template'),
             'multiOptions' => $this->optionalEnum($this->enumTemplates()),
-            'value'    => $defaultTemplate,
+            'value'        => $defaultTemplate,
+            'class'        => 'autosubmit'
         ]);
         $this->addElement('select', 'acknowledge', [
             'label'       => $this->translate('Acknowledge'),
@@ -136,6 +142,35 @@ class NewIssueForm extends Form
                 . ' created Jira issue will be linked in the related comment.'
             )
         ]);
+
+        $templateName = $this->getSentValue('template');
+
+        if ($templateName !== null) {
+            $fields = $this->templatesConfig->getSection($templateName);
+            $jiraCustomFields = $this->jira->enumCustomFields();
+            $jiraCustomFields['duedate'] = 'Due Date';
+
+            foreach ($fields as $key => $value) {
+                $label = $key;
+
+                if (array_key_exists($key, $jiraCustomFields)) {
+                    $elementName = $key;
+                    $label = $jiraCustomFields[$key];
+                } else {
+                    $elementName = array_search($key, $jiraCustomFields);
+                }
+
+                $this->addElement(
+                    'text',
+                    $elementName,
+                    [
+                        'label'    => $label,
+                        'disabled' => true,
+                        'value'    => $value,
+                    ]
+                );
+            }
+        }
 
         $this->addElement('submit', 'submit', [
             'label' => $this->translate('Create Issue')
@@ -188,6 +223,7 @@ class NewIssueForm extends Form
         $template = new IssueTemplate();
         $template->addByTemplateName($this->getValue('template'));
         $template->setMonitoringInfo($this->monitoringInfo);
+
         $key = $this->jira->createIssue($template->getFilled($params));
         if ($this->getValue('acknowledge') === 'n') {
             return;
