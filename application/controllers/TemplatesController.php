@@ -7,6 +7,7 @@ namespace Icinga\Module\Jira\Controllers;
 use Icinga\Application\Config;
 use Icinga\Module\Jira\Forms\Config\TemplateConfigForm;
 use Icinga\Module\Jira\Web\Controller;
+use Icinga\Module\Jira\Web\Table\JiraCustomFields;
 use Icinga\Module\Jira\Web\Table\TemplateTable;
 use Icinga\Web\Notification;
 use Icinga\Web\Widget\Tab;
@@ -80,6 +81,17 @@ class TemplatesController extends Controller
                 Url::fromPath('jira/fields/add', ['template' => $templateName]),
                 'plus'
             ))->setBaseTarget('_next')
+        );
+
+
+        $config = Config::module('jira', 'templates');
+
+        $this->addContent(
+            new JiraCustomFields(
+                $config->getSection($templateName)->toArray(),
+                $templateName,
+                $this->jira()
+            )
         );
     }
 
