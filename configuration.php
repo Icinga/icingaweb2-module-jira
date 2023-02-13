@@ -17,6 +17,15 @@ $this->provideConfigTab(
     ]
 );
 
+$this->provideConfigTab(
+    'templates',
+    [
+        'title' => $this->translate('Configure templates'),
+        'label' => $this->translate('Templates Configuration'),
+        'url'   => 'templates'
+    ]
+);
+
 if ($this->app->getModuleManager()->hasEnabled('director')) {
     $this->provideConfigTab(
         'director',
