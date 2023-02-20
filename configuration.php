@@ -12,7 +12,8 @@ $this->providePermission('jira/issue/create', $this->translate('Allow to manuall
 $this->provideConfigTab(
     'deployment',
     [
-        'label' => t('Configuration'),
+        'title' => $this->translate('Configuration'),
+        'label' => $this->translate('Configuration'),
         'url'   => 'configuration'
     ]
 );

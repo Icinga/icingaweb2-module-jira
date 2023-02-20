@@ -32,12 +32,12 @@ class ConfigurationController extends Controller
         $this->mergeTabs($this->Module()->getConfigTabs()->activate('deployment'));
 
         $config = Config::module('jira');
+
         $form = (new ConfigForm())
-            ->populate($config->getSection('deployment'))
+            ->populate($config)
             ->on(ConfigForm::ON_SUCCESS, function ($form) use ($config) {
-                $config
-                    ->setSection('deployment', $form->getValues())
-                    ->saveIni();
+                $config->getConfigObject()->merge($form->getValues());
+                $config->saveIni();
 
                 Notification::success(t('Jira Software deployment configuration has been saved successfully'));
             })->handleRequest($this->getServerRequest());
