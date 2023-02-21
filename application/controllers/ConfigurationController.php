@@ -60,8 +60,8 @@ class ConfigurationController extends Controller
     public function directorAction()
     {
         $this->assertPermission('director/admin');
-
-        $this->addTitle('Director Config Preview')->activateTab();
+        $this->mergeTabs($this->Module()->getConfigTabs()->activate('director'));
+        
         if ($this->params->get('action') === 'sync') {
             $this->runFailSafe('sync');
             return;
@@ -153,10 +153,7 @@ class ConfigurationController extends Controller
         if ($name === null) {
             $name = $this->getRequest()->getActionName();
         }
-        $this->getTabs()->add('director', [
-            'label' => $this->translate('Director Config'),
-            'url' => 'jira/configuration/director',
-        ])->add('inspect', [
+        $this->getTabs()->add('inspect', [
             'label' => $this->translate('Inspect'),
             'url' => 'jira/configuration/inspect',
         ])->activate($name);
