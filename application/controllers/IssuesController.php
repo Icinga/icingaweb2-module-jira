@@ -7,7 +7,6 @@ use Icinga\Module\Jira\IcingadbBackend;
 use Icinga\Module\Jira\IdoBackend;
 use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Jira\Web\Controller;
-use Icinga\Module\Jira\Web\Form;
 use Icinga\Module\Jira\Web\Form\NewIssueForm;
 use Icinga\Module\Jira\Web\Table\IssuesTable;
 use Icinga\Web\Notification;
@@ -57,7 +56,7 @@ class IssuesController extends Controller
             ->activateTab();
 
         $form = (new NewIssueForm($this->jira(), $this->getModuleConfig(), $info))
-            ->on(Form::ON_SUCCESS, function (NewIssueForm $form) use ($info) {
+            ->on(NewIssueForm::ON_SUCCESS, function (NewIssueForm $form) use ($info) {
                 $form->createIssue();
                 Notification::success('A new incident has been created');
                 $this->redirectNow(Url::fromPath('jira/issues', $info->getObjectParams()));

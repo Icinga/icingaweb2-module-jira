@@ -9,10 +9,15 @@ use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\IssueTemplate;
 use Icinga\Module\Jira\MonitoringInfo;
 use Icinga\Module\Jira\RestApi;
-use Icinga\Module\Jira\Web\Form;
+use Icinga\Web\Session;
+use ipl\Html\Html;
+use ipl\Web\Common\CsrfCounterMeasure;
+use ipl\Web\Compat\CompatForm;
 
-class NewIssueForm extends Form
+class NewIssueForm extends CompatForm
 {
+    use CsrfCounterMeasure;
+
     /** @var RestApi */
     private $jira;
 
@@ -35,10 +40,7 @@ class NewIssueForm extends Form
 
     protected function assemble()
     {
-        $this-> prepareWebForm();
-        $this->addAttributes([
-            'class' => 'icinga-form icinga-controls'
-        ]);
+        $this->addElement($this->createCsrfCounterMeasure(Session::getSession()->getId()));
         $config = $this->config;
         $defaultProject = $config->get('ui', 'default_project');
         $defaultTemplate = $config->get('ui', 'default_template');
@@ -58,7 +60,7 @@ class NewIssueForm extends Form
             'required' => true,
         ]);
 
-        $projectName = $this->getSentValue('project');
+        $projectName = $this->getValue('project');
         if ($projectName === null) {
             $projectName = $defaultProject;
         }
@@ -143,7 +145,7 @@ class NewIssueForm extends Form
             )
         ]);
 
-        $templateName = $this->getSentValue('template');
+        $templateName = $this->getValue('template');
 
         if ($templateName !== null) {
             $fields = $this->templatesConfig->getSection($templateName);
@@ -177,6 +179,23 @@ class NewIssueForm extends Form
         ]);
     }
 
+    /**
+     * Appends a null option to the given key-value pairs
+     *
+     * @param $enum
+     * @param $nullLabel
+     *
+     * @return array|null[]
+     */
+    public function optionalEnum($enum, $nullLabel = null)
+    {
+        if ($nullLabel === null) {
+            $nullLabel = $this->translate('- please choose -');
+        }
+
+        return [null => $nullLabel] + $enum;
+    }
+
     private function enumTemplates()
     {
         $templates = [];
@@ -201,6 +220,26 @@ class NewIssueForm extends Form
         } else {
             $this->addElement('YesNo', $key, $options);
             $this->getElement($key)->setValue($default);
+        }
+    }
+
+    /**
+     * Display error messages as hints on error
+     *
+     * @return void
+     */
+    protected function onError()
+    {
+        foreach ($this->getMessages() as $message) {
+            if ($message instanceof Exception) {
+                $message = $message->getMessage();
+            }
+            $this->prepend(Html::tag('p', ['class' => 'state-hint error'], $message));
+        }
+        foreach ($this->getElements() as $element) {
+            foreach ($element->getMessages() as $message) {
+                $this->prepend(Html::tag('p', ['class' => 'state-hint error'], $message));
+            }
         }
     }
 
