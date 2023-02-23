@@ -35,7 +35,7 @@ class IssueDetails extends Table
 
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
-        $keyField = $config->get('jira_key_fields', 'icingaKey', 'icingaKey');
+        $keyField = $config->get('key_fields', 'icingaKey', 'icingaKey');
 
         $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$keyField);
         $parts = explode('!', $icingaKey);

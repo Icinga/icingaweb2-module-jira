@@ -119,7 +119,7 @@ class SendCommand extends Command
             $ackMessage = "JIRA issue $key has been created";
         } else {
             $key = $issue->key;
-            $icingaStatus = $config->get('jira_key_fields', 'icingaStatus', 'icingaStatus');
+            $icingaStatus = $config->get('key_fields', 'icingaStatus', 'icingaStatus');
             $currentStatus = isset($issue->fields->$icingaStatus) ? $issue->fields->$icingaStatus : null;
             $ackMessage = "Existing JIRA issue $key has been found";
             if ($currentStatus !== $status) {

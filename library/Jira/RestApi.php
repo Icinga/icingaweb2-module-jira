@@ -122,7 +122,7 @@ class RestApi
             $query = $this->prepareProjectIssueQuery($project, $host, $service, true);
 
             $config = Config::module('jira');
-            $keyField = $config->get('jira_key_fields', 'icingaKey', 'icingaKey');
+            $keyField = $config->get('key_fields', 'icingaKey', 'icingaKey');
 
             $issues = $this->post('search', [
                 'jql'        => $query,
@@ -201,7 +201,7 @@ class RestApi
         }
 
         $config = Config::module('jira');
-        $keyField = $config->get('jira_key_fields', 'icingaKey', 'icingaKey');
+        $keyField = $config->get('key_fields', 'icingaKey', 'icingaKey');
 
         if ($host === null) {
             $query .= ' AND ' . $keyField . ' ~ "BEGIN*"';
@@ -239,8 +239,8 @@ class RestApi
     public function fetchIssues($host = null, $service = null, $onlyOpen = true)
     {
         $config = Config::module('jira');
-        $keyField = $config->get('jira_key_fields', 'icingaKey', 'icingaKey');
-        $keyStatus = $config->get('jira_key_fields', 'icingaStatus', 'icingaStatus');
+        $keyField = $config->get('key_fields', 'icingaKey', 'icingaKey');
+        $keyStatus = $config->get('key_fields', 'icingaStatus', 'icingaStatus');
         $start = 0;
         $limit = 15;
         $query = $this->prepareIssueQuery($host, $service, $onlyOpen);

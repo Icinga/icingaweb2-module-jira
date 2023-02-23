@@ -40,7 +40,7 @@ password = "password"
 ; default_project = "SO"
 ; default_issuetype = "Event"
 
-[jira_key_fields]
+[key_fields]
 ; icingaStatus = "icingaStatus"
 ; icingaKey = "icingaKey"
 
