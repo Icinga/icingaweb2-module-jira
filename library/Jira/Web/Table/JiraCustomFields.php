@@ -15,7 +15,7 @@ class JiraCustomFields extends Table
     use Translation;
 
     protected $defaultAttributes = [
-        'class'            => 'common-table table-row-selectable issue-table',
+        'class'            => ['common-table', 'table-row-selectable', 'issue-table'],
         'data-base-target' => '_next',
     ];
 
@@ -57,7 +57,7 @@ class JiraCustomFields extends Table
                     static::td(new Link(
                         $customFields[$field] ?? $field,
                         Url::fromPath(
-                            'jira/fields/edit',
+                            'jira/field',
                             [
                                 'template' => $this->templateName,
                                 'fieldId' => $field

@@ -57,44 +57,6 @@ class TemplatesController extends Controller
         $this->addContent($form);
     }
 
-    public function editAction()
-    {
-        $this->addTitleTab(t('Edit Template'));
-        $templateName = $this->params->get('template');
-
-        $form = (new TemplateConfigForm($templateName))
-            ->on(TemplateConfigForm::ON_SUCCESS, function ($form) use ($templateName) {
-                if ($form->getPressedSubmitElement()->getName() === 'delete') {
-                    Notification::success(sprintf(t('Template "%s" has been deleted'), $templateName));
-                } else {
-                    Notification::success(sprintf(t('Template "%s" has been updated'), $templateName));
-                }
-                
-                $this->redirectNow(Url::fromPath('jira/templates'));
-            })->handleRequest($this->getServerRequest());
-
-        $this->addContent($form);
-
-        $this->addContent(
-            (new ButtonLink(
-                t('Add Custom Field'),
-                Url::fromPath('jira/fields/add', ['template' => $templateName]),
-                'plus'
-            ))->setBaseTarget('_next')
-        );
-
-
-        $config = Config::module('jira', 'templates');
-
-        $this->addContent(
-            new JiraCustomFields(
-                $config->getSection($templateName)->toArray(),
-                $templateName,
-                $this->jira()
-            )
-        );
-    }
-
     /**
      * Merge tabs with other tabs in this tab panel
      *

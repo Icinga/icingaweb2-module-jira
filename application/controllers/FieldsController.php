@@ -4,71 +4,64 @@
 
 namespace Icinga\Module\Jira\Controllers;
 
+use Icinga\Application\Config;
 use Icinga\Module\Jira\Forms\Config\FieldConfigForm;
 use Icinga\Module\Jira\Web\Controller;
+use Icinga\Module\Jira\Web\Table\JiraCustomFields;
 use Icinga\Web\Notification;
 use ipl\Web\Url;
+use ipl\Web\Widget\ButtonLink;
 
 class FieldsController extends Controller
 {
+    /** @var string Template Name */
+    private $template;
+
     public function init()
     {
         $this->assertPermission('config/modules');
+        $this->template = $this->params->getRequired('template');
         parent::init();
+    }
+
+    public function indexAction()
+    {
+        $this->createTemplateTabs($this->template)->activate('fields');
+
+        $this->addContent(
+            (new ButtonLink(
+                t('Add Custom Field'),
+                Url::fromPath(
+                    'jira/fields/add',
+                    ['template' => $this->template]
+                ),
+                'plus'
+            ))->setBaseTarget('_next')
+        );
+
+        $config = Config::module('jira', 'templates');
+
+        $this->addContent(
+            new JiraCustomFields(
+                $config->getSection($this->template)->toArray(),
+                $this->template,
+                $this->jira()
+            )
+        );
     }
 
     public function addAction()
     {
         $this->addTitleTab(t('Add Custom Field'));
 
-        $template = $this->params->getRequired('template');
-
-        $form = (new FieldConfigForm($this->jira(), $template))
-            ->on(FieldConfigForm::ON_SUCCESS, function ($form) use ($template) {
+        $form = (new FieldConfigForm($this->jira(), $this->template))
+            ->on(FieldConfigForm::ON_SUCCESS, function ($form) {
                 Notification::success(sprintf(
-                    t('Added custom field "%s" successfully to the template "%s"'),
+                    t('Added custom field %s successfully to the template %s'),
                     $form->enumAllowedFields()[$form->getValue('fields')],
-                    $template
+                    $this->template
                 ));
-                $this->redirectNow(Url::fromPath('jira/templates/edit', ['template' => $template]));
-            })->handleRequest($this->getServerRequest());
-
-        $this->addContent($form);
-    }
-
-    public function editAction()
-    {
-        $this->addTitleTab(t('Edit Custom Field'));
-
-        $fieldId = $this->params->shift('fieldId');
-        $template = $this->params->shift('template');
-
-        $form = (new FieldConfigForm($this->jira(), $template, $fieldId))
-            ->on(FieldConfigForm::ON_SUCCESS, function ($form) use ($template, $fieldId) {
-                if ($form->getPressedSubmitElement()->getName() === 'delete') {
-                    Notification::success(sprintf(
-                        t('Removed field "%s" successfully from template "%s"'),
-                        $fieldId,
-                        $template
-                    ));
-                    $this->redirectNow(Url::fromPath(
-                        'jira/templates/edit',
-                        ['template' => $template]
-                    ));
-                } else {
-                    Notification::success(sprintf(
-                        t('Updated field "%s" successfully in template "%s"'),
-                        $fieldId,
-                        $template
-                    ));
-                    $this->redirectNow(Url::fromPath(
-                        'jira/fields/edit',
-                        [
-                            'template' => $template,
-                            'fieldId'  => $fieldId
-                        ]
-                    ));
-                }
+                $this->redirectNow(Url::fromPath('jira/fields', ['template' => $this->template]));
             })->handleRequest($this->getServerRequest());
 
         $this->addContent($form);

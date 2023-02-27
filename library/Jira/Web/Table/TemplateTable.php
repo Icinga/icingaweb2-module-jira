@@ -17,7 +17,7 @@ class TemplateTable extends Table
     protected $templates;
 
     protected $defaultAttributes = [
-        'class'            => 'common-table table-row-selectable issue-table',
+        'class'            => ['common-table', 'table-row-selectable', 'issue-table'],
         'data-base-target' => '_next',
     ];
 
@@ -36,7 +36,7 @@ class TemplateTable extends Table
             $this->add(static::tr([
                 static::td(new Link(
                     $templateName,
-                    Url::fromPath('jira/templates/edit', ['template' => $templateName])
+                    Url::fromPath('jira/template', ['template' => $templateName])
                 )),
             ]));
         }
