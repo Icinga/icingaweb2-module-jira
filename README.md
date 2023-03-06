@@ -1,6 +1,6 @@
-# Icinga Module for Jira™
+# Icinga Web Jira Integration
 
-[![PHP Support](https://img.shields.io/badge/php-%3E%3D%207.0-777BB4?logo=PHP)](https://php.net/)
+[![PHP Support](https://img.shields.io/badge/php-%3E%3D%207.2-777BB4?logo=PHP)](https://php.net/)
 ![Build Status](https://github.com/icinga/icingaweb2-module-jira/workflows/PHP%20Tests/badge.svg?branch=master)
 [![Github Tag](https://img.shields.io/github/tag/Icinga/icingaweb2-module-jira.svg)](https://github.com/Icinga/icingaweb2-module-jira)
 
@@ -21,9 +21,9 @@ based on monitored system properties. This feature is mostly being used to
 assign monitored objects to their **related CIs** or to trigger dedicated
 **customer-related workflows**.
 
-This is 100% free Open Source Software. Interested? Then let's [get started](doc/01-Introduction.md)!
+Let's [get started](doc/01-Introduction.md)!
 
-![Jira integration](doc/screenshot/issue_list_and_details-new.png)
+![Jira integration](doc/screenshot/issue_list_and_details.png)
 
 Changes
 -------

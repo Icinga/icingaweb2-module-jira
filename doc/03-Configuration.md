@@ -2,23 +2,30 @@
 
 ## Requirements
 
-* PHP (>= 7.0)
+* PHP (>= 7.2)
 * Icinga Web 2 (>= 2.9.0)
 * Icinga Web 2 libraries:
-  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (>= 0.8)
+  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (>=0.11.0)
 * Icinga Web 2 modules:
   * The `monitoring` or `icingadb` module needs to be configured and enabled.
 
-## Install the Icinga Module for Jira™
+## Install the Icinga Web Jira Integration
 
 Install it [like any other module](https://icinga.com/docs/icinga-web-2/latest/doc/08-Modules/#installation).
 Use `jira` as name.
 
 ## Configuration
 
-Currently you have to manually create a related configuration file. In future
-we'd love to allow you to provide these settings directly in the Web GUI. For now
-please create a dedicated module configuration directory, like:
+### Configuring in Web GUI
+
+Jira allows you to configure the settings in Web GUI. Once the `jira` module has been enabled, go to its `Configuration`
+tab and configure the settings for the module as shown in the screenshot.
+
+![Configuring in Web GUI](screenshot/configuration_page.png)
+
+### Manual Configuration
+
+To manually create a related configuration file, please create a dedicated module configuration directory, like:
 
     install -d -m 2770 -o www-data -g icingaweb2 /etc/icingaweb2/modules/jira
 
@@ -100,12 +107,35 @@ shown anywhere, it shouldn't disturb.
 
 ### Fill Jira Custom Fields
 
+For your customized workflows you might need this module to ship additional
+fields. Additional Jira custom fields for the issues can either be configured in Web GUI or manually:
+
+1. **Web GUI** :
+   * Once the Jira module has been enabled and its settings are configured, visit the `Templates Configuration` 
+page to create a new template.
+
+   ![Web GUI - Template Configuration](screenshot/add_template.png)
+
+   * Click on the template to which the additional fields need to be added.
+ 
+   ![Web GUI - Edit Template](screenshot/template_config.png)
+
+   * Add the required additional fields to the template as shown in the screenshot below. These
+   fields can be associated with host groups, service groups or a custom variable. They could also be some other
+   values relevant to the issue being created. Currently only fields of type string, array, number and date are 
+   supported in Web GUI. Multi-select array type and other type custom fields are not supported.
+
+   ![Web GUI - Add Field](screenshot/add_field.png)
+
+   * The fields added to a template will be listed in the `Fields List` tab of that corresponding template.
+
+   ![Web GUI - Fields List](screenshot/fields_list.png)
+
+2. **Manually** : Create corresponding templates in your `templates.ini` in 
+`<ICINGAWEB_CONFIGDIR>/modules/jira/templates.ini`. This template can then be used while creating the issue.
+
 > **Hint**: This is optional, do not blindly copy & paste. Use this as an
 > example in case you need to feed different workflows with special paprameters.
-
-For your customized workflows you might need this module to ship additional
-fields. This is as easy as creating corresponding templates in your `templates.ini`
-in `<ICINGAWEB_CONFIGDIR>/modules/jira/templates.ini`:
 
 ```ini
 [my-workflow]
