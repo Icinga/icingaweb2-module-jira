@@ -66,7 +66,8 @@ class NewIssueForm extends Form
 
         //Createmeta for the jira server above v9.x.x has been updated
         // check https://docs.atlassian.com/software/jira/docs/api/REST/9.0.0/#project-getProject
-        if (($this->jira->isServer() && version_compare($this->jira->getJiraVersion(), '9', '>='))
+        if (
+            ($this->jira->isServer() && version_compare($this->jira->getJiraVersion(), '9', '>='))
             || (
                 $deployment->get('type') === 'cloud'
                 && ! (int) $deployment->get('legacy')

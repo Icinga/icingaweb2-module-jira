@@ -30,9 +30,11 @@ class MonitoringInfo
      */
     public function __construct($object)
     {
-        if (! $object instanceof MonitoredObject
+        if (
+            ! $object instanceof MonitoredObject
             && ! $object instanceof IcingadbHost
-            && ! $object instanceof IcingadbService) {
+            && ! $object instanceof IcingadbService
+        ) {
             throw new InvalidArgumentException(sprintf(
                 'Expects the given object to be an instance of %s, %s or %s: got %s',
                 MonitoredObject::class,

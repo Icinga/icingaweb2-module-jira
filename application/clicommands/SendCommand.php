@@ -71,7 +71,7 @@ class SendCommand extends Command
         $issue = $jira->eventuallyGetLatestOpenIssueFor($project, $host, $service);
 
         $config = Config::module('jira');
-        
+
         $mm = $this->app->getModuleManager();
         if ($p->shift('icingadb') || ! $mm->hasEnabled('monitoring')) {
             if (! $mm->hasEnabled('icingadb')) {

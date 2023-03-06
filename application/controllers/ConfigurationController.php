@@ -63,7 +63,7 @@ class ConfigurationController extends Controller
     {
         $this->assertPermission('director/admin');
         $this->mergeTabs($this->Module()->getConfigTabs()->activate('director'));
-        
+
         if ($this->params->get('action') === 'sync') {
             $this->runFailSafe('sync');
             return;

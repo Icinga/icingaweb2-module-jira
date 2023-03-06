@@ -20,9 +20,9 @@ class RestApi
     protected $password;
 
     protected $curl;
-    
+
     protected $apiName = 'api';
-    
+
     protected $apiVersion = '2';
 
     /** @var object Server info of Jira Software */
@@ -107,7 +107,7 @@ class RestApi
     {
         try {
             $this->fetchIssue($key);
-            
+
             return true;
         } catch (NotFoundError $e) {
             return false;
@@ -358,7 +358,7 @@ class RestApi
                 $fields->$key = $value;
             }
         }
-        
+
         $issue->fields = $fields;
 
         return $issue;
@@ -426,7 +426,7 @@ class RestApi
                 'Unable to authenticate, please check your API credentials'
             );
         }
-        
+
         if ($statusCode === 404) {
             throw new NotFoundError(
                 'Not Found'
@@ -519,7 +519,7 @@ class RestApi
             416 => 'Requested Range Not Satisfiable',
             417 => 'Expectation Failed',
             420 => 'Policy Not Fulfilled',
-            
+
             500 => 'Internal Server Error',
             501 => 'Not Implemented',
             502 => 'Bad Gateway',
@@ -527,7 +527,7 @@ class RestApi
             504 => 'Gateway Timeout',
             505 => 'HTTP Version Not Supported',
         ];
-        
+
         if (\array_key_exists($statusCode, $errors)) {
             return \sprintf('%d: %s', $statusCode, $errors[$statusCode]);
         } elseif ($statusCode >= 400 && $statusCode < 500) {

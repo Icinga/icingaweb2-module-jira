@@ -55,7 +55,8 @@ class TemplateForm extends BaseHtmlElement
 
         //Createmeta for the jira server above v9.x.x has been updated
         // check https://docs.atlassian.com/software/jira/docs/api/REST/9.0.0/#project-getProject
-        if (($this->jira->isServer() && version_compare($this->jira->getJiraVersion(), '9', '>='))
+        if (
+            ($this->jira->isServer() && version_compare($this->jira->getJiraVersion(), '9', '>='))
             || (
                 $deployment->get('type') === 'cloud'
                 && ! (int) $deployment->get('legacy')
@@ -63,7 +64,7 @@ class TemplateForm extends BaseHtmlElement
         ) {
             foreach ($projects as $project) {
                 $project = $this->jira->get(sprintf(
-                // 'issue/createmeta/{projectIdOrKey}/issuetypes/{issueTypeId}?expand=values.fields',
+//                    'issue/createmeta/{projectIdOrKey}/issuetypes/{issueTypeId}?expand=values.fields',
                     'issue/createmeta/%s/issuetypes/',
                     rawurlencode($project->key)
                 ))->getResult();
@@ -79,7 +80,7 @@ class TemplateForm extends BaseHtmlElement
             }
         } else {
             $projects = $this->jira->get(sprintf(
-            // 'issue/createmeta?projectKeys=%s&expand=projects.issuetypes.fields',
+//                'issue/createmeta?projectKeys=%s&expand=projects.issuetypes.fields',
                 'issue/createmeta?projectKeys=%s',
                 rawurlencode($projectName)
             ))->getResult()->projects;
@@ -120,7 +121,7 @@ class TemplateForm extends BaseHtmlElement
             'id'    => $name,
             'name'  => $name,
         ]);
-        
+
         if (array_key_exists('reject', $propertyMap)) {
             $reject = $propertyMap['reject'];
         } else {
@@ -179,7 +180,7 @@ class TemplateForm extends BaseHtmlElement
                 $value = $entry[$name];
             }
         }
-        
+
         if (empty($value)) {
             return $default;
         } else {

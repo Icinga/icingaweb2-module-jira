@@ -72,7 +72,7 @@ class RenderingHelper
         if (is_array($url)) {
             $url = implode('/', array_map('urlencode', $url));
         }
-        
+
         $attributes['href'] = $this->api()->urlLink($url);
         $attributes += [
             'target' => '_blank',
@@ -81,7 +81,7 @@ class RenderingHelper
 
         return Html::tag('a', $attributes, $caption)->setSeparator(' ');
     }
-    
+
     public function renderAvatar($object, $width = 16, $height = 16)
     {
         return $this->renderIconImage(

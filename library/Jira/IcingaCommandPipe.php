@@ -49,8 +49,7 @@ class IcingaCommandPipe
             ->setComment($message)
             ->setPersistent(false)
             ->setSticky(false)
-            ->setNotify(false)
-            ;
+            ->setNotify(false);
 
         $transport = $this->getCommandTransport();
         $transport->send($cmd);

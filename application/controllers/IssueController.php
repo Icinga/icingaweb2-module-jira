@@ -19,7 +19,6 @@ class IssueController extends Controller
         $this->addTitleTab('Issue details');
         if ($issue) {
             $this->addTitle('%s: %s', $key, $issue->fields->summary);
-            // $this->dump($issue);
         } else {
             $this->addTitle($key);
         }
