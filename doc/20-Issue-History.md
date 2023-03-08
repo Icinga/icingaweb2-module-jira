@@ -1,9 +1,9 @@
 Issue History and Details
 =========================
 
-For convenience, this module comes with a nice overview of your created JIRA
+For convenience, this module comes with a nice overview of your created Jira
 issues. It shows your most recent issues, combined with the most important
-details. Please note that only issues created by the configured JIRA user will
+details. Please note that only issues created by the configured Jira user will
 be shown.
 
 Issue History Table
@@ -19,14 +19,14 @@ The Summary column shows issue summary and description, and the last column
 shows how long ago the issue has been created. Move the mouse over the shown
 time to read the full related creation time with timezone details.
 
-![JIRA issue list](screenshot/issue_list.png)
+![Jira issue list](screenshot/issue_list.png)
 
 You can then choose an issue, and you'll provided with some more details. All
 comments posted to this issue will be shown. Also, there are and some links
-pointing to JIRA (directly to the issue or to it's project) and to the related
+pointing to Jira (directly to the issue or to it's project) and to the related
 Icinga Host or Service.
 
-![JIRA issue details](screenshot/issue_details.png)
+![Jira issue details](screenshot/issue_details.png)
 
 
 Monitoring module hook

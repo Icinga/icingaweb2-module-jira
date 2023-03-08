@@ -9,7 +9,7 @@
 * Icinga Web 2 modules:
   * The `monitoring` or `icingadb` module needs to be configured and enabled.
 
-## Install the Icinga Module for JIRA®
+## Install the Icinga Module for Jira®
 
 Install it [like any other module](https://icinga.com/docs/icinga-web-2/latest/doc/08-Modules/#installation).
 Use `jira` as name.
@@ -49,11 +49,11 @@ url = "https://icinga.example.com/icingaweb2"
 ```
 
 The `port` and `path` settings are optional, protocol is always HTTPS. The
-given user needs permissions to create (and show) issues in at least one JIRA
+given user needs permissions to create (and show) issues in at least one Jira
 project.
 
 If you want to have links pointing back to your Icinga Installation in your
-JIRA issues, you need to fill the `url` setting.
+Jira issues, you need to fill the `url` setting.
 
 The `ui` section allows to optionally pre-select a specific project and/or a
 specific issue type in the "Create New Issue" form. Please note that those
@@ -71,9 +71,9 @@ afterwards:
 
     systemctl restart icinga2.service
 
-### Required JIRA Custom Fields
+### Required Jira Custom Fields
 
-This module requires you to create two custom fields in JIRA:
+This module requires you to create two custom fields in Jira:
 
 * `icingaKey`: a searchable text field
 * `icingaStatus`: a short text field, 12 characters are enough
@@ -85,7 +85,7 @@ this field is going to be used.
 
 This module uses `icingaKey` to figure out whether an issue for the given object
 already exists. Hosts use their host name, services use hostname!servicename.
-As JIRA seems to offer no exact search for custom text fields out of the box (at
+As Jira seems to offer no exact search for custom text fields out of the box (at
 least not without installing extra plugins), we are cheating. Search is down via
 `~` and we add surrounding escaped double quotes. Still, this doesn't seem to be
 enough. So we prefix the key with `BEGIN` and postfix it with `END`.
@@ -98,7 +98,7 @@ following JQL construct:
 A little bit weird, but it should work fine. And as this field is usually not
 shown anywhere, it shouldn't disturb.
 
-### Fill JIRA Custom Fields
+### Fill Jira Custom Fields
 
 > **Hint**: This is optional, do not blindly copy & paste. Use this as an
 > example in case you need to feed different workflows with special paprameters.

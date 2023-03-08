@@ -15,7 +15,7 @@ class HostActions extends HostActionsHook
     {
         return [
             new Link(
-                'JIRA Issues',
+                'Jira Issues',
                 Url::fromPath(
                     'jira/issues',
                     [

@@ -1,7 +1,7 @@
 Sending Notifications
 =====================
 
-This is what your monitoring software should call to send a notification to JIRA:
+This is what your monitoring software should call to send a notification to Jira:
 
     icingacli jira send problem \
         --host some.example.com \
@@ -26,10 +26,10 @@ icingacli jira send problem [options]
 
 REQUIRED OPTIONS
 
-  --project <project-name>     JIRA project name, like "ITSM"
-  --issuetype <type-name>      JIRA issue type, like "Incident"
-  --summary <summary>          JIRA issue summary
-  --description <description>  JIRA issue description text
+  --project <project-name>     Jira project name, like "ITSM"
+  --issuetype <type-name>      Jira issue type, like "Incident"
+  --summary <summary>          Jira issue summary
+  --description <description>  Jira issue description text
   --state <state-name>         Icinga state
   --host <host-name>           Icinga Host name
 
@@ -38,7 +38,7 @@ OPTIONAL
   --service <service-name>   Icinga Service name
   --template <template-name> Template name (templates.ini section)
   --ack-author <author>      Username shown for acknowledgements,
-                             defaults to "JIRA"
+                             defaults to "Jira"
   --no-acknowledge           Do not acknowledge Icinga problem
   --command-pipe <path>      Legacy command pipe, allows to run without
                              depending on a configured monitoring module
@@ -55,12 +55,12 @@ Icinga 2 NotificationCommand
 In Icinga 2, a related `NotificationCommand` definition could look as follows:
 
 ```
-object NotificationCommand "JIRA Host Notification" {
+object NotificationCommand "Jira Host Notification" {
     import "plugin-notification-command"
     command = [ "/usr/bin/icingacli", "jira", "send", "problem" ]
     arguments += {
         "--ack-author" = {
-            description = "This author name will be used when acknowledging Icinga problems once a JIRA issue got created"
+            description = "This author name will be used when acknowledging Icinga problems once a Jira issue got created"
             value = "$jira_ack_author$"
         }
         "--command-pipe" = {
@@ -68,22 +68,22 @@ object NotificationCommand "JIRA Host Notification" {
             value = "$jira_command_pipe$"
         }
         "--description" = {
-            description = "JIRA issue description"
+            description = "Jira issue description"
             required = true
             value = "$jira_description$"
         }
         "--host" = "$host.name$"
         "--issuetype" = {
-            description = "JIRA issue type (e.g. Incident)"
+            description = "Jira issue type (e.g. Incident)"
             required = true
             value = "$jira_issuetype$"
         }
         "--no-acknowledge" = {
-            description = "D not acknowledge  Icinga problems once a JIRA issue got created"
+            description = "D not acknowledge  Icinga problems once a Jira issue got created"
             value = "$jira_no_acknowledge$"
         }
         "--project" = {
-            description = "JIRA project name (e.g. ITSM)"
+            description = "Jira project name (e.g. ITSM)"
             required = true
             value = "$jira_project$"
         }
@@ -92,12 +92,12 @@ object NotificationCommand "JIRA Host Notification" {
             value = "$host.state$"
         }
         "--summary" = {
-            description = "JIRA issue summary"
+            description = "Jira issue summary"
             required = true
             value = "$jira_summary$"
         }
         "--template" = {
-            description = "Issue template name (templates.ini section). This allows to pass custom fields to JIRA"
+            description = "Issue template name (templates.ini section). This allows to pass custom fields to Jira"
             value = "$jira_template$"
         }
     }
@@ -110,12 +110,12 @@ Host- and Service-NotificationCommands need distinct command definitions, so her
 is what it would look like for a Service:
 
 ```
-object NotificationCommand "JIRA Service Notification" {
+object NotificationCommand "Jira Service Notification" {
     import "plugin-notification-command"
     command = [ "/usr/bin/icingacli", "jira", "send", "problem" ]
     arguments += {
         "--ack-author" = {
-            description = "This author name will be used when acknowledging Icinga problems once a JIRA issue got created"
+            description = "This author name will be used when acknowledging Icinga problems once a Jira issue got created"
             value = "$jira_ack_author$"
         }
         "--command-pipe" = {
@@ -123,22 +123,22 @@ object NotificationCommand "JIRA Service Notification" {
             value = "$jira_command_pipe$"
         }
         "--description" = {
-            description = "JIRA issue description"
+            description = "Jira issue description"
             required = true
             value = "$jira_description$"
         }
         "--host" = "$host.name$"
         "--issuetype" = {
-            description = "JIRA issue type (e.g. Incident)"
+            description = "Jira issue type (e.g. Incident)"
             required = true
             value = "$jira_issuetype$"
         }
         "--no-acknowledge" = {
-            description = "D not acknowledge  Icinga problems once a JIRA issue got created"
+            description = "D not acknowledge  Icinga problems once a Jira issue got created"
             value = "$jira_no_acknowledge$"
         }
         "--project" = {
-            description = "JIRA project name (e.g. ITSM)"
+            description = "Jira project name (e.g. ITSM)"
             required = true
             value = "$jira_project$"
         }
@@ -148,12 +148,12 @@ object NotificationCommand "JIRA Service Notification" {
             value = "$service.state$"
         }
         "--summary" = {
-            description = "JIRA issue summary"
+            description = "Jira issue summary"
             required = true
             value = "$jira_summary$"
         }
         "--template" = {
-            description = "Issue template name (templates.ini section). This allows to pass custom fields to JIRA"
+            description = "Issue template name (templates.ini section). This allows to pass custom fields to Jira"
             value = "$jira_template$"
         }
     }

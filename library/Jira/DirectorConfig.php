@@ -60,7 +60,7 @@ class DirectorConfig
     {
         return IcingaCommand::create([
             'methods_execute' => 'PluginNotification',
-            'object_name' => 'JIRA Host Notification',
+            'object_name' => 'Jira Host Notification',
             'object_type' => 'object',
             'command'     => '/usr/bin/icingacli jira send problem',
             'arguments'   => $this->defaultHostArguments(),
@@ -75,7 +75,7 @@ class DirectorConfig
     {
         return IcingaCommand::create([
             'methods_execute' => 'PluginNotification',
-            'object_name' => 'JIRA Service Notification',
+            'object_name' => 'Jira Service Notification',
             'object_type' => 'object',
             'command'     => '/usr/bin/icingacli jira send problem',
             'arguments'   => $this->defaultServiceArguments() + $this->defaultHostArguments(),
@@ -89,36 +89,36 @@ class DirectorConfig
             '--project'   => (object) [
                 'value'       => '$jira_project$',
                 'required'    => true,
-                'description' => 'JIRA project name (e.g. ITSM)',
+                'description' => 'Jira project name (e.g. ITSM)',
             ],
             '--issuetype' => (object) [
                 'value'       => '$jira_issuetype$',
-                'description' => 'JIRA issue type (e.g. Incident)',
+                'description' => 'Jira issue type (e.g. Incident)',
                 'required'    => true,
             ],
             '--summary' => (object) [
                 'value'       => '$jira_summary$',
-                'description' => 'JIRA issue summary',
+                'description' => 'Jira issue summary',
                 'required'    => true,
             ],
             '--description' => (object) [
                 'value'       => '$jira_description$',
-                'description' => 'JIRA issue description',
+                'description' => 'Jira issue description',
                 'required' => true,
             ],
             '--template' => (object) [
                 'value'       => '$jira_template$',
                 'description' => 'Issue template name (templates.ini section).'
-                    . ' This allows to pass custom fields to JIRA',
+                    . ' This allows to pass custom fields to Jira',
             ],
             '--ack-author' => (object) [
                 'value'       => '$jira_ack_author$',
                 'description' => 'This author name will be used when acknowledging'
-                    . ' Icinga problems once a JIRA issue got created',
+                    . ' Icinga problems once a Jira issue got created',
             ],
             '--no-acknowledge' => (object) [
                 'value'       => '$jira_no_acknowledge$',
-                'description' => 'D not acknowledge  Icinga problems once a JIRA'
+                'description' => 'D not acknowledge  Icinga problems once a Jira'
                     . ' issue got created',
             ],
             '--command-pipe' => (object) [

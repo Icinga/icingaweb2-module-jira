@@ -53,7 +53,7 @@ class IssuesController extends Controller
     {
         $info = $this->requireMonitoringInfo();
         $info->setNotificationType('MANUAL'); // Not sure about this, but that's how it used to be
-        $this->addTitle($this->translate('Create JIRA Issue') . ': %s', $info->getObjectLabel())
+        $this->addTitle($this->translate('Create Jira Issue') . ': %s', $info->getObjectLabel())
             ->activateTab();
 
         $form = (new NewIssueForm($this->jira(), $this->getModuleConfig(), $info))

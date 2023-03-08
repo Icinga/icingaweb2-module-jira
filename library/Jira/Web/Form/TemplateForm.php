@@ -29,7 +29,7 @@ class TemplateForm extends BaseHtmlElement
             $projects = $this->jira->get('project')->getResult();
         } catch (Exception $e) {
             $this->add(Html::tag('p', ['class' => 'state-hint error'], sprintf(
-                $this->translate('Unable to talk to JIRA, please check your configuration: %s'),
+                $this->translate('Unable to talk to Jira, please check your configuration: %s'),
                 $e->getMessage()
             )));
 
