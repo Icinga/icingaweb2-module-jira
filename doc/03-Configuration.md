@@ -9,7 +9,7 @@
 * Icinga Web 2 modules:
   * The `monitoring` or `icingadb` module needs to be configured and enabled.
 
-## Install the Icinga Module for Jira®
+## Install the Icinga Module for Jira™
 
 Install it [like any other module](https://icinga.com/docs/icinga-web-2/latest/doc/08-Modules/#installation).
 Use `jira` as name.

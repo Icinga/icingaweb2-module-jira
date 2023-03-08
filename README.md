@@ -1,4 +1,4 @@
-# Icinga Module for Jira®
+# Icinga Module for Jira™
 
 [![PHP Support](https://img.shields.io/badge/php-%3E%3D%207.0-777BB4?logo=PHP)](https://php.net/)
 ![Build Status](https://github.com/icinga/icingaweb2-module-jira/workflows/PHP%20Tests/badge.svg?branch=master)
@@ -6,7 +6,7 @@
 
 ![Icinga Logo](https://icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
-Hassle-free deep integration with Atlassian Jira®. Depending on your needs, this
+Hassle-free deep integration with Atlassian Jira™. Depending on your needs, this
 module is able to:
 
 * create **Jira Issues for Problems** detected by Icinga
