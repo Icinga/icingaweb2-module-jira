@@ -138,15 +138,15 @@ class MonitoringInfo
         if ($this->object instanceof MonitoredObject) {
             if ($this->object instanceof Service) {
                 return $this->object->service_output . "\n"
-                    . str_replace('\n', "\n", $this->object->service_long_output);
+                    . str_replace('\n', "\n", $this->object->service_long_output ?? '');
             }
 
             return $this->object->host_output . "\n"
-                . str_replace('\n', "\n", $this->object->host_long_output);
+                . str_replace('\n', "\n", $this->object->host_long_output ?? '');
         }
 
         return $this->object->state->output . "\n"
-            . str_replace('\n', "\n", $this->object->state->long_output);
+            . str_replace('\n', "\n", $this->object->state->long_output ?? '');
     }
 
     public function hostVars()
