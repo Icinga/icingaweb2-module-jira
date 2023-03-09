@@ -15,7 +15,7 @@ class ServiceActions extends ServiceActionsHook
     {
         return [
             new Link(
-                'JIRA Issues',
+                'Jira Issues',
                 Url::fromPath(
                     'jira/issues',
                     [

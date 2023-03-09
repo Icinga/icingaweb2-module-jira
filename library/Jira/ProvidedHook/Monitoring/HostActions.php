@@ -16,7 +16,7 @@ class HostActions extends HostActionsHook
     public function getActionsForHost(Host $host)
     {
         return [
-            'JIRA Issues' => Url::fromPath(
+            'Jira Issues' => Url::fromPath(
                 'jira/issues',
                 [
                     'host' => $host->host_name,

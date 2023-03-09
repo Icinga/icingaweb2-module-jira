@@ -1,6 +1,6 @@
 <?php
 
-// Icinga Web JIRA Integration | (c) 2023 Icinga GmbH | GPLv2
+// Icinga Web Jira Integration | (c) 2023 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Jira\Forms\Config;
 

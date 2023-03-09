@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This module allows to send notifications to JIRA and integrates nicely into the
+This module allows to send notifications to Jira and integrates nicely into the
 Icinga Web 2 frontend.
 
 Features
@@ -9,7 +9,7 @@ Features
 
 ### NotificationCommand for Icinga
 
-You want to create a JIRA issue for all or some of your Hosts and Services?
+You want to create a Jira issue for all or some of your Hosts and Services?
 Then this project might be what you're looking for. Sending notifications is
 as easy as follows:
 
@@ -36,7 +36,7 @@ this works.
 ### Brief issue history overview
 
 Granted access to this module you can get a quick overview showing the most recent
-JIRA issues created by Icinga. Read more about [what information](20-Issue-History.md)
+Jira issues created by Icinga. Read more about [what information](20-Issue-History.md)
 we're going to show.
 
 ![Issue list and details](screenshot/issue_list_and_details_small.png)

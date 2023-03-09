@@ -1,4 +1,4 @@
-# Icinga Module for JIRA®
+# Icinga Module for Jira™
 
 [![PHP Support](https://img.shields.io/badge/php-%3E%3D%207.0-777BB4?logo=PHP)](https://php.net/)
 ![Build Status](https://github.com/icinga/icingaweb2-module-jira/workflows/PHP%20Tests/badge.svg?branch=master)
@@ -6,24 +6,24 @@
 
 ![Icinga Logo](https://icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
-Hassle-free deep integration with Atlassian Jira®. Depending on your needs, this
+Hassle-free deep integration with Atlassian Jira™. Depending on your needs, this
 module is able to:
 
-* create **JIRA Issues for Problems** detected by Icinga
+* create **Jira Issues for Problems** detected by Icinga
 * create **only one** issue per problem
-* **acknowledge** Icinga Problems once a JIRA issue has been created
-* manually create Host- or Service-related JIRA issues
-* shows a Host/Service-related **JIRA Issue History**
+* **acknowledge** Icinga Problems once a Jira issue has been created
+* manually create Host- or Service-related Jira issues
+* shows a Host/Service-related **Jira Issue History**
 
-And there is more. Use custom templates to trigger JIRA **Workflows** according
-your very own needs. This way you can automatically fill JIRA custom fields
+And there is more. Use custom templates to trigger Jira **Workflows** according
+your very own needs. This way you can automatically fill Jira custom fields
 based on monitored system properties. This feature is mostly being used to
 assign monitored objects to their **related CIs** or to trigger dedicated
 **customer-related workflows**.
 
 This is 100% free Open Source Software. Interested? Then let's [get started](doc/01-Introduction.md)!
 
-![JIRA integration](doc/screenshot/issue_list_and_details-new.png)
+![Jira integration](doc/screenshot/issue_list_and_details-new.png)
 
 Changes
 -------
@@ -35,7 +35,7 @@ Changes
 
 ### v1.2.1
 
-* FIX: Creating tickets in JIRA now works again (#77)
+* FIX: Creating tickets in Jira now works again (#77)
 
 ### v1.2.0
 
@@ -52,11 +52,11 @@ Changes
 * FIX: we're sending Content-Length to make proxies happy (#51)
 * FEATURE: Show status for created issues (#44)
 * FEATURE: Allow choosing a default template (#36)
-* FEATURE: Add configurable duedate for created JIRA issues (#37)
+* FEATURE: Add configurable duedate for created Jira issues (#37)
 
 ### v1.0.1
 
-* FIX: Ticket URLs pointing to JIRA for Setups sitting in the DocumentRoot (#30)
+* FIX: Ticket URLs pointing to Jira for Setups sitting in the DocumentRoot (#30)
 * FIX: The new HTTP/HTTPS scheme setting didn't work (#30)
 * FIX: There still was a dependency on Icinga Director (#28)
 * FIX: Form for manually created issues didn't work without Icinga Director (#27)

@@ -48,7 +48,7 @@ class RestApi
         $host = $config->get('api', 'host');
         $scheme = $config->get('api', 'scheme', 'https');
         if ($host === null) {
-            throw new RuntimeException('No JIRA host has been configured');
+            throw new RuntimeException('No Jira host has been configured');
         }
         $url = \rtrim(\sprintf(
             '%s://%s:%d/%s',
@@ -208,7 +208,7 @@ class RestApi
         } else {
             $icingaKey = static::makeIcingaKey($host, $service);
 
-            // There is no exact field matcher out of the box on JIRA, this is
+            // There is no exact field matcher out of the box on Jira, this is
             // an ugly work-around. We search for "BEGINhostnameEND" or
             // "BEGINhostname!serviceEND"
             $query .= \sprintf(' AND ' . $keyField . ' ~ "\"%s\""', $icingaKey);
@@ -284,7 +284,7 @@ class RestApi
 
         if (property_exists($result, 'key')) {
             $key = $result->key;
-            Logger::info('New JIRA issue %s has been created', $key);
+            Logger::info('New Jira issue %s has been created', $key);
             Benchmark::measure('A new issue has been created');
 
             return $key;

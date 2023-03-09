@@ -67,7 +67,7 @@ class RenderingHelper
         $config = Config::module('jira');
         $host = $config->get('api', 'host');
         if ($host === null) {
-            throw new RuntimeException('No JIRA host has been configured');
+            throw new RuntimeException('No Jira host has been configured');
         }
         if (is_array($url)) {
             $url = implode('/', array_map('urlencode', $url));
@@ -76,7 +76,7 @@ class RenderingHelper
         $attributes['href'] = $this->api()->urlLink($url);
         $attributes += [
             'target' => '_blank',
-            'title'  => 'Open in new JIRA tab'
+            'title'  => 'Open in new Jira tab'
         ];
 
         return Html::tag('a', $attributes, $caption)->setSeparator(' ');

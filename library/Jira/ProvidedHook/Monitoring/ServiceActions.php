@@ -16,7 +16,7 @@ class ServiceActions extends ServiceActionsHook
     public function getActionsForService(Service $service)
     {
         return [
-            'JIRA Issues' => Url::fromPath(
+            'Jira Issues' => Url::fromPath(
                 'jira/issues',
                 [
                     'host'    => $service->host_name,

@@ -47,7 +47,7 @@ class NewIssueForm extends Form
         );
 
         $this->addElement('select', 'project', [
-            'label' => $this->translate('JIRA project'),
+            'label' => $this->translate('Jira project'),
             'multiOptions' => $this->optionalEnum($enum),
             'value'    => $defaultProject,
             'class'    => 'autosubmit',
@@ -133,7 +133,7 @@ class NewIssueForm extends Form
             'value' =>  $defaultAck,
             'description' => $this->translate(
                 'Whether the Icinga problem should be acknowledged. The newly'
-                . ' created JIRA issue will be linked in the related comment.'
+                . ' created Jira issue will be linked in the related comment.'
             )
         ]);
 
@@ -197,11 +197,11 @@ class NewIssueForm extends Form
 
     protected function eventuallyAcknowledge($key, $host, $service)
     {
-        $ackMessage = "JIRA issue $key has been created";
+        $ackMessage = "Jira issue $key has been created";
 
         try {
             $cmd = new IcingaCommandPipe();
-            if ($cmd->acknowledge('JIRA', $ackMessage, $host, $service)) {
+            if ($cmd->acknowledge('Jira', $ackMessage, $host, $service)) {
                 Logger::info("Problem has been acknowledged for $key");
             }
         } catch (Exception $e) {

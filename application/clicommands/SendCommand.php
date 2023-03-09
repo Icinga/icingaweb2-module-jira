@@ -27,10 +27,10 @@ class SendCommand extends Command
      *
      * REQUIRED OPTIONS
      *
-     *   --project <project-name>     JIRA project name, like "ITSM"
-     *   --issuetype <type-name>      JIRA issue type, like "Incident"
-     *   --summary <summary>          JIRA issue summary
-     *   --description <description>  JIRA issue description text
+     *   --project <project-name>     Jira project name, like "ITSM"
+     *   --issuetype <type-name>      Jira issue type, like "Incident"
+     *   --summary <summary>          Jira issue summary
+     *   --description <description>  Jira issue description text
      *   --state <state-name>         Icinga state
      *   --host <host-name>           Icinga Host name
      *
@@ -41,7 +41,7 @@ class SendCommand extends Command
      *                              It can be a date  or time difference in textual datetime format.
      *   --template <template-name> Template name (templates.ini section)
      *   --ack-author <author>      Username shown for acknowledgements,
-     *                              defaults to "JIRA"
+     *                              defaults to "Jira"
      *   --no-acknowledge           Do not acknowledge Icinga problem
      *   --command-pipe <path>      Legacy command pipe, allows to run without
      *                              depending on a configured monitoring module
@@ -60,7 +60,7 @@ class SendCommand extends Command
         $host        = $p->shiftRequired('host');
         $service     = $p->shift('service');
         $tplName     = $p->shift('template');
-        $ackAuthor   = $p->shift('ack-author', 'JIRA');
+        $ackAuthor   = $p->shift('ack-author', 'Jira');
         $ackPipe     = $p->shift('command-pipe');
         $status      = $p->shiftRequired('state');
         $description = $p->shiftRequired('description');
@@ -116,12 +116,12 @@ class SendCommand extends Command
 
             $key = $jira->createIssue($template->getFilled($params));
 
-            $ackMessage = "JIRA issue $key has been created";
+            $ackMessage = "Jira issue $key has been created";
         } else {
             $key = $issue->key;
             $icingaStatus = $config->get('key_fields', 'icingaStatus', 'icingaStatus');
             $currentStatus = isset($issue->fields->$icingaStatus) ? $issue->fields->$icingaStatus : null;
-            $ackMessage = "Existing JIRA issue $key has been found";
+            $ackMessage = "Existing Jira issue $key has been found";
             if ($currentStatus !== $status) {
                 $update = new IssueUpdate($jira, $key);
                 $update->setCustomField($icingaStatus, $status);
