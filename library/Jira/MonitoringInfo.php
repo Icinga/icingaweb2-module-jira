@@ -70,8 +70,10 @@ class MonitoringInfo
                     $vars = [];
             }
 
-            if (isset($vars[$varName])) {
-                return $vars[$varName];
+            $nestedVarNames = explode('.', $varName);
+            $innerName = array_shift($nestedVarNames);
+            if (isset($vars[$innerName])) {
+                return $this->getRecursiveVar($nestedVarNames, $vars[$innerName]);
             }
 
             return null;
@@ -83,6 +85,38 @@ class MonitoringInfo
         } catch (Exception $e) {
             return null;
         }
+    }
+
+    /**
+     * Fetch custom variable for the object
+     *
+     * Also fetches deep custom variable.
+     *
+     * @param $nestedVarName
+     * @param $var
+     *
+     * @return mixed
+     */
+    public function getRecursiveVar($nestedVarName, &$var)
+    {
+        if (! empty($nestedVarName)) {
+            $varName = array_shift($nestedVarName);
+
+            if (preg_match('/\[(\d+)]$/', $varName, $m)) {
+                $varName = substr($varName, 0, -strlen($m[0]));
+                array_unshift($nestedVarName, $m[1]);
+            }
+
+            if (is_array($var)) {
+                $var = $var[$varName];
+            } elseif (is_object($var)) {
+                $var = $var->$varName;
+            }
+
+            $this->getRecursiveVar($nestedVarName, $var);
+        }
+
+        return $var;
     }
 
     public function getHostname()
@@ -252,5 +286,68 @@ class MonitoringInfo
     public function getObject()
     {
         return $this->object;
+    }
+
+    /**
+     * Fetch the list of host groups for the object
+     *
+     * @return array|mixed|null
+     */
+    public function fetchHostGroups()
+    {
+        if ($this->getObject() instanceof MonitoredObject) {
+            $hg = $this->getObject()->hostgroups;
+            return array_map(function ($value) use ($hg) {
+                if (strpos($value, ' ') !== false) {
+                    return array_search($value, $hg);
+                }
+
+                return $value;
+            }, array_values($this->getObject()->hostgroups));
+        }
+
+        $hostGroups = [];
+
+        if ($this->getObject() instanceof IcingadbService) {
+            foreach ($this->getObject()->host->hostgroup as $hostgroup) {
+                if (strpos($hostgroup->display_name, ' ') !== false) {
+                    $hostGroups[] = $hostgroup->name;
+                } else {
+                    $hostGroups[] = $hostgroup->display_name;
+                }
+            }
+
+            return $hostGroups;
+        }
+
+        foreach ($this->getObject()->hostgroup as $hostgroup) {
+            if (strpos($hostgroup->display_name, ' ') !== false) {
+                $hostGroups[] = $hostgroup->name;
+            } else {
+                $hostGroups[] = $hostgroup->display_name;
+            }
+        }
+
+        return $hostGroups;
+    }
+
+    /**
+     * Fetch the list of service groups for the object
+     *
+     * @return array|mixed|null
+     */
+    public function fetchServiceGroups()
+    {
+        if ($this->getObject() instanceof MonitoredObject) {
+            return $this->getObject()->fetchServicegroups();
+        }
+
+        $serviceGroups = [];
+
+        foreach ($this->getObject()->servicegroup as $servicegroup) {
+            $serviceGroups[] = $servicegroup->display_name;
+        }
+
+        return $serviceGroups;
     }
 }

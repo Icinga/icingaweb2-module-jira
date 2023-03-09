@@ -343,6 +343,23 @@ class RestApi
     }
 
     /**
+     * Returns the custom field information for the given fieldId
+     *
+     * @param string $fieldId
+     *
+     * @return mixed Custom field information
+     *
+     * @throws \Icinga\Exception\NotFoundError
+     */
+    public function getJiraFieldInfo(string $fieldId)
+    {
+        $fields = $this->get('field')->getResult();
+        $idx = array_search($fieldId, array_column((array) $fields, 'id'));
+
+        return $fields[$idx];
+    }
+
+    /**
      * @param $issue
      * @throws NotFoundError
      * @return object

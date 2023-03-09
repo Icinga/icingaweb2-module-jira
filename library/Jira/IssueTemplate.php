@@ -2,10 +2,15 @@
 
 namespace Icinga\Module\Jira;
 
+use Exception;
 use Icinga\Application\Config;
+use Icinga\Exception\NotFoundError;
+use ipl\I18n\Translation;
 
 class IssueTemplate
 {
+    use Translation;
+
     protected $custom = [];
 
     /** @var MonitoringInfo */
@@ -15,11 +20,7 @@ class IssueTemplate
     {
         $fields = [];
         foreach ($this->getUnfilledFields() as $key => $tpl) {
-            if ($key === 'duedate') {
-                $fields['duedate'] = date('Y-m-d', strtotime($tpl));
-            } else {
-                $this->addToFields($fields, $key, $this->fillTemplate($tpl, $params));
-            }
+            $this->addToFields($fields, $key, $this->fillTemplate($key, $tpl, $params));
         }
 
         if (isset($fields['description'])) {
@@ -74,35 +75,106 @@ class IssueTemplate
         }
     }
 
-    protected function fillTemplate($string, $params)
+    /**
+     * Fill the fields in the issue template
+     *
+     * @param $key string Field Name or Field ID
+     * @param $string string Field value or string to represent icingaKey, host/service group or custom variables
+     * @param $params array Parameters used to create the issue
+     *
+     * @return array|false|float|int|mixed|string value of the field
+     *
+     * @throws NotFoundError
+     * @throws Exception
+     */
+    protected function fillTemplate($key, $string, $params)
     {
         $pattern = '/\${([^}\s]+)}/';
-        return preg_replace_callback(
-            $pattern,
-            function ($match) use ($params) {
-                $name = $match[1];
-                if ($name === 'icingaKey') {
-                    return $this->getIcingaKeyFromParams($params);
-                }
-                if (array_key_exists($name, $params)) {
-                    return $params[$name];
-                }
 
-                $value = null;
-                if (preg_match('/^(?:host|service)\./', $name)) {
-                    if ($this->monitoringInfo) {
-                        $value = $this->monitoringInfo->getProperty($name);
+        $jira = RestApi::fromConfig();
+        if (in_array($key, $jira->enumCustomFields())) {
+            $fieldId = array_search($key, $jira->enumCustomFields());
+        } else {
+            $fieldId = $key;
+        }
+
+        $fieldType = $jira->getJiraFieldInfo($fieldId)->schema->type;
+
+        if (preg_match($pattern, $string, $match)) {
+            $name = $match[1];
+            $value = null;
+
+            if ($name === 'icingaKey') {
+                return $this->getIcingaKeyFromParams($params);
+            }
+            if (array_key_exists($name, $params)) {
+                return $params[$name];
+            }
+
+            if (preg_match('/^(?:host|service)\./', $name)) {
+                if ($this->monitoringInfo) {
+                    $value = $this->monitoringInfo->getProperty($name);
+
+                    $jira = RestApi::fromConfig();
+                    if (in_array($key, $jira->enumCustomFields())) {
+                        $fieldId = array_search($key, $jira->enumCustomFields());
+                    } else {
+                        $fieldId = $key;
+                    }
+
+                    $fieldType = $jira->getJiraFieldInfo($fieldId)->schema->type;
+
+                    if (is_object($value)) {
+                        throw new Exception(sprintf(
+                            $this->translate('Sending objects to custom fields is not supported'),
+                            $key
+                        ));
+                    } elseif (is_array($value) && $fieldType !== 'array') {
+                        throw new Exception(sprintf(
+                            $this->translate('Custom field %s expects %s, but array given.'),
+                            $key,
+                            $fieldType
+                        ));
+                    } elseif (! is_array($value) && $fieldType === 'array') {
+                        if ($value === null) {
+                            return [];
+                        }
+
+                        throw new Exception(sprintf(
+                            $this->translate('Custom field %s expects array, but %s given'),
+                            $key,
+                            gettype($value)
+                        ));
+                    } elseif ($fieldType === 'number') {
+                        $value = filter_var($value, FILTER_VALIDATE_INT) !== false ? (int) $value : (float) $value;
                     }
                 }
+            }
 
-                if ($value === null) {
-                    return '${' . $name . '}';
-                } else {
-                    return $value;
-                }
-            },
-            $string
-        );
+            if ($name === 'hostgroup') {
+                $value = $this->monitoringInfo->fetchHostGroups();
+            }
+
+            if ($name === 'servicegroup') {
+                $value = $this->monitoringInfo->fetchServiceGroups();
+            }
+
+            if ($value === null) {
+                return '${' . $name . '}';
+            } else {
+                return $value;
+            }
+        }
+
+        if ($fieldType === 'date') {
+            return date('Y-m-d', strtotime($string));
+        }
+
+        if ($fieldType === 'number') {
+            return filter_var($string, FILTER_VALIDATE_INT) !== false ? (int) $string : (float) $string;
+        }
+
+        return $string;
     }
 
     protected function getIcingaKeyFromParams($params)

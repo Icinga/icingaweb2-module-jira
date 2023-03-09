@@ -4,9 +4,12 @@ namespace Icinga\Module\Jira\Web;
 
 use Exception;
 use Icinga\Application\Config;
+use Icinga\Exception\ProgrammingError;
 use Icinga\Module\Jira\RestApi;
 use ipl\Html\Html;
 use ipl\Web\Compat\CompatController;
+use ipl\Web\Url;
+use ipl\Web\Widget\Tabs;
 
 class Controller extends CompatController
 {
@@ -99,5 +102,39 @@ class Controller extends CompatController
         $this->controls->prependHtml(Html::tag('h1', null, $title));
 
         return $this;
+    }
+
+    /**
+     * Create tabs for a template to edit it and list its fields
+     *
+     * @param string $name
+     *
+     * @return Tabs
+     *
+     * @throws ProgrammingError
+     */
+    protected function createTemplateTabs(string $name)
+    {
+        $tabs = $this->getTabs()->add(
+            'template',
+            [
+                'label'     => t('Edit Template'),
+                'url'       => Url::fromPath(
+                    'jira/template',
+                    ['template' => $name]
+                )
+            ]
+        )->add(
+            'fields',
+            [
+                'label'     => t('Fields List'),
+                'url'       => Url::fromPath(
+                    'jira/fields',
+                    ['template' => $name]
+                )
+            ]
+        );
+
+        return $tabs;
     }
 }

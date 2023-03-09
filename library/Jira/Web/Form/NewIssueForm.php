@@ -9,10 +9,15 @@ use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\IssueTemplate;
 use Icinga\Module\Jira\MonitoringInfo;
 use Icinga\Module\Jira\RestApi;
-use Icinga\Module\Jira\Web\Form;
+use Icinga\Web\Session;
+use ipl\Html\Html;
+use ipl\Web\Common\CsrfCounterMeasure;
+use ipl\Web\Compat\CompatForm;
 
-class NewIssueForm extends Form
+class NewIssueForm extends CompatForm
 {
+    use CsrfCounterMeasure;
+
     /** @var RestApi */
     private $jira;
 
@@ -22,19 +27,20 @@ class NewIssueForm extends Form
     /** @var Config */
     private $config;
 
+    /** @var Config */
+    protected $templatesConfig;
+
     public function __construct(RestApi $jira, Config $config, MonitoringInfo $info)
     {
         $this->jira = $jira;
         $this->config = $config;
         $this->monitoringInfo = $info;
+        $this->templatesConfig = $this->config::module('jira', 'templates');
     }
 
     protected function assemble()
     {
-        $this-> prepareWebForm();
-        $this->addAttributes([
-            'class' => 'icinga-form icinga-controls'
-        ]);
+        $this->addElement($this->createCsrfCounterMeasure(Session::getSession()->getId()));
         $config = $this->config;
         $defaultProject = $config->get('ui', 'default_project');
         $defaultTemplate = $config->get('ui', 'default_template');
@@ -54,7 +60,7 @@ class NewIssueForm extends Form
             'required' => true,
         ]);
 
-        $projectName = $this->getSentValue('project');
+        $projectName = $this->getValue('project');
         if ($projectName === null) {
             $projectName = $defaultProject;
         }
@@ -96,10 +102,11 @@ class NewIssueForm extends Form
         asort($enum, SORT_FLAG_CASE | SORT_NATURAL);
 
         $this->addElement('select', 'issuetype', [
-            'label' => $this->translate('Issue type'),
+            'label'        => $this->translate('Issue type'),
             'multiOptions' => $this->optionalEnum($enum),
             'value'        => $config->get('ui', 'default_issuetype'),
             'required'     => true,
+            'class'        => 'autosubmit',
         ]);
 
         $this->addElement('text', 'summary', [
@@ -120,9 +127,10 @@ class NewIssueForm extends Form
             ),
         ));
         $this->addElement('select', 'template', [
-            'label' => $this->translate('Template'),
+            'label'        => $this->translate('Template'),
             'multiOptions' => $this->optionalEnum($this->enumTemplates()),
-            'value'    => $defaultTemplate,
+            'value'        => $defaultTemplate,
+            'class'        => 'autosubmit'
         ]);
         $this->addElement('select', 'acknowledge', [
             'label'       => $this->translate('Acknowledge'),
@@ -137,9 +145,55 @@ class NewIssueForm extends Form
             )
         ]);
 
+        $templateName = $this->getValue('template');
+
+        if ($templateName !== null) {
+            $fields = $this->templatesConfig->getSection($templateName);
+            $jiraCustomFields = $this->jira->enumCustomFields();
+            $jiraCustomFields['duedate'] = 'Due Date';
+
+            foreach ($fields as $key => $value) {
+                $label = $key;
+
+                if (array_key_exists($key, $jiraCustomFields)) {
+                    $elementName = $key;
+                    $label = $jiraCustomFields[$key];
+                } else {
+                    $elementName = array_search($key, $jiraCustomFields);
+                }
+
+                $this->addElement(
+                    'text',
+                    $elementName,
+                    [
+                        'label'    => $label,
+                        'disabled' => true,
+                        'value'    => $value,
+                    ]
+                );
+            }
+        }
+
         $this->addElement('submit', 'submit', [
             'label' => $this->translate('Create Issue')
         ]);
+    }
+
+    /**
+     * Appends a null option to the given key-value pairs
+     *
+     * @param $enum
+     * @param $nullLabel
+     *
+     * @return array|null[]
+     */
+    public function optionalEnum($enum, $nullLabel = null)
+    {
+        if ($nullLabel === null) {
+            $nullLabel = $this->translate('- please choose -');
+        }
+
+        return [null => $nullLabel] + $enum;
     }
 
     private function enumTemplates()
@@ -169,6 +223,26 @@ class NewIssueForm extends Form
         }
     }
 
+    /**
+     * Display error messages as hints on error
+     *
+     * @return void
+     */
+    protected function onError()
+    {
+        foreach ($this->getMessages() as $message) {
+            if ($message instanceof Exception) {
+                $message = $message->getMessage();
+            }
+            $this->prepend(Html::tag('p', ['class' => 'state-hint error'], $message));
+        }
+        foreach ($this->getElements() as $element) {
+            foreach ($element->getMessages() as $message) {
+                $this->prepend(Html::tag('p', ['class' => 'state-hint error'], $message));
+            }
+        }
+    }
+
     public function onSuccess()
     {
     }
@@ -188,6 +262,7 @@ class NewIssueForm extends Form
         $template = new IssueTemplate();
         $template->addByTemplateName($this->getValue('template'));
         $template->setMonitoringInfo($this->monitoringInfo);
+
         $key = $this->jira->createIssue($template->getFilled($params));
         if ($this->getValue('acknowledge') === 'n') {
             return;
