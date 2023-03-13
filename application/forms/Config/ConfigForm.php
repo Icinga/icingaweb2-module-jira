@@ -154,7 +154,7 @@ class ConfigForm extends CompatForm
             [
                 'label'       => $this->translate('Key Fields'),
                 'description' => $this->translate(
-                    'The module requires you to create two custom fields in JIRA that represent '
+                    'The module requires you to create two custom fields in Jira that represent '
                     . '"icingaKey" and "icingaStatus".'
                 )
             ]
@@ -207,7 +207,7 @@ class ConfigForm extends CompatForm
             [
                 'label'       => $this->translate('Issue Defaults'),
                 'description' => $this->translate(
-                    'Default project and issue type to be used for creating jira tickets.'
+                    'Default project and issue type to be used for creating Jira tickets.'
                     . ' Please note that the project settings must represent project keys, not display names.'
                 )
             ]
@@ -235,7 +235,7 @@ class ConfigForm extends CompatForm
             [
                 'label'       => $this->translate('Icinga Web Link'),
                 'description' => $this->translate(
-                    'If you want to have links pointing back to your Icinga Installation in your JIRA issues, '
+                    'If you want to have links pointing back to your Icinga Installation in your Jira issues, '
                     . 'you need to fill the Url setting.'
                 )
             ]
