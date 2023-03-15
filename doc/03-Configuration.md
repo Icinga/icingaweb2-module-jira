@@ -1,29 +1,13 @@
-# Installation and Configuration
+# Configuration
 
-## Requirements
-
-* PHP (>= 7.2)
-* Icinga Web 2 (>= 2.9.0)
-* Icinga Web 2 libraries:
-  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (>=0.11.0)
-* Icinga Web 2 modules:
-  * The `monitoring` or `icingadb` module needs to be configured and enabled.
-
-## Install the Icinga Web Jira Integration
-
-Install it [like any other module](https://icinga.com/docs/icinga-web-2/latest/doc/08-Modules/#installation).
-Use `jira` as name.
-
-## Configuration
-
-### Configuring in Web GUI
+## Configuring in Web GUI
 
 Jira allows you to configure the settings in Web GUI. Once the `jira` module has been enabled, go to its `Configuration`
 tab and configure the settings for the module as shown in the screenshot.
 
 ![Configuring in Web GUI](screenshot/configuration_page.png)
 
-### Manual Configuration
+## Manual Configuration
 
 To manually create a related configuration file, please create a dedicated module configuration directory, like:
 
@@ -78,14 +62,14 @@ afterwards:
 
     systemctl restart icinga2.service
 
-### Required Jira Custom Fields
+## Required Jira Custom Fields
 
 This module requires you to create two custom fields in Jira:
 
 * `icingaKey`: a searchable text field
 * `icingaStatus`: a short text field, 12 characters are enough
 
-### icingaKey field value
+## icingaKey field value
 
 TL;DR: you do not need to read this, it is just for those who are curios how
 this field is going to be used.
@@ -105,7 +89,7 @@ following JQL construct:
 A little bit weird, but it should work fine. And as this field is usually not
 shown anywhere, it shouldn't disturb.
 
-### Fill Jira Custom Fields
+## Fill Jira Custom Fields
 
 For your customized workflows you might need this module to ship additional
 fields. Additional Jira custom fields for the issues can either be configured in Web GUI or manually:
