@@ -83,7 +83,7 @@ class ConfigForm extends CompatForm
             'deployment',
             [
                 'label'       => $this->translate('Deployment Settings'),
-                'description' => $this->translate('Configure where the Jira software has been deployed.')
+                'description' => $this->translate('Configure where the Jira Software has been deployed.')
             ]
         ));
 
