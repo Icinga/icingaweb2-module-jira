@@ -39,7 +39,7 @@ class ConfigurationController extends Controller
                 $config->getConfigObject()->merge($form->getValues());
                 $config->saveIni();
 
-                Notification::success(t('Jira Software deployment configuration has been saved successfully'));
+                Notification::success(t('Jira configuration has been saved successfully'));
             })->handleRequest($this->getServerRequest());
 
         $this->addContent($form);

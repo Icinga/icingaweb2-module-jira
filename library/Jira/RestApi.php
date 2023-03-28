@@ -25,7 +25,7 @@ class RestApi
 
     protected $apiVersion = '2';
 
-    /** @var object Server info of Jira Software */
+    /** @var object Jira Server Info */
     protected $serverInfo;
 
     protected $enumCustomFields;
@@ -67,7 +67,7 @@ class RestApi
     }
 
     /**
-     * Get Jira Software Version
+     * Get Jira Version
      *
      * @return string
      */
@@ -77,7 +77,7 @@ class RestApi
     }
 
     /**
-     * Check if Jira Software is deployed on server (on-prem)
+     * Check if Jira is deployed on server (on-prem)
      *
      * @return bool
      */
@@ -570,7 +570,7 @@ class RestApi
     }
 
     /**
-     * Get server info of Jira Software
+     * Get Jira Server Information
      *
      * @return object
      */

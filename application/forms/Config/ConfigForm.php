@@ -83,7 +83,7 @@ class ConfigForm extends CompatForm
             'deployment',
             [
                 'label'       => $this->translate('Deployment Settings'),
-                'description' => $this->translate('Configure where the Jira software has been deployed.')
+                'description' => $this->translate('Configure where Jira has been deployed.')
             ]
         ));
 
@@ -123,7 +123,7 @@ class ConfigForm extends CompatForm
                         }
 
                         if ($value !== strtolower($serverInfo->deploymentType)) {
-                            $validator->addMessage($this->translate('Jira Software seems to be deployed differently.'));
+                            $validator->addMessage($this->translate('Jira seems to be deployed differently.'));
 
                             return false;
                         }
