@@ -6,7 +6,7 @@
 
 ![Icinga Logo](https://icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
-Hassle-free deep integration with Atlassian Jira™. Depending on your needs, this
+Hassle-free deep integration with Atlassian Jira. Depending on your needs, this
 module is able to:
 
 * create **Jira Issues for Problems** detected by Icinga
