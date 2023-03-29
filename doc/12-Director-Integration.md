@@ -14,7 +14,7 @@ permissions. This is how it looks like on a fresh installation:
 Now, please click the `Sync to Director` action link:
 
 
-You should be notified about the succesful operation, and the sync state will
+You should be notified about the successful operation, and the sync state will
 get green:
 
 ![Director - NotificationCommand created](screenshot/director_command_created.png)

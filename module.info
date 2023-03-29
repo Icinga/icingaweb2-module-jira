@@ -1,6 +1,8 @@
 Name: Jira
-Version: 1.2.2
-Depends: monitoring (>=2.9.0), icingadb, ipl (>=0.11.0)
+Version: 1.3.0
+Requires:
+  Libraries: icinga-php-library (>=0.11.0)
+  Modules: monitoring (>= 2.9.0), icingadb (>= 1.0.0)
 Description: Jira integration
  This module allows to send notifications to Jira and integrates nicely into
  the Icinga Web 2 frontend. It hooks into Icinga Director and into the monitoring
