@@ -159,7 +159,7 @@ class NewIssueForm extends CompatForm
                     $elementName = $key;
                     $label = $jiraCustomFields[$key];
                 } else {
-                    $elementName = array_search($key, $jiraCustomFields);
+                    $elementName = array_search($key, $jiraCustomFields) ?: $key;
                 }
 
                 $this->addElement(
