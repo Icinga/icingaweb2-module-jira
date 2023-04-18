@@ -31,9 +31,6 @@ class FieldConfigForm extends CompatForm
     /** @var string */
     protected $templateName;
 
-    /** @var bool Hack used for delete button */
-    protected $callOnSuccess;
-
     /** @var string */
     protected $fieldId;
 
@@ -47,8 +44,9 @@ class FieldConfigForm extends CompatForm
         $this->templateName = $templateName;
 
         if ($fieldId !== null) {
+            // obtain field key in case the fieldId is field label
             if (! array_key_exists($fieldId, $this->fields)) {
-                $this->fieldId = array_search($fieldId, $this->fields);
+                $this->fieldId = array_search($fieldId, $this->fields) ?: $fieldId;
             } else {
                 $this->fieldId = $fieldId;
             }
@@ -118,6 +116,7 @@ class FieldConfigForm extends CompatForm
                     'Callback' => function ($value, $validator) {
                         /** @var CallbackValidator $validator */
                         $templateFieldKeys = $this->templateConfig->getSection($this->templateName)->keys();
+
                         $selected = $this->fields[$value];
 
                         if (
@@ -337,23 +336,31 @@ class FieldConfigForm extends CompatForm
             $this->getElement('submit')
                 ->getWrapper()
                 ->prepend($deleteButton);
-
-            if ($deleteButton->hasBeenPressed()) {
-                $templateFields =  $this->templateConfig->getSection($this->templateName)->toArray();
-
-                $field = isset($templateFields[$this->fieldId]) ? $this->fieldId : $this->fields[$this->fieldId];
-
-                unset($templateFields[$field]);
-
-                $this->templateConfig->setSection($this->templateName, $templateFields);
-                $this->templateConfig->saveIni();
-                $this->getSubmitButton()->setValue($this->getSubmitButton()->getButtonLabel());
-
-                $this->callOnSuccess = false;
-
-                return;
-            }
         }
+    }
+
+    public function hasBeenSubmitted()
+    {
+        if ($this->getPressedSubmitElement() !== null && $this->getPressedSubmitElement()->getName() === 'delete') {
+            return true;
+        }
+
+        return parent::hasBeenSubmitted();
+    }
+
+    public function isValid()
+    {
+        if ($this->getPressedSubmitElement()->getName() === 'delete') {
+            $csrfElement = $this->getElement('CSRFToken');
+
+            if (! $csrfElement->isValid()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return parent::isValid();
     }
 
     /**
@@ -375,8 +382,15 @@ class FieldConfigForm extends CompatForm
 
     public function onSuccess()
     {
-        if ($this->callOnSuccess === false) {
-            $this->getPressedSubmitElement()->setValue($this->getElement('delete')->getLabel());
+        if ($this->getPressedSubmitElement()->getName() === 'delete') {
+            $templateFields =  $this->templateConfig->getSection($this->templateName)->toArray();
+
+            $field = isset($templateFields[$this->fieldId]) ? $this->fieldId : $this->fields[$this->fieldId];
+
+            unset($templateFields[$field]);
+
+            $this->templateConfig->setSection($this->templateName, $templateFields);
+            $this->templateConfig->saveIni();
 
             return;
         }

@@ -21,9 +21,6 @@ class TemplateConfigForm extends CompatForm
     /** @var string|null */
     protected $templateName;
 
-    /** @var bool Hack used for delete button */
-    protected $callOnSuccess;
-
     public function __construct($templateName = null)
     {
         $this->config = Config::module('jira', 'templates');
@@ -84,25 +81,42 @@ class TemplateConfigForm extends CompatForm
             );
 
             $this->registerElement($deleteButton);
-            $this->getElement('submit')->getWrapper()->prepend($deleteButton);
-
-            if ($deleteButton->hasBeenPressed()) {
-                $this->config->removeSection($this->templateName);
-                $this->config->saveIni();
-
-                // Stupid cheat because ipl/html is not capable of multiple submit buttons
-                $this->getSubmitButton()->setValue($this->getSubmitButton()->getButtonLabel());
-                $this->callOnSuccess = false;
-
-                return;
-            }
+            $this->getElement('submit')
+                ->getWrapper()
+                ->prepend($deleteButton);
         }
+    }
+
+    public function hasBeenSubmitted()
+    {
+        if ($this->getPressedSubmitElement() !== null && $this->getPressedSubmitElement()->getName() === 'delete') {
+            return true;
+        }
+
+        return parent::hasBeenSubmitted();
+    }
+
+    public function isValid()
+    {
+        if ($this->getPressedSubmitElement()->getName() === 'delete') {
+            $csrfElement = $this->getElement('CSRFToken');
+
+            if (! $csrfElement->isValid()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return parent::isValid();
     }
 
     public function onSuccess()
     {
-        if ($this->callOnSuccess === false) {
-            $this->getSubmitButton()->setValue($this->getElement('delete')->getButtonLabel());
+        if ($this->getPressedSubmitElement()->getName() === 'delete') {
+            $this->config->removeSection($this->templateName);
+            $this->config->saveIni();
+
             return;
         }
 
