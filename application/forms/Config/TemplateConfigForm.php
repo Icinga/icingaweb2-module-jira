@@ -93,7 +93,6 @@ class TemplateConfigForm extends CompatForm
                 // Stupid cheat because ipl/html is not capable of multiple submit buttons
                 $this->getSubmitButton()->setValue($this->getSubmitButton()->getButtonLabel());
                 $this->callOnSuccess = false;
-                $this->valid = true;
 
                 return;
             }

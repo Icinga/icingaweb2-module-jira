@@ -202,6 +202,7 @@ class FieldConfigForm extends CompatForm
                 ]
             );
 
+            $matches = [];
             if ($this->fieldId !== null && ! $this->hasBeenSent()) {
                 if (preg_match('/\${([^}\s]+)}/', $this->fieldValue, $matches)) {
                     if (preg_match('/^(?:host|service)\./', $matches[1])) {
@@ -305,7 +306,7 @@ class FieldConfigForm extends CompatForm
                             ->setValue($this->fieldValue);
                     }
 
-                    if ($this->getValue('associated') === 'customvar') {
+                    if ($this->getValue('associated') === 'customvar' && ! empty($matches)) {
                         $this->getElement($this->getValue('fields') . '_cv')
                             ->setValue($matches[1]);
                     }
@@ -350,7 +351,6 @@ class FieldConfigForm extends CompatForm
                 $this->getSubmitButton()->setValue($this->getSubmitButton()->getButtonLabel());
 
                 $this->callOnSuccess = false;
-                $this->valid = true;
 
                 return;
             }
