@@ -397,7 +397,11 @@ class FieldConfigForm extends CompatForm
             $fieldValue = $this->getValue($fieldId . '_value');
         }
 
-        $fields[$fieldName] = $fieldValue;
+        if ($fieldId === 'duedate') {
+            $fields[$fieldId] = $fieldValue;
+        } else {
+            $fields[$fieldName] = $fieldValue;
+        }
 
         $this->templateConfig->setSection($this->templateName, $fields);
         $this->templateConfig->saveIni();
