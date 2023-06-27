@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira;
 
+use DateTime;
 use Icinga\Date\DateFormatter;
 use Icinga\Exception\IcingaException;
 use Icinga\Module\Icingadb\Model\CustomvarFlat;
@@ -164,6 +165,12 @@ class MonitoringInfo
             return DateFormatter::formatDateTime($this->object->last_state_change);
         }
 
+        // In Icinga DB Web 1.1 last_state_change is a DateTime instance
+        if ($this->object->state->last_state_change instanceof DateTime) {
+            return DateFormatter::formatDateTime($this->object->state->last_state_change->getTimestamp());
+        }
+
+        // Remove this once DB Web 1.1 is required
         return DateFormatter::formatDateTime($this->object->state->last_state_change);
     }
 
