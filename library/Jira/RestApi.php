@@ -226,7 +226,7 @@ class RestApi
             $icingaKey .= "!$service";
         }
 
-        return "${icingaKey}END";
+        return "{$icingaKey}END";
     }
 
     /**
