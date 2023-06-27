@@ -166,8 +166,7 @@ class FieldConfigForm extends CompatForm
                 ]
             );
 
-            $fieldDetails = $this->jira->getJiraFieldInfo($this->getValue('fields'));
-            $this->getElement('type')->setValue($fieldDetails->schema->type);
+            $this->getElement('type')->setValue($this->jira->getFieldType($this->getValue('fields')));
 
             if ($this->getValue('type') !== 'array') {
                 $fieldsAssociation['other'] = $this->translate('Others');

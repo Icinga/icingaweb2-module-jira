@@ -98,7 +98,7 @@ class IssueTemplate
             $fieldId = $key;
         }
 
-        $fieldType = $jira->getJiraFieldInfo($fieldId)->schema->type;
+        $fieldType = $jira->getFieldType($fieldId);
 
         if (preg_match($pattern, $string, $match)) {
             $name = $match[1];
@@ -122,7 +122,7 @@ class IssueTemplate
                         $fieldId = $key;
                     }
 
-                    $fieldType = $jira->getJiraFieldInfo($fieldId)->schema->type;
+                    $fieldType = $jira->getFieldType($fieldId);
 
                     if (is_object($value)) {
                         throw new Exception(sprintf(
