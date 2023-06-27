@@ -360,6 +360,25 @@ class RestApi
     }
 
     /**
+     * Get the custom field type for the given fieldId
+     *
+     * @param string $fieldId
+     *
+     * @return string
+     *
+     * @throws NotFoundError
+     */
+    public function getFieldType(string $fieldId)
+    {
+        $fieldInfo = $this->getJiraFieldInfo($fieldId);
+        if (property_exists($fieldInfo, "schema")) {
+            return $fieldInfo->schema->type;
+        }
+
+        return 'any';
+    }
+
+    /**
      * @param $issue
      * @throws NotFoundError
      * @return object
