@@ -128,14 +128,13 @@ class IssueDetails extends Table
         $key = "${size}x${size}";
         if (isset($author->avatarUrls->$key)) {
             return [
-                // TODO: move styling to CSS
                 Html::tag('img', [
+                    'class' => 'comment-author',
                     'src' => $author->avatarUrls->$key,
                     'alt' => '',
                     'width' => $size,
                     'height' => $size,
-                    'align' => 'left',
-                    'style' => 'margin-right: 1em; border-radius: 50%;',
+                    'align' => 'left'
                 ]),
                 ' ',
                 $author->displayName
@@ -170,7 +169,7 @@ class IssueDetails extends Table
             )),
             Html::tag(
                 'pre',
-                ['style' => 'background-color: transparent'],
+                ['class' => 'comment'],
                 $this->formatBody($body)
             ),
         ]);
