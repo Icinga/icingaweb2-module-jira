@@ -45,8 +45,7 @@ class IssuesTable extends Table
                     ),
                     $helper->anonymize($issue->fields->summary),
                     Html::tag(
-                        'span',
-                        ['class' => 'small', 'style' => 'display: block'],
+                        'p',
                         $helper->anonymize($issue->fields->description)
                     ),
                 ])->setSeparator(' '),
