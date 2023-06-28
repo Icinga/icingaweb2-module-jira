@@ -125,7 +125,7 @@ class IssueDetails extends Table
     protected function formatAuthor($author)
     {
         $size = 48;
-        $key = "${size}x${size}";
+        $key = "{$size}x{$size}";
         if (isset($author->avatarUrls->$key)) {
             return [
                 // TODO: move styling to CSS

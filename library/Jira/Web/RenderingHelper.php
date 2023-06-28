@@ -85,7 +85,7 @@ class RenderingHelper
     public function renderAvatar($object, $width = 16, $height = 16)
     {
         return $this->renderIconImage(
-            $object->avatarUrls->{"${width}x${height}"},
+            $object->avatarUrls->{"{$width}x{$height}"},
             $object->name,
             null,
             $width,

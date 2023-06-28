@@ -41,6 +41,10 @@ class IssueUpdate
 
     public function toObject()
     {
+        if (empty($this->comments) && empty($this->fields)) {
+            throw new RuntimeExceptionAlias('Cannot send empty update');
+        }
+
         $data = (object) [];
         if (! empty($this->comments)) {
             $data->update = (object) ['comment' => []];
@@ -55,9 +59,6 @@ class IssueUpdate
             }
         }
 
-        if (empty($data)) {
-            throw new RuntimeExceptionAlias('Cannot send empty update');
-        }
         $this->api->translateNamesToCustomFields($data);
 
         return $data;

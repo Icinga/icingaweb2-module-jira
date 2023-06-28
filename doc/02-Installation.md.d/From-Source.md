@@ -6,7 +6,7 @@ Make sure you use `jira` as the module name. The following requirements must als
 
 ## Requirements
 
-* PHP (≥7.2)
+* PHP (≥7.3)
 * [Icinga Web](https://github.com/Icinga/icingaweb2) (≥2.9)
 * Icinga Web libraries:
   * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (≥0.11)
