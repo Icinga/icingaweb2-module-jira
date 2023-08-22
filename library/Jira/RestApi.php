@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira;
 
+use CurlHandle;
 use Exception;
 use Icinga\Application\Benchmark;
 use Icinga\Application\Config;
@@ -574,7 +575,7 @@ class RestApi
     }
 
     /**
-     * @return resource
+     * @return resource|CurlHandle
      */
     protected function curl()
     {
