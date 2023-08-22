@@ -9,6 +9,7 @@ use Icinga\Application\Config;
 use ipl\Html\Table;
 use ipl\I18n\Translation;
 use ipl\Web\Widget\Icon;
+use stdClass;
 
 class IssueDetails extends Table
 {
@@ -94,9 +95,9 @@ class IssueDetails extends Table
 
         $this->addComments(array_reverse($fields->comment->comments));
         $this->addComment(
-            $helper->anonymize($fields->summary),
+            $fields->summary,
             $fields->created,
-            $helper->anonymize($fields->description)
+            $fields->description
         );
     }
 

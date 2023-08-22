@@ -43,10 +43,10 @@ class IssuesTable extends Table
                     Html::tag('strong')->add(
                         new Link($issue->key, Url::fromPath('jira/issue/show', ['key' => $issue->key]))
                     ),
-                    $helper->anonymize($issue->fields->summary),
+                    $issue->fields->summary,
                     Html::tag(
                         'p',
-                        $helper->anonymize($issue->fields->description)
+                        $issue->fields->description
                     ),
                 ])->setSeparator(' '),
                 static::td($helper->shortTimeSince($issue->fields->created)),
