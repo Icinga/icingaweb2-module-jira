@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Jira;
 
+use CurlHandle;
 use Exception;
 use Icinga\Application\Benchmark;
 use Icinga\Application\Config;
@@ -574,14 +575,14 @@ class RestApi
     }
 
     /**
-     * @return resource
+     * @return resource|CurlHandle
      */
     protected function curl()
     {
         if ($this->curl === null) {
             $this->curl = \curl_init($this->baseUrl);
             if (! $this->curl) {
-                throw new RuntimeException('CURL INIT ERROR: ' . \curl_error($this->curl));
+                throw new RuntimeException('Failed to initialize cURL session');
             }
         }
 

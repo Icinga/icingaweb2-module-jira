@@ -1,9 +1,28 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
-    level: 1
+    level: max
+
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    treatPhpDocTypesAsCertain: false
+
     paths:
         - application
         - library
+
     scanDirectories:
         - vendor
+
     ignoreErrors:
-        - '#Unsafe usage of new static\(\)#'
+        -
+            messages:
+                - '#Unsafe usage of new static\(\)#'
+                - '#. but return statement is missing#'
+            reportUnmatched: false
+
+    universalObjectCratesClasses:
+        - ipl\Orm\Model
+        - Icinga\Module\Monitoring\Object\MonitoredObject
+        - Icinga\Module\Monitoring\DataView\DataView

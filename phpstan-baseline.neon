@@ -1,0 +1,2021 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Clicommands\\\\SendCommand\\:\\:problemAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/clicommands/SendCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$hostName of method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getMonitoringInfo\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: application/clicommands/SendCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$serviceName of method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getMonitoringInfo\\(\\) expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: application/clicommands/SendCommand.php
+
+		-
+			message: "#^Part \\$status \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
+			count: 1
+			path: application/clicommands/SendCommand.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:addCommand\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:createHint\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:createHint\\(\\) has parameter \\$msg with no type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:createHint\\(\\) has parameter \\$state with no type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:directorAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:inspectAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\ConfigurationController\\:\\:sync\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method ipl\\\\Web\\\\Widget\\\\Tabs\\:\\:add\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: application/controllers/ConfigurationController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\FieldController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/FieldController.php
+
+		-
+			message: "#^Parameter \\#2 \\$templateName of class Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm constructor expects string, mixed given\\.$#"
+			count: 1
+			path: application/controllers/FieldController.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 2
+			path: application/controllers/FieldController.php
+
+		-
+			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 2
+			path: application/controllers/FieldController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\FieldsController\\:\\:addAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/FieldsController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\FieldsController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/FieldsController.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Controllers\\\\FieldsController\\:\\:\\$template \\(string\\) does not accept mixed\\.$#"
+			count: 1
+			path: application/controllers/FieldsController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IndexController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/IndexController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssueController\\:\\:showAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/IssueController.php
+
+		-
+			message: "#^Parameter \\#1 \\$title of method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:addTitle\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: application/controllers/IssueController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssuesController\\:\\:createAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssuesController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssuesController\\:\\:requireMonitoringInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssuesController\\:\\:showNewIssueForm\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssuesController\\:\\:titleSuffix\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssuesController\\:\\:titleSuffix\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\IssuesController\\:\\:titleSuffix\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$host of method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:fetchIssues\\(\\) expects null, mixed given\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$hostName of method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getMonitoringInfo\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Parameter \\#2 \\$service of method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:fetchIssues\\(\\) expects null, mixed given\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Parameter \\#2 \\$serviceName of method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getMonitoringInfo\\(\\) expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: application/controllers/IssuesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\TemplateController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/TemplateController.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:createTemplateTabs\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: application/controllers/TemplateController.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 2
+			path: application/controllers/TemplateController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\TemplatesController\\:\\:addAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/TemplatesController.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Controllers\\\\TemplatesController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/controllers/TemplatesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method ipl\\\\Web\\\\Widget\\\\Tabs\\:\\:add\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: application/controllers/TemplatesController.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$deploymentType\\.$#"
+			count: 1
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Cannot access offset 'password' on mixed\\.$#"
+			count: 1
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Cannot access offset 'username' on mixed\\.$#"
+			count: 1
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\ConfigForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\ConfigForm\\:\\:getValues\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\ConfigForm\\:\\:populate\\(\\) has parameter \\$values with no value type specified in iterable type iterable\\.$#"
+			count: 1
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Method ipl\\\\Html\\\\Contract\\\\FormElement\\:\\:getValue\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 3
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Parameter \\#2 \\$config of method Icinga\\\\Application\\\\Config\\:\\:setSection\\(\\) expects array\\|Icinga\\\\Data\\\\ConfigObject\\|null, mixed given\\.$#"
+			count: 1
+			path: application/forms/Config/ConfigForm.php
+
+		-
+			message: "#^Argument of an invalid type stdClass supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Cannot call method getName\\(\\) on ipl\\\\Html\\\\Contract\\\\FormSubmitElement\\|null\\.$#"
+			count: 2
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Cannot call method prepend\\(\\) on ipl\\\\Html\\\\Contract\\\\Wrappable\\|null\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm\\:\\:__construct\\(\\) has parameter \\$fieldId with no type specified\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm\\:\\:enumAllowedFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm\\:\\:optionalEnum\\(\\) has parameter \\$enum with no type specified\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm\\:\\:optionalEnum\\(\\) has parameter \\$nullLabel with no type specified\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Offset mixed does not exist on array\\|null\\.$#"
+			count: 2
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Offset string does not exist on array\\|null\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Parameter \\#1 \\$fieldId of method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:getFieldType\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\FieldConfigForm\\:\\:\\$fields type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: application/forms/Config/FieldConfigForm.php
+
+		-
+			message: "#^Cannot call method getName\\(\\) on ipl\\\\Html\\\\Contract\\\\FormSubmitElement\\|null\\.$#"
+			count: 2
+			path: application/forms/Config/TemplateConfigForm.php
+
+		-
+			message: "#^Cannot call method prepend\\(\\) on ipl\\\\Html\\\\Contract\\\\Wrappable\\|null\\.$#"
+			count: 1
+			path: application/forms/Config/TemplateConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\TemplateConfigForm\\:\\:__construct\\(\\) has parameter \\$templateName with no type specified\\.$#"
+			count: 1
+			path: application/forms/Config/TemplateConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\TemplateConfigForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/forms/Config/TemplateConfigForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\TemplateConfigForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: application/forms/Config/TemplateConfigForm.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Icinga\\\\Application\\\\Config\\:\\:removeSection\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: application/forms/Config/TemplateConfigForm.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Cli\\\\Command\\:\\:\\$jira has no type specified\\.$#"
+			count: 1
+			path: library/Jira/Cli/Command.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:commandDiffers\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:commandExists\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:db\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:defaultHostArguments\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:defaultHostVars\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:defaultServiceArguments\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:defaultServiceVars\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:initializeDb\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:requiredArguments\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:sync\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\DirectorConfig\\:\\:syncCommand\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/DirectorConfig.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:acknowledge\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$author with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:getAcknowledgeProblemCommand\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:getCommandTransport\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:setMonitoringInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:\\$monitoringInfo has no type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingaCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getObject\\(\\) should return Icinga\\\\Module\\\\Icingadb\\\\Model\\\\Host\\|Icinga\\\\Module\\\\Icingadb\\\\Model\\\\Service but returns ipl\\\\Orm\\\\Model\\.$#"
+			count: 1
+			path: library/Jira/IcingadbBackend.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getObjectProperties\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingadbBackend.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getObjectProperties\\(\\) has parameter \\$hostName with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingadbBackend.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getObjectProperties\\(\\) has parameter \\$serviceName with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IcingadbBackend.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IdoBackend\\:\\:getObjectProperties\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IdoBackend.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IdoBackend\\:\\:getObjectProperties\\(\\) has parameter \\$hostName with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IdoBackend.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IdoBackend\\:\\:getObjectProperties\\(\\) has parameter \\$serviceName with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IdoBackend.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:addByTemplateName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:addByTemplateName\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:addFields\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:addToFields\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:addToFields\\(\\) has parameter \\$fields with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:addToFields\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:addToFields\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:fillTemplate\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:fillTemplate\\(\\) has parameter \\$params with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:fillTemplate\\(\\) has parameter \\$string with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:getCustomFields\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:getDefaultFields\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:getFilled\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:getFilled\\(\\) has parameter \\$params with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:getIcingaKeyFromParams\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:getIcingaKeyFromParams\\(\\) has parameter \\$params with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:getUnfilledFields\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:setMonitoringInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Parameter \\#2 \\$haystack of function array_search expects array, array\\|null given\\.$#"
+			count: 2
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Parameter \\#2 \\$haystack of function in_array expects array, array\\|null given\\.$#"
+			count: 2
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\IssueTemplate\\:\\:\\$custom has no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueTemplate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:__construct\\(\\) has parameter \\$issueKey with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:addComment\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:addComment\\(\\) has parameter \\$body with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:getKey\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:setCustomField\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:setCustomField\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:setCustomField\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:toObject\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:\\$comments has no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\IssueUpdate\\:\\:\\$fields has no type specified\\.$#"
+			count: 1
+			path: library/Jira/IssueUpdate.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:__construct\\(\\) has parameter \\$pipe with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:acknowledge\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$author with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:acknowledge\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$author with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$comment with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$expireTime with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$notify with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$persistent with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:renderAck\\(\\) has parameter \\$sticky with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:shorten\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:shorten\\(\\) has parameter \\$maxLength with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:shorten\\(\\) has parameter \\$string with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\LegacyCommandPipe\\:\\:\\$pipe has no type specified\\.$#"
+			count: 1
+			path: library/Jira/LegacyCommandPipe.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:getIcingaWebUrl\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:jiraLink\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:jiraLink\\(\\) has parameter \\$label with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:jiraLink\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingaHost\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingaHost\\(\\) has parameter \\$hostname with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingaService\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingaService\\(\\) has parameter \\$hostname with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingaService\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingadbHost\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingadbHost\\(\\) has parameter \\$hostname with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingadbService\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingadbService\\(\\) has parameter \\$hostname with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:linkToIcingadbService\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function rtrim expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:\\$icingaUrl has no type specified\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 2
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$customvar_flat on mixed\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$display_name on mixed\\.$#"
+			count: 3
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$hostgroup on mixed\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$is_acknowledged on mixed\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$last_state_change on mixed\\.$#"
+			count: 3
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$long_output on mixed\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$name on mixed\\.$#"
+			count: 2
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$output on mixed\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot call method getStateText\\(\\) on mixed\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Dead catch \\- Exception is never thrown in the try block\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:__construct\\(\\) has parameter \\$object with no type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getDefaultSummary\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getDescriptionHeader\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getHostname\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getLastStateChange\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getObjectLabel\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getObjectParams\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getOutput\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getProperty\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getProperty\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getRecursiveVar\\(\\) has parameter \\$nestedVarName with no type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getRecursiveVar\\(\\) has parameter \\$var with no type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getService\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:getStateName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:hasObject\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:hostVars\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:isAcknowledged\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:serviceVars\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:setNotificationType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:setNotificationType\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Parameter \\#1 \\$flattenedVars of method Icinga\\\\Module\\\\Icingadb\\\\Model\\\\CustomvarFlat\\:\\:unFlattenVars\\(\\) expects Traversable, mixed given\\.$#"
+			count: 2
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:\\$fetched has no type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\MonitoringInfo\\:\\:\\$vars has no type specified\\.$#"
+			count: 1
+			path: library/Jira/MonitoringInfo.php
+
+		-
+			message: "#^Cannot access property \\$name on mixed\\.$#"
+			count: 1
+			path: library/Jira/ProvidedHook/Icingadb/ServiceActions.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\ProvidedHook\\\\Monitoring\\\\HostActions\\:\\:getActionsForHost\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/ProvidedHook/Monitoring/HostActions.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\ProvidedHook\\\\Monitoring\\\\ServiceActions\\:\\:getActionsForService\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/ProvidedHook/Monitoring/ServiceActions.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$deploymentType\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$version\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Argument of an invalid type stdClass supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Cannot access offset int\\|false on stdClass\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Cannot access property \\$errorMessages on mixed\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Cannot access property \\$errors on mixed\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Cannot access property \\$schema on mixed\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:__construct\\(\\) has parameter \\$baseUrl with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:__construct\\(\\) has parameter \\$password with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:__construct\\(\\) has parameter \\$username with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:createIssue\\(\\) has parameter \\$fields with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:delete\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:enumCustomFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:eventuallyGetLatestOpenIssueFor\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:eventuallyGetLatestOpenIssueFor\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:eventuallyGetLatestOpenIssueFor\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:eventuallyGetLatestOpenIssueFor\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:fetchIssue\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:get\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:getHttpErrorMessage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:getHttpErrorMessage\\(\\) has parameter \\$statusCode with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:hasIssue\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:makeIcingaKey\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:makeIcingaKey\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:makeIcingaKey\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:post\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:put\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:request\\(\\) has parameter \\$method with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:request\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:translateCustomFieldNames\\(\\) has parameter \\$issue with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:translateNamesToCustomFields\\(\\) has parameter \\$issue with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:updateIssue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:url\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:url\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:urlLink\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:urlLink\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_flip expects array\\<int\\|string\\>, array\\|null given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$handle of function curl_error expects CurlHandle, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$handle of function curl_exec expects CurlHandle, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$handle of function curl_getinfo expects CurlHandle, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$handle of function curl_setopt_array expects CurlHandle, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|true given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$object_or_class of function property_exists expects object\\|string, mixed given\\.$#"
+			count: 3
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, array\\|null given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\$body of method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:post\\(\\) expects null, array\\<string, array\\<int, mixed\\>\\|int\\|string\\> given\\.$#"
+			count: 2
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\$body of method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:post\\(\\) expects null, object\\{fields\\: mixed\\}&stdClass given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\$code of class RuntimeException constructor expects int, true given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\$return of function print_r expects bool, int given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#4 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$apiName has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$apiVersion has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$baseUrl has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$baseUrlForLink has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$curl has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$enumCustomFields has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$password has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:\\$username has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:fromErrorMessage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:fromErrorMessage\\(\\) has parameter \\$error with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:fromJsonResult\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:fromJsonResult\\(\\) has parameter \\$json with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:getErrorMessage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:isErrorCode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:isErrorCode\\(\\) has parameter \\$code with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:parseJsonResult\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:parseJsonResult\\(\\) has parameter \\$json with no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:setJsonError\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:succeeded\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:\\$errorMessage has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\RestApiResponse\\:\\:\\$result has no type specified\\.$#"
+			count: 1
+			path: library/Jira/RestApiResponse.php
+
+		-
+			message: "#^Parameter \\#1 \\$haystack of function strpos expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/Validator/PhpSessionBasedCsrfTokenValidator.php
+
+		-
+			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/Validator/PhpSessionBasedCsrfTokenValidator.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Validator\\\\SimpleValidator\\:\\:__construct\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Validator/SimpleValidator.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Validator\\\\SimpleValidator\\:\\:getSetting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Validator/SimpleValidator.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Validator\\\\SimpleValidator\\:\\:getSetting\\(\\) has parameter \\$default with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Validator/SimpleValidator.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Validator\\\\SimpleValidator\\:\\:getSetting\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Validator/SimpleValidator.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Validator\\\\SimpleValidator\\:\\:\\$settings has no type specified\\.$#"
+			count: 1
+			path: library/Jira/Validator/SimpleValidator.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:dump\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:dump\\(\\) has parameter \\$what with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:getModuleConfig\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:getModuleConfig\\(\\) has parameter \\$file with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:runFailSafe\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:runFailSafe\\(\\) has parameter \\$callable with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array given\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{\\$this\\(Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\), string\\} given\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Parameter \\#2 \\$values of function vsprintf expects array\\<bool\\|float\\|int\\|string\\|null\\>, array\\<int\\|string, mixed\\> given\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:addBoolean\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:addBoolean\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:addBoolean\\(\\) has parameter \\$options with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:createIssue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:enumTemplates\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:eventuallyAcknowledge\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:eventuallyAcknowledge\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:eventuallyAcknowledge\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:eventuallyAcknowledge\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:getProperty\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:getProperty\\(\\) has parameter \\$default with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:getProperty\\(\\) has parameter \\$entry with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:getProperty\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:makeEnum\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:makeEnum\\(\\) has parameter \\$data with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:makeEnum\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:makeEnum\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:makeEnum\\(\\) has parameter \\$reject with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:optionalEnum\\(\\) has parameter \\$enum with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\NewIssueForm\\:\\:optionalEnum\\(\\) has parameter \\$nullLabel with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Icinga\\\\Application\\\\Config\\:\\:getSection\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function rawurlencode expects string, mixed given\\.$#"
+			count: 2
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Parameter \\#2 \\$name of method ipl\\\\Html\\\\Form\\:\\:addElement\\(\\) expects string\\|null, int\\<min, \\-1\\>\\|int\\<1, max\\>\\|string given\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/NewIssueForm.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:createCustomFieldSelect\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:getProperty\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:getProperty\\(\\) has parameter \\$default with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:getProperty\\(\\) has parameter \\$entry with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:getProperty\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:getPropertyName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:getPropertyName\\(\\) has parameter \\$map with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:getPropertyName\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:makeSelect\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:makeSelect\\(\\) has parameter \\$data with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:makeSelect\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:makeSelect\\(\\) has parameter \\$propertyMap with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Form\\\\TemplateForm\\:\\:\\$jira has no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between 'ITSM' and null will always evaluate to false\\.$#"
+			count: 1
+			path: library/Jira/Web/Form/TemplateForm.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:api\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToJira\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToJira\\(\\) has parameter \\$attributes with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToJira\\(\\) has parameter \\$caption with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToJira\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoring\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoring\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoring\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringHost\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringHost\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringService\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringService\\(\\) has parameter \\$host with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringService\\(\\) has parameter \\$service with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderAvatar\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderAvatar\\(\\) has parameter \\$height with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderAvatar\\(\\) has parameter \\$object with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderAvatar\\(\\) has parameter \\$width with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIcon\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIcon\\(\\) has parameter \\$object with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIconImage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIconImage\\(\\) has parameter \\$alt with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIconImage\\(\\) has parameter \\$height with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIconImage\\(\\) has parameter \\$title with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIconImage\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderIconImage\\(\\) has parameter \\$width with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderStatusBadge\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderStatusBadge\\(\\) has parameter \\$status with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:shortTimeSince\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:shortTimeSince\\(\\) has parameter \\$onlyTime with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:shortTimeSince\\(\\) has parameter \\$time with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:\\$api has no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/RenderingHelper.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$displayName\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:__construct\\(\\) has parameter \\$issue with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has parameter \\$author with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has parameter \\$body with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has parameter \\$time with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComments\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComments\\(\\) has parameter \\$comments with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addNameValuePairs\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addNameValuePairs\\(\\) has parameter \\$pairs with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addNameValueRow\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addNameValueRow\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addNameValueRow\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addWideRow\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addWideRow\\(\\) has parameter \\$content with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:createNameValueRow\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:createNameValueRow\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:createNameValueRow\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:formatAuthor\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:formatAuthor\\(\\) has parameter \\$author with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:formatBody\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:formatBody\\(\\) has parameter \\$body with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:replaceLinks\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:replaceLinks\\(\\) has parameter \\$string with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Parameter \\#2 \\$callback of function preg_replace_callback expects callable\\(array\\<int\\|string, string\\>\\)\\: string, Closure\\(mixed\\)\\: ipl\\\\Html\\\\HtmlElement given\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:\\$helper has no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:\\$issue has no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssueDetails.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssuesTable\\:\\:__construct\\(\\) has parameter \\$issues with no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssuesTable.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssuesTable\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssuesTable.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssuesTable\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssuesTable.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssuesTable\\:\\:\\$issues has no type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/IssuesTable.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\JiraCustomFields\\:\\:__construct\\(\\) has parameter \\$fields with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/JiraCustomFields.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\JiraCustomFields\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/JiraCustomFields.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\JiraCustomFields\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/JiraCustomFields.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\JiraCustomFields\\:\\:\\$fields type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/JiraCustomFields.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\TemplateTable\\:\\:__construct\\(\\) has parameter \\$templates with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/TemplateTable.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\TemplateTable\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/TemplateTable.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\TemplateTable\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/TemplateTable.php
+
+		-
+			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\TemplateTable\\:\\:\\$templates type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: library/Jira/Web/Table/TemplateTable.php
