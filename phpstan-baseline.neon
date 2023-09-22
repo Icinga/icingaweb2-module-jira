@@ -226,11 +226,6 @@ parameters:
 			path: application/forms/Config/ConfigForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Forms\\\\Config\\\\ConfigForm\\:\\:populate\\(\\) has parameter \\$values with no value type specified in iterable type iterable\\.$#"
-			count: 1
-			path: application/forms/Config/ConfigForm.php
-
-		-
 			message: "#^Method ipl\\\\Html\\\\Contract\\\\FormElement\\:\\:getValue\\(\\) invoked with 1 parameter, 0 required\\.$#"
 			count: 3
 			path: application/forms/Config/ConfigForm.php
@@ -1946,11 +1941,6 @@ parameters:
 			path: library/Jira/Web/Table/IssueDetails.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
 			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:\\$helper has no type specified\\.$#"
 			count: 1
 			path: library/Jira/Web/Table/IssueDetails.php
@@ -1971,11 +1961,6 @@ parameters:
 			path: library/Jira/Web/Table/IssuesTable.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssuesTable\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssuesTable.php
-
-		-
 			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssuesTable\\:\\:\\$issues has no type specified\\.$#"
 			count: 1
 			path: library/Jira/Web/Table/IssuesTable.php
@@ -1991,11 +1976,6 @@ parameters:
 			path: library/Jira/Web/Table/JiraCustomFields.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\JiraCustomFields\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/JiraCustomFields.php
-
-		-
 			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\JiraCustomFields\\:\\:\\$fields type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: library/Jira/Web/Table/JiraCustomFields.php
@@ -2007,11 +1987,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\TemplateTable\\:\\:assemble\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/TemplateTable.php
-
-		-
-			message: "#^Property Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\TemplateTable\\:\\:\\$defaultAttributes type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: library/Jira/Web/Table/TemplateTable.php
 
