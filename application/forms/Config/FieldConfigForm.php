@@ -73,7 +73,10 @@ class FieldConfigForm extends CompatForm
 
         foreach ($this->jira->get('field')->getResult() as $field) {
             if ($field->custom && in_array($field->schema->type, $fieldTypes)) {
-                if ($field->schema->type === 'array' && $field->schema->items !== 'string') {
+                if (
+                    $field->schema->type === 'array'
+                    && (! isset($field->schema->items) || $field->schema->items !== 'string')
+                ) {
                     continue;
                 }
 
