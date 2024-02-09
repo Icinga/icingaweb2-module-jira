@@ -19,8 +19,9 @@ class HostActions extends HostActionsHook
                 Url::fromPath(
                     'jira/issues',
                     [
-                        'host'  => $host->name,
-                        'all'   => true
+                        'host'      => $host->name,
+                        'all'       => true,
+                        'backend'   => 'icingadb'
                     ]
                 )
             )

@@ -2,8 +2,6 @@
 
 namespace Icinga\Module\Jira;
 
-use Icinga\Application\Modules\Module;
-use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Monitoring\Command\Object\AcknowledgeProblemCommand;
 use Icinga\Module\Monitoring\Command\Transport\CommandTransport;
 use Icinga\Module\Icingadb\Command\Transport\CommandTransport as IcingadbCommandTransport;
@@ -13,20 +11,16 @@ use Icinga\Module\Monitoring\Object\MonitoredObject;
 
 class IcingaCommandPipe
 {
+    /** @var MonitoringInfo */
     private $monitoringInfo;
+
+    public function __construct(MonitoringInfo $monitoringInfo)
+    {
+        $this->monitoringInfo = $monitoringInfo;
+    }
 
     public function acknowledge($author, $message, $host, $service = null)
     {
-        if ($this->monitoringInfo === null) {
-            if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
-                $backend = new IcingadbBackend();
-            } else {
-                $backend = new IdoBackend();
-            }
-
-            $this->setMonitoringInfo($backend->getMonitoringInfo($host, $service));
-        }
-
         if (! $this->monitoringInfo->hasObject()) {
             if ($service !== null) {
                 throw new IcingaException(
@@ -55,13 +49,6 @@ class IcingaCommandPipe
         $transport->send($cmd);
 
         return true;
-    }
-
-    public function setMonitoringInfo(MonitoringInfo $info)
-    {
-        $this->monitoringInfo = $info;
-
-        return $this;
     }
 
     protected function getAcknowledgeProblemCommand()

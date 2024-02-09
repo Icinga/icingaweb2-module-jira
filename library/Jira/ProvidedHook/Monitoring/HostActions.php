@@ -19,8 +19,9 @@ class HostActions extends HostActionsHook
             'Jira Issues' => Url::fromPath(
                 'jira/issues',
                 [
-                    'host' => $host->host_name,
-                    'all'  => true,
+                    'host'      => $host->host_name,
+                    'all'       => true,
+                    'backend'   => 'monitoring'
                 ]
             )
         ];
