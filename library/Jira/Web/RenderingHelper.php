@@ -7,7 +7,10 @@ use Icinga\Application\Modules\Module;
 use Icinga\Date\DateFormatter;
 use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Jira\RestApi;
+use ipl\Html\Attributes;
 use ipl\Html\Html;
+use ipl\Html\HtmlElement;
+use ipl\Html\HtmlString;
 use ipl\Web\Url;
 use ipl\Web\Widget\Icon;
 use ipl\Web\Widget\Link;
@@ -17,49 +20,157 @@ class RenderingHelper
 {
     protected $api;
 
-    public function linkToMonitoring($host, $service)
+    /** @var ?Link Host link */
+    protected $hostLink;
+
+    /** @var ?Link Service link */
+    protected $serviceLink;
+
+    /**
+     * Set the link of monitored host
+     *
+     * @param Link $hostLink
+     *
+     * @return $this
+     */
+    public function setHostLink(Link $hostLink): self
     {
-        if ($service === null) {
-            return $this->linkToMonitoringHost($host);
-        } else {
-            return $this->linkToMonitoringService($host, $service);
-        }
+        $this->hostLink = $hostLink;
+
+        return $this;
     }
 
-    public function linkToMonitoringHost($host)
+    /**
+     * Set the link of monitored service
+     *
+     * @param Link $serviceLink
+     *
+     * @return $this
+     */
+    public function setServiceLink(Link $serviceLink): self
     {
-        if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
-            return new Link([new Icon('server'), $host], Url::fromPath('icingadb/host', [
-                'name' => $host
-            ]), [
-                'title' => t('Show Icinga Host State'),
-            ]);
-        }
+        $this->serviceLink = $serviceLink;
 
-        return new Link([new Icon('laptop'), $host], Url::fromPath('monitoring/host/show', [
-            'host' => $host
-        ]), [
-            'title' => t('Show Icinga Host State'),
-        ]);
+        return $this;
     }
 
-    public function linkToMonitoringService($host, $service)
+    /**
+     * Get the link of monitored host
+     *
+     * @return ?Link
+     */
+    public function getHostLink(): ?Link
     {
-        if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
-            return new Link([new Icon('cog'), $service], Url::fromPath('icingadb/service', [
-                'name'          => $service,
-                'host.name'     => $host,
-            ]), [
-                'title' => t('Show Icinga Service State'),
-            ]);
-        }
+        return $this->hostLink;
+    }
 
-        return new Link([new Icon('cog'), $service], Url::fromPath('monitoring/service/show', [
-            'host'    => $host,
-            'service' => $service,
-        ]), [
-            'title' => t('Show Icinga Service State'),
-        ]);
+    /**
+     * Get the link of monitored service
+     *
+     * @return ?Link
+     */
+    public function getServiceLink(): ?Link
+    {
+        return $this->serviceLink;
+    }
+
+
+    /**
+     * Get the formatted issue comment using author, time and description or comment body
+     *
+     * @param string|HtmlElement[] $author
+     * @param string $time
+     * @param string $body
+     *
+     * @return HtmlElement[]
+     */
+    public function getIssueComment($author, string $time, string $body): array
+    {
+        return [
+            new HtmlElement('h3', null, Html::sprintf('%s: %s', $this->shortTimeSince($time), $author)),
+            new HtmlElement('pre', new Attributes(['class' => 'comment']), $this->formatBody($body)),
+        ];
+    }
+
+    /**
+     * Format the given issue description or comment body
+     *
+     * @param string $body
+     *
+     * @return HtmlString
+     */
+    public function formatBody(string $body): HtmlString
+    {
+        $html = Html::wantHtml($body)->render();
+
+        // This is safe.
+        return new HtmlString($this->replaceLinks($html) ?? '');
+    }
+
+    /**
+     * Replace object urls in the given string with link elements
+     *
+     * @param string $string
+     *
+     * @return ?string
+     */
+    protected function replaceLinks(string $string): ?string
+    {
+        return preg_replace_callback('/\[([^|]+)\|([^]]+)]/', function ($match) {
+            $url = Url::fromPath(htmlspecialchars_decode($match[2]));
+            $link = new Link(
+                $match[1],
+                $url,
+                ['target' => '_blank']
+            );
+
+            if ($url->hasParam('service') || $url->hasParam('host.name')) {
+                if (
+                    strpos($match[2], 'icingaweb2/monitoring') !== false
+                    && (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend())
+                ) {
+                    $link = new Link(
+                        $match[1],
+                        Url::fromPath(
+                            'icingadb/service',
+                            [
+                                'name'      => $url->getParam('service'),
+                                'host.name' => $url->getParam('host'),
+                            ]
+                        ),
+                        ['target' => '_blank']
+                    );
+                }
+
+                $serviceLink = clone $link;
+                $serviceLink->setContent([new Icon('cog'), $match[1]])
+                    ->addAttributes(['title' => t('Show Icinga Service State')]);
+                $this->setServiceLink($serviceLink);
+            } else {
+                $icon = new Icon('server');
+                if (strpos($match[2], 'icingaweb2/monitoring') !== false) {
+                    if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
+                        $link = new Link(
+                            $match[1],
+                            Url::fromPath(
+                                'icingadb/host',
+                                ['name' => $url->getParam('host')]
+                            ),
+                            ['target' => '_blank']
+                        );
+                    } else {
+                        $icon = new Icon('laptop');
+                    }
+                }
+
+                $hostLink = clone $link;
+                $hostLink->setContent([$icon, $match[1]])
+                    ->addAttributes(['title' => t('Show Icinga Host State')]);
+                $this->setHostLink($hostLink);
+            }
+
+            return $link->render();
+        }, $string);
     }
 
     public function linkToJira($caption, $url, $attributes = [])

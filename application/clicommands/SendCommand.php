@@ -150,7 +150,7 @@ class SendCommand extends Command
             if ($ackPipe) {
                 $cmd = new LegacyCommandPipe($ackPipe);
             } else {
-                $cmd = (new IcingaCommandPipe())->setMonitoringInfo($info);
+                $cmd = new IcingaCommandPipe($info);
             }
             if ($cmd->acknowledge($ackAuthor, $ackMessage, $host, $service)) {
                 Logger::info("Problem has been acknowledged for $key");
