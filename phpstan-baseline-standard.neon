@@ -796,11 +796,6 @@ parameters:
 			path: library/Jira/LinkHelper.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function rtrim expects string, mixed given\\.$#"
-			count: 1
-			path: library/Jira/LinkHelper.php
-
-		-
 			message: "#^Property Icinga\\\\Module\\\\Jira\\\\LinkHelper\\:\\:\\$icingaUrl has no type specified\\.$#"
 			count: 1
 			path: library/Jira/LinkHelper.php
@@ -1171,31 +1166,6 @@ parameters:
 			path: library/Jira/RestApi.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_flip expects array\\<int\\|string\\>, array\\|null given\\.$#"
-			count: 1
-			path: library/Jira/RestApi.php
-
-		-
-			message: "#^Parameter \\#1 \\$handle of function curl_error expects CurlHandle, CurlHandle\\|resource given\\.$#"
-			count: 1
-			path: library/Jira/RestApi.php
-
-		-
-			message: "#^Parameter \\#1 \\$handle of function curl_exec expects CurlHandle, CurlHandle\\|resource given\\.$#"
-			count: 1
-			path: library/Jira/RestApi.php
-
-		-
-			message: "#^Parameter \\#1 \\$handle of function curl_getinfo expects CurlHandle, CurlHandle\\|resource given\\.$#"
-			count: 1
-			path: library/Jira/RestApi.php
-
-		-
-			message: "#^Parameter \\#1 \\$handle of function curl_setopt_array expects CurlHandle, CurlHandle\\|resource given\\.$#"
-			count: 1
-			path: library/Jira/RestApi.php
-
-		-
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|true given\\.$#"
 			count: 1
 			path: library/Jira/RestApi.php
@@ -1207,16 +1177,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#"
-			count: 1
-			path: library/Jira/RestApi.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#"
-			count: 1
-			path: library/Jira/RestApi.php
-
-		-
-			message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, array\\|null given\\.$#"
 			count: 1
 			path: library/Jira/RestApi.php
 
@@ -1366,11 +1326,6 @@ parameters:
 			path: library/Jira/Validator/PhpSessionBasedCsrfTokenValidator.php
 
 		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-			count: 1
-			path: library/Jira/Validator/PhpSessionBasedCsrfTokenValidator.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Validator\\\\SimpleValidator\\:\\:__construct\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: library/Jira/Validator/SimpleValidator.php
@@ -1422,21 +1377,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\:\\:runFailSafe\\(\\) has parameter \\$callable with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Controller.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array given\\.$#"
-			count: 1
-			path: library/Jira/Web/Controller.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{\\$this\\(Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\), string\\} given\\.$#"
-			count: 1
-			path: library/Jira/Web/Controller.php
-
-		-
-			message: "#^Parameter \\#2 \\$values of function vsprintf expects array\\<bool\\|float\\|int\\|string\\|null\\>, array\\<int\\|string, mixed\\> given\\.$#"
 			count: 1
 			path: library/Jira/Web/Controller.php
 
@@ -1563,11 +1503,6 @@ parameters:
 		-
 			message: "#^Parameter \\#1 \\$name of method Icinga\\\\Application\\\\Config\\:\\:getSection\\(\\) expects string, mixed given\\.$#"
 			count: 1
-			path: library/Jira/Web/Form/NewIssueForm.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function rawurlencode expects string, mixed given\\.$#"
-			count: 2
 			path: library/Jira/Web/Form/NewIssueForm.php
 
 		-
