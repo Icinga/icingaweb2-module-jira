@@ -1,0 +1,71 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$str of function rtrim expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/LinkHelper.php
+
+		-
+			message: "#^Method Icinga\\\\Module\\\\Jira\\\\RestApi\\:\\:curl\\(\\) has invalid return type CurlHandle\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$ch of function curl_error expects resource, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$ch of function curl_exec expects resource, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$ch of function curl_getinfo expects resource, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$ch of function curl_setopt_array expects resource, CurlHandle\\|resource given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of function array_flip expects array\\<int\\|string\\>, array\\|null given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function trim expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\$search of function array_key_exists expects array, array\\|null given\\.$#"
+			count: 1
+			path: library/Jira/RestApi.php
+
+		-
+			message: "#^Parameter \\#2 \\$str of function explode expects string, mixed given\\.$#"
+			count: 1
+			path: library/Jira/Validator/PhpSessionBasedCsrfTokenValidator.php
+
+		-
+			message: "#^Parameter \\#1 \\$function of function call_user_func expects callable\\(\\)\\: mixed, array given\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Parameter \\#1 \\$function of function call_user_func expects callable\\(\\)\\: mixed, array\\{\\$this\\(Icinga\\\\Module\\\\Jira\\\\Web\\\\Controller\\), string\\} given\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Parameter \\#2 \\$args of function vsprintf expects array\\<bool\\|float\\|int\\|string\\|null\\>, array\\<int, mixed\\> given\\.$#"
+			count: 1
+			path: library/Jira/Web/Controller.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function rawurlencode expects string, mixed given\\.$#"
+			count: 2
+			path: library/Jira/Web/Form/NewIssueForm.php
