@@ -6,6 +6,7 @@ use Exception;
 use Icinga\Application\Icinga;
 use Icinga\Application\Logger;
 use Icinga\Application\Config;
+use Icinga\Exception\IcingaException;
 use Icinga\Module\Jira\IcingaCommandPipe;
 use Icinga\Module\Jira\Cli\Command;
 use Icinga\Module\Jira\IcingadbBackend;
@@ -66,12 +67,6 @@ class SendCommand extends Command
         $description = $p->shiftRequired('description');
         $duedate     = $p->shift('due-date');
         $project     = $p->shiftRequired('project');
-
-        $jira = $this->jira();
-        $issue = $jira->eventuallyGetLatestOpenIssueFor($project, $host, $service);
-
-        $config = Config::module('jira');
-
         $mm = $this->app->getModuleManager();
         if ($p->shift('icingadb') || ! $mm->hasEnabled('monitoring')) {
             if (! $mm->hasEnabled('icingadb')) {
@@ -86,6 +81,23 @@ class SendCommand extends Command
         }
 
         $info = $backend->getMonitoringInfo($host, $service);
+
+        if (! $info->hasObject()) {
+            if ($service !== null) {
+                throw new IcingaException(
+                    'No service "%s" found on host "%s"',
+                    $service,
+                    $host
+                );
+            } else {
+                throw new IcingaException('No such host found: %s', $host);
+            }
+        }
+
+        $jira = $this->jira();
+        $issue = $jira->eventuallyGetLatestOpenIssueFor($project, $host, $service);
+
+        $config = Config::module('jira');
 
         if ($issue === null) {
             if (\in_array($status, ['UP', 'OK'])) {
