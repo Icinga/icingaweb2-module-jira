@@ -426,16 +426,6 @@ parameters:
 			path: library/Jira/IcingaCommandPipe.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:setMonitoringInfo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/IcingaCommandPipe.php
-
-		-
-			message: "#^Property Icinga\\\\Module\\\\Jira\\\\IcingaCommandPipe\\:\\:\\$monitoringInfo has no type specified\\.$#"
-			count: 1
-			path: library/Jira/IcingaCommandPipe.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Jira\\\\IcingadbBackend\\:\\:getObject\\(\\) should return Icinga\\\\Module\\\\Icingadb\\\\Model\\\\Host\\|Icinga\\\\Module\\\\Icingadb\\\\Model\\\\Service but returns ipl\\\\Orm\\\\Model\\.$#"
 			count: 1
 			path: library/Jira/IcingadbBackend.php
@@ -1616,46 +1606,6 @@ parameters:
 			path: library/Jira/Web/RenderingHelper.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoring\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoring\\(\\) has parameter \\$host with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoring\\(\\) has parameter \\$service with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringHost\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringHost\\(\\) has parameter \\$host with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringService\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringService\\(\\) has parameter \\$host with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:linkToMonitoringService\\(\\) has parameter \\$service with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/RenderingHelper.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\RenderingHelper\\:\\:renderAvatar\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Jira/Web/RenderingHelper.php
@@ -1756,26 +1706,6 @@ parameters:
 			path: library/Jira/Web/Table/IssueDetails.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has parameter \\$author with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has parameter \\$body with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComment\\(\\) has parameter \\$time with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:addComments\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Jira/Web/Table/IssueDetails.php
@@ -1847,31 +1777,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:formatAuthor\\(\\) has parameter \\$author with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:formatBody\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:formatBody\\(\\) has parameter \\$body with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:replaceLinks\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Jira\\\\Web\\\\Table\\\\IssueDetails\\:\\:replaceLinks\\(\\) has parameter \\$string with no type specified\\.$#"
-			count: 1
-			path: library/Jira/Web/Table/IssueDetails.php
-
-		-
-			message: "#^Parameter \\#2 \\$callback of function preg_replace_callback expects callable\\(array\\<int\\|string, string\\>\\)\\: string, Closure\\(mixed\\)\\: ipl\\\\Html\\\\HtmlElement given\\.$#"
 			count: 1
 			path: library/Jira/Web/Table/IssueDetails.php
 
