@@ -5,6 +5,7 @@
 namespace Icinga\Module\Jira\Forms\Config;
 
 use Icinga\Application\Config;
+use Icinga\Data\ConfigObject;
 use Icinga\Module\Jira\RestApi;
 use Icinga\Web\Session;
 use ipl\Html\Contract\FormSubmitElement;
@@ -51,9 +52,10 @@ class FieldConfigForm extends CompatForm
                 $this->fieldId = $fieldId;
             }
 
-            $templateFields = $this->templateConfig->getSection($templateName)->toArray();
+            /** @var ConfigObject<string> $templateFields */
+            $templateFields = $this->templateConfig->getSection($templateName);
 
-            $this->fieldValue = $templateFields[$fieldId];
+            $this->fieldValue = $templateFields->toArray()[$fieldId];
         }
     }
 
