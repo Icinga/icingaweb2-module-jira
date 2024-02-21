@@ -33,6 +33,7 @@ class IssuesTable extends Table
         ], null, 'th'));
 
         foreach ($this->issues as $issue) {
+            $issueDescription = $helper->formatBody($issue->fields->description);
             $this->add(static::tr([
                 static::td([
                     $helper->renderAvatar($issue->fields->project),
@@ -46,7 +47,7 @@ class IssuesTable extends Table
                     $issue->fields->summary,
                     Html::tag(
                         'p',
-                        $issue->fields->description
+                        $issueDescription
                     ),
                 ])->setSeparator(' '),
                 static::td($helper->shortTimeSince($issue->fields->created)),

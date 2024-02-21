@@ -19,9 +19,10 @@ class ServiceActions extends ServiceActionsHook
             'Jira Issues' => Url::fromPath(
                 'jira/issues',
                 [
-                    'host'    => $service->host_name,
-                    'service' => $service->service_description,
-                    'all'     => true,
+                    'host'      => $service->host_name,
+                    'service'   => $service->service_description,
+                    'all'       => true,
+                    'backend'   => 'monitoring'
                 ]
             )
         ];

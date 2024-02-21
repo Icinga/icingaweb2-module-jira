@@ -19,9 +19,10 @@ class ServiceActions extends ServiceActionsHook
                 Url::fromPath(
                     'jira/issues',
                     [
-                        'service' => $service->name,
-                        'host' => $service->host->name,
-                        'all' => true
+                        'service'   => $service->name,
+                        'host'      => $service->host->name,
+                        'all'       => true,
+                        'backend'   => 'icingadb'
                     ]
                 )
             )

@@ -2,12 +2,11 @@
 
 namespace Icinga\Module\Jira\Controllers;
 
-use Icinga\Application\Modules\Module;
 use Icinga\Module\Jira\IcingadbBackend;
 use Icinga\Module\Jira\IdoBackend;
-use Icinga\Module\Jira\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Jira\Web\Controller;
 use Icinga\Module\Jira\Web\Form\NewIssueForm;
+use Icinga\Module\Jira\Common\IcingaDbSupport;
 use Icinga\Module\Jira\Web\Table\IssuesTable;
 use Icinga\Web\Notification;
 use Icinga\Web\Url;
@@ -15,6 +14,8 @@ use ipl\Html\Text;
 
 class IssuesController extends Controller
 {
+    use IcingaDbSupport;
+
     public function indexAction()
     {
         $host = $this->params->get('host');
@@ -67,7 +68,8 @@ class IssuesController extends Controller
 
     protected function requireMonitoringInfo()
     {
-        if (Module::exists('icingadb') && IcingadbSupport::useIcingaDbAsBackend()) {
+        $backendName = $this->params->get('backend');
+        if ($backendName === 'icingadb' || $this->useIcingaDbAsBackend()) {
             $backend = new IcingadbBackend();
         } else {
             $backend = new IdoBackend();
@@ -91,7 +93,7 @@ class IssuesController extends Controller
         $tabs = $this->getTabs();
 
         $params = [];
-        foreach (['host', 'service'] as $param) {
+        foreach (['host', 'service', 'backend'] as $param) {
             if ($value = $this->params->get($param)) {
                 $params[$param] = $value;
             }
