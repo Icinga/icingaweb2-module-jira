@@ -101,23 +101,11 @@ class RenderingHelper
      */
     public function formatBody(string $body): HtmlString
     {
-        $html = Html::wantHtml($body)->render();
+        $urls = [];
 
-        // This is safe.
-        return new HtmlString($this->replaceLinks($html) ?? '');
-    }
-
-    /**
-     * Replace object urls in the given string with link elements
-     *
-     * @param string $string
-     *
-     * @return ?string
-     */
-    protected function replaceLinks(string $string): ?string
-    {
-        return preg_replace_callback('/\[([^|]+)\|([^]]+)]/', function ($match) {
-            $url = Url::fromPath(htmlspecialchars_decode($match[2]));
+        // Replace object urls in the given string with link elements
+        $body = preg_replace_callback('/\[([^|]+)\|([^]]+)]/', function ($match) use (&$urls) {
+            $url = Url::fromPath($match[2]);
             $link = new Link(
                 $match[1],
                 $url,
@@ -169,8 +157,19 @@ class RenderingHelper
                 $this->setHostLink($hostLink);
             }
 
-            return $link->render();
-        }, $string);
+            $urls[] = $link->render();
+
+            return '$objectLink' . (count($urls) - 1) . '$';
+        }, $body);
+
+        $html = Html::wantHtml($body)->render();
+
+        foreach ($urls as $i => $url) {
+            $html = str_replace('$objectLink' . $i . '$', $url, $html);
+        }
+
+        // This is safe.
+        return new HtmlString($html);
     }
 
     public function linkToJira($caption, $url, $attributes = [])
