@@ -40,10 +40,12 @@ class IssueDetails extends Table
         $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$keyField);
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
+        $helper->setHostName($host);
         if (empty($parts)) {
             $service = null;
         } else {
             $service = array_shift($parts);
+            $helper->setServiceName($service);
         }
         if (isset($fields->icingaUser)) {
             $user = $fields->icingaUser;
