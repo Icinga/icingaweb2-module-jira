@@ -4,12 +4,11 @@ namespace Icinga\Module\Jira\Web\Table;
 
 use Icinga\Module\Jira\Web\RenderingHelper;
 use ipl\Html\Html;
-use ipl\Html\HtmlString;
+use ipl\Html\HtmlElement;
 use Icinga\Application\Config;
 use ipl\Html\Table;
 use ipl\I18n\Translation;
 use ipl\Web\Widget\Icon;
-use stdClass;
 
 class IssueDetails extends Table
 {
@@ -41,10 +40,12 @@ class IssueDetails extends Table
         $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$keyField);
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
+        $helper->setHostName($host);
         if (empty($parts)) {
             $service = null;
         } else {
             $service = array_shift($parts);
+            $helper->setServiceName($service);
         }
         if (isset($fields->icingaUser)) {
             $user = $fields->icingaUser;
@@ -74,16 +75,22 @@ class IssueDetails extends Table
             $this->translate('Created') => $helper->shortTimeSince($fields->created, false),
         ]);
 
+        $summary = $helper->getIssueComment(
+            $fields->summary,
+            $fields->created,
+            $fields->description
+        );
+
         if ($host !== null) {
             $this->addNameValueRow(
                 $this->translate('Host'),
-                $helper->linkToMonitoringHost($host)
+                $helper->getHostLink()
             );
         }
         if ($service !== null) {
             $this->addNameValueRow(
                 $this->translate('Service'),
-                $helper->linkToMonitoringService($host, $service)
+                $helper->getServiceLink()
             );
         }
         if ($user !== null) {
@@ -94,11 +101,7 @@ class IssueDetails extends Table
         }
 
         $this->addComments(array_reverse($fields->comment->comments));
-        $this->addComment(
-            $fields->summary,
-            $fields->created,
-            $fields->description
-        );
+        $this->addComment($summary);
     }
 
     protected function addWideRow($content)
@@ -113,9 +116,11 @@ class IssueDetails extends Table
         foreach ($comments as $comment) {
             if (property_exists($comment, 'author')) {
                 $this->addComment(
-                    $this->formatAuthor($comment->author),
-                    $comment->created,
-                    $comment->body
+                    $this->helper->getIssueComment(
+                        $this->formatAuthor($comment->author),
+                        $comment->created,
+                        $comment->body
+                    )
                 );
             }
         }
@@ -145,35 +150,16 @@ class IssueDetails extends Table
         }
     }
 
-    protected function formatBody($body)
+    /**
+     * Add comment to the issue detail
+     *
+     * @param HtmlElement[] $comment
+     *
+     * @return $this
+     */
+    protected function addComment(array $comment)
     {
-        $html = Html::wantHtml($body)->render();
-
-        // This is safe.
-        return new HtmlString($this->replaceLinks($html));
-    }
-
-    protected function replaceLinks($string)
-    {
-        return \preg_replace_callback('/\[([^|]+)\|([^]]+)]/', function ($match) {
-            return Html::tag('a', ['href' => $match[2], 'target' => '_blank'], $match[1]);
-        }, $string);
-    }
-
-    protected function addComment($author, $time, $body)
-    {
-        return $this->addWideRow([
-            Html::tag('h3', null, Html::sprintf(
-                '%s: %s',
-                $this->helper->shortTimeSince($time),
-                $author
-            )),
-            Html::tag(
-                'pre',
-                ['class' => 'comment'],
-                $this->formatBody($body)
-            ),
-        ]);
+        return $this->addWideRow($comment);
     }
 
     protected function createNameValueRow($name, $value)

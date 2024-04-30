@@ -275,7 +275,7 @@ class NewIssueForm extends CompatForm
         $ackMessage = "Jira issue $key has been created";
 
         try {
-            $cmd = new IcingaCommandPipe();
+            $cmd = new IcingaCommandPipe($this->monitoringInfo);
             if ($cmd->acknowledge('Jira', $ackMessage, $host, $service)) {
                 Logger::info("Problem has been acknowledged for $key");
             }

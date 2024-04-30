@@ -1,10 +1,20 @@
 .issue-table {
-  td:first-of-type {
-      white-space: nowrap;
-  }
-  img {
-    vertical-align: middle;
-  }
+    td:first-of-type {
+        white-space: nowrap;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    td > p > a {
+        border-bottom: 1px dotted @text-color-light;
+
+        &:hover {
+            border-bottom: 1px solid @text-color-light;
+            text-decoration: none;
+        }
+    }
 }
 
 .status-badge {
