@@ -31,12 +31,15 @@ class RestApi
 
     protected $enumCustomFields;
 
-    public function __construct($baseUrl, $username, $password)
+    protected $proxy;
+
+    public function __construct($baseUrl, $username, $password, $proxy)
     {
         $this->username = $username;
         $this->password = $password;
         $this->baseUrlForLink = $baseUrl;
         $this->baseUrl = \rtrim($baseUrl, '/') . '/rest';
+        $this->proxy = $proxy;
         $this->serverInfo = $this->get('serverInfo')->getResult();
     }
 
@@ -62,7 +65,7 @@ class RestApi
         $user = $config->get('api', 'username');
         $pass = $config->get('api', 'password');
 
-        $api = new static($url, $user, $pass);
+        $api = new static($url, $user, $pass, $proxy);
 
         return $api;
     }
@@ -447,6 +450,10 @@ class RestApi
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
         );
+
+        if ($this->proxy) {
+            $opts[CURLOPT_PROXY] = $this->proxy;
+        }
 
         curl_setopt_array($curl, $opts);
         // TODO: request headers, validate status code

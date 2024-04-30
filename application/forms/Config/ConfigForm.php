@@ -58,6 +58,17 @@ class ConfigForm extends CompatForm
                 'label'       => $this->translate('Scheme'),
                 'description' => $this->translate('Protocol used by Jira (http / https)'),
             ]
+        )->addElement(
+            'text',
+            'proxy',
+            [
+                'label'    => $this->translate('Proxy Server'),
+                'description' => $this->translate(
+                    'Proxy Server used to connect to Jira if needed, '
+                    . 'format <hostname or IP>:<port>'
+                ),
+                'required' => false,
+            ]
         );
 
         $this->addElement(
