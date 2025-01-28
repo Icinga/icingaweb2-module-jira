@@ -421,6 +421,19 @@ class RestApi
     protected function request($method, $url, $body = null)
     {
         $auth = \sprintf('%s:%s', $this->username, $this->password);
+
+        $opts = [
+            CURLOPT_URL            => $this->url($url),
+            CURLOPT_USERPWD        => $auth,
+            CURLOPT_CUSTOMREQUEST  => \strtoupper($method),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 3,
+
+            // TODO: Fix this!
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false
+        ];
+
         $headers = [
             'User-Agent: IcingaWeb2-Jira/v1.0',
         ];
@@ -430,23 +443,12 @@ class RestApi
         if ($body !== null) {
             $body = \json_encode($body);
             $headers[] = 'Content-Length: ' . strlen($body);
+            $opts[CURLOPT_POSTFIELDS] = $body;
         }
         $headers[] = 'Content-Type: application/json';
+        $opts[CURLOPT_HTTPHEADER] = $headers;
 
         $curl = $this->curl();
-        $opts = array(
-            CURLOPT_URL            => $this->url($url),
-            CURLOPT_HTTPHEADER     => $headers,
-            CURLOPT_USERPWD        => $auth,
-            CURLOPT_CUSTOMREQUEST  => \strtoupper($method),
-            CURLOPT_POSTFIELDS    => $body,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CONNECTTIMEOUT => 3,
-
-            // TODO: Fix this!
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSL_VERIFYPEER => false,
-        );
 
         curl_setopt_array($curl, $opts);
         // TODO: request headers, validate status code
@@ -492,13 +494,12 @@ class RestApi
 
     /**
      * @param $url
-     * @param null $body
      * @return RestApiResponse
      * @throws NotFoundError
      */
-    public function get($url, $body = null)
+    public function get($url)
     {
-        return $this->request('get', $url, $body);
+        return $this->request('get', $url);
     }
 
     /**
