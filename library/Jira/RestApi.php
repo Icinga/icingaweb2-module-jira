@@ -593,6 +593,9 @@ class RestApi
             if (! $this->curl) {
                 throw new RuntimeException('Failed to initialize cURL session');
             }
+        } else {
+            // Since this is a persistent curl handle, reset its options after every session
+            curl_reset($this->curl);
         }
 
         return $this->curl;
