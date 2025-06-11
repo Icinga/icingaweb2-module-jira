@@ -228,15 +228,15 @@ class ConfigForm extends CompatForm
 
         $ui->addElement(
             'text',
-            'project',
+            'default_project',
             [
-                'label' => $this->translate('Project'),
+                'label' => $this->translate('Default Project'),
             ]
         )->addElement(
             'text',
-            'issuetype',
+            'default_issuetype',
             [
-                'label' => $this->translate('Issue Type'),
+                'label' => $this->translate('Default Issue Type'),
             ]
         );
 
