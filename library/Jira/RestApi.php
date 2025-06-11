@@ -202,7 +202,7 @@ class RestApi
     private function finalizeIssueQuery(string $query, $host = null, $service = null, $onlyOpen = true)
     {
         if ($onlyOpen) {
-            $query .= ' AND resolution is empty';
+            $query .= ' AND statusCategory != done AND resolution is empty';
         }
 
         $config = Config::module('jira');
