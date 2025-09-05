@@ -128,13 +128,20 @@ class RestApi
 
             $config = Config::module('jira');
             $keyField = $config->get('key_fields', 'icingaKey', 'icingaKey');
-
-            $issues = $this->post('search', [
+            $body = [
                 'jql'        => $query,
-                'startAt'    => $start,
                 'maxResults' => $limit,
-                'fields'     => [ $keyField ],
-            ])->getResult()->issues;
+                'fields'     => [ $keyField ]
+            ];
+
+            if (version_compare($this->getJiraVersion(), '10.2', '>=')) {
+                $url = 'search/jql';
+            } else {
+                $url = 'search';
+                $body['startAt'] = $start;
+            }
+
+            $issues = $this->post($url, $body)->getResult()->issues;
 
             if (empty($issues)) {
                 Benchmark::measure('Found no (optional) issue');
@@ -261,12 +268,20 @@ class RestApi
             $keyField,
         ];
 
-        $issues = $this->post('search', [
+        $body = [
             'jql'        => $query,
-            'startAt'    => $start,
             'maxResults' => $limit,
-            'fields'     => $fields,
-        ])->getResult()->issues;
+            'fields'     => $fields
+        ];
+
+        if (version_compare($this->getJiraVersion(), '10.2', '>=')) {
+            $url = 'search/jql';
+        } else {
+            $url = 'search';
+            $body['startAt'] = $start;
+        }
+
+        $issues = $this->post($url, $body)->getResult()->issues;
 
         Benchmark::measure(sprintf('Fetched %s issues', \count($issues)));
 
