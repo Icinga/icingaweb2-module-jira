@@ -89,6 +89,11 @@ following JQL construct:
 A little bit weird, but it should work fine. And as this field is usually not
 shown anywhere, it shouldn't disturb.
 
+If you also set the icingaKeyPrefix to something that is not `''` like `cluster1` your JQL construct
+will look like this:
+
+    icingaKey ~ "\"BEGIN_cluster1_example.com!Disk SpaceEND\""
+
 ## Fill Jira Custom Fields
 
 For your customized workflows you might need this module to ship additional
