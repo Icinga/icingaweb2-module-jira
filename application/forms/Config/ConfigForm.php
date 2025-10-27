@@ -210,6 +210,17 @@ class ConfigForm extends CompatForm
                     }
                 ]
             ]
+        )->addElement(
+            'text',
+            'icingaKeyPrefix',
+            [
+                'label'       => 'icingaKeyPrefix',
+                'description' => $this->translate(
+                    'Custom name that is prefixed to the icingaKey, If you plan to have multiple individual '
+                    . 'icinga instances write to the same jira project you should set a meaningful name her like cluster1'
+                ),
+                'required'    => false,
+            ]
         );
 
         // Fieldset for UI

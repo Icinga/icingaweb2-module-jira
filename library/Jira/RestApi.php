@@ -214,17 +214,22 @@ class RestApi
 
         $config = Config::module('jira');
         $keyField = $config->get('key_fields', 'icingaKey', 'icingaKey');
+        $prefix = $config->get('key_fields', 'icingaKeyPrefix', '');
 
         if ($host === null) {
-            $query .= ' AND ' . $keyField . ' ~ "BEGIN*"';
+            $pattern = 'BEGIN*';
+            if ($prefix !== '') {
+                $pattern = 'BEGIN_' . $prefix . '_*';
+            }
         } else {
-            $icingaKey = static::makeIcingaKey($host, $service);
-
+            $pattern = static::makeIcingaKey($host, $service);
             // There is no exact field matcher out of the box on Jira, this is
-            // an ugly work-around. We search for "BEGINhostnameEND" or
-            // "BEGINhostname!serviceEND"
-            $query .= \sprintf(' AND ' . $keyField . ' ~ "\"%s\""', $icingaKey);
+            // an ugly work-around. We search for "BEGINhostnameEND" or "BEGIN_YOURPREFIX_hostname"
+            // "BEGINhostname!serviceEND" or "BEGIN_YOURPREFIX_hostname!serviceEND"
+
         }
+
+        $query .= \sprintf(" AND '$keyField'" . ' ~ "\"%s\""', $pattern);
 
         $query .= ' ORDER BY created DESC';
 
@@ -233,7 +238,12 @@ class RestApi
 
     public static function makeIcingaKey($host, $service = null)
     {
+        $prefix = Config::module('jira')->get('key_fields', 'icingaKeyPrefix', '');
         $icingaKey = "BEGIN$host";
+        if ($prefix !== '') {
+            $icingaKey = "BEGIN_{$prefix}_{$host}";
+        }
+
         if ($service !== null) {
             $icingaKey .= "!$service";
         }

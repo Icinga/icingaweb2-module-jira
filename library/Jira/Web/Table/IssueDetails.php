@@ -36,8 +36,13 @@ class IssueDetails extends Table
         $fields = $issue->fields;
         $projectKey = $fields->project->key;
         $keyField = $config->get('key_fields', 'icingaKey', 'icingaKey');
-
-        $icingaKey = preg_replace('/^BEGIN(.+)END$/', '$1', $fields->$keyField);
+        $prefix = $config->get('key_fields', 'icingaKeyPrefix','');
+        $pattern = '/^BEGIN(.+)END$/';
+        if($prefix !== ''){
+            $pattern = '/^BEGIN_' . $prefix . '_(.+)END$/';
+        }
+        
+        $icingaKey = preg_replace($pattern, '$1', $fields->$keyField);
         $parts = explode('!', $icingaKey);
         $host = array_shift($parts);
         $helper->setHostName($host);
