@@ -382,7 +382,7 @@ class FieldConfigForm extends CompatForm
             $nullLabel = $this->translate('- please choose -');
         }
 
-        return [null => $nullLabel] + $enum;
+        return ['' => $nullLabel] + $enum;
     }
 
     public function onSuccess()

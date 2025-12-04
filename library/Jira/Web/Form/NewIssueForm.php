@@ -193,7 +193,7 @@ class NewIssueForm extends CompatForm
             $nullLabel = $this->translate('- please choose -');
         }
 
-        return [null => $nullLabel] + $enum;
+        return ['' => $nullLabel] + $enum;
     }
 
     private function enumTemplates()
