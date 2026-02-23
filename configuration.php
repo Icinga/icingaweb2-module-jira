@@ -1,5 +1,8 @@
 <?php
 
+// SPDX-FileCopyrightText: 2018 Icinga GmbH <https://icinga.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 /** @var \Icinga\Application\Modules\Module $this */
 $section = $this->menuSection(N_('Jira'))
     ->setUrl('jira')
