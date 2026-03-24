@@ -29,7 +29,11 @@ class TemplateForm extends BaseHtmlElement
     protected function assemble()
     {
         try {
-            $projects = $this->jira->get('project')->getResult();
+            if (strtolower($this->jira->getServerInfo()->deploymentType) === 'cloud') {
+                $projects = $this->jira->get('project/search')->getResult()->values;
+            } else {
+                $projects = $this->jira->get('project')->getResult();
+            }
         } catch (Exception $e) {
             $this->add(Html::tag('p', ['class' => 'state-hint error'], sprintf(
                 $this->translate('Unable to talk to Jira, please check your configuration: %s'),
