@@ -6,10 +6,10 @@ Make sure you use `jira` as the module name. The following requirements must als
 
 ## Requirements
 
-* PHP (≥7.2)
-* [Icinga Web](https://github.com/Icinga/icingaweb2) (≥2.9)
+* PHP ≥ 8.2
+* [Icinga Web](https://github.com/Icinga/icingaweb2) ≥ 2.9
 * Icinga Web libraries:
-  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (≥0.11)
+  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) ≥ 0.19.0
 * Icinga Web modules:
-  * [Icinga DB Web](https://github.com/Icinga/icingadb-web) (≥1.0) or the `monitoring` module
+  * [Icinga DB Web](https://github.com/Icinga/icingadb-web) ≥ 1.0 or the `monitoring` module
 <!-- {% include "02-Installation.md" %} -->
