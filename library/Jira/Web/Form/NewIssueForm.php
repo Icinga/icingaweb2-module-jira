@@ -49,8 +49,14 @@ class NewIssueForm extends CompatForm
         $defaultTemplate = $config->get('ui', 'default_template');
         $defaultAck = $config->get('ui', 'acknowledge', 'y');
 
+        if (strtolower($this->jira->getServerInfo()->deploymentType) === 'cloud') {
+            $projects = $this->jira->get('project/search')->getResult()->values;
+        } else {
+            $projects = $this->jira->get('project')->getResult();
+        }
+
         $enum = $this->makeEnum(
-            $this->jira->get('project')->getResult(),
+            $projects,
             'key',
             'name'
         );
