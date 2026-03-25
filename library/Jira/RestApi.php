@@ -137,7 +137,7 @@ class RestApi
                 'fields'     => [ $keyField ]
             ];
 
-            if (version_compare($this->getJiraVersion(), '10.2', '>=')) {
+            if (strtolower($this->serverInfo->deploymentType) === 'cloud') {
                 $url = 'search/jql';
             } else {
                 $url = 'search';
@@ -277,7 +277,7 @@ class RestApi
             'fields'     => $fields
         ];
 
-        if (version_compare($this->getJiraVersion(), '10.2', '>=')) {
+        if (strtolower($this->serverInfo->deploymentType) === 'cloud') {
             $url = 'search/jql';
         } else {
             $url = 'search';
